@@ -593,6 +593,12 @@ nav a:focus-visible::after {
   font-size: 0.78rem;
 }
 
+.market-rule-note {
+  margin: 14px 0 0;
+  color: #adb3b0;
+  font-size: 0.8rem;
+}
+
 .decision-board {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

@@ -1,5 +1,5 @@
 version: "1.0.0"
-status: provisional
+status: locked_v1
 effective_date: "2026-07-03"
 timezone: Asia/Taipei
 trading_day_basis: TWSE_TPEx_calendar
@@ -48,7 +48,15 @@ candidate:
     fallback_activation:
       condition: primary_candidate_count_below
       threshold: 5
-      action: append_fallback_candidates_until_total_reaches_5
+      event_backtest_action: include_all_qualifying_fallback_candidates
+      live_notification_action: rank_and_limit
+      live_notification_max_candidates: 5
+      live_notification_ranking:
+        - primary_liquidity_bucket_first
+        - weekly_fresh_golden_cross_first
+        - daily_fresh_golden_cross_first
+        - volume_lots_desc
+        - stock_id_asc_tiebreak
   macd:
     price_field: close
     fast_ema: 12
@@ -142,10 +150,31 @@ market_regime_D1:
         - B
         - AB
       maximum_candidates: 3
-  provisional_parameters:
-    - taiex_return_thresholds
-    - breadth_thresholds
-    - relative_strength_thresholds
+  locked_V1_parameters:
+    taiex_return_threshold: 0.005
+    breadth_ratio_thresholds:
+      bullish: 1.50
+      bearish: 0.67
+    candidate_relative_strength_percentage_points:
+      bullish: 1.00
+      bearish: -1.00
+    strong_weak_score_threshold: 2
+  sensitivity_test_grid:
+    taiex_return_absolute:
+      - 0.003
+      - 0.005
+      - 0.007
+    breadth_bullish:
+      - 1.20
+      - 1.50
+      - 2.00
+    candidate_relative_strength_percentage_points:
+      - 0.50
+      - 1.00
+      - 1.50
+    score_threshold:
+      - 2
+      - 3
 
 D1_intraday_entry:
   earliest_entry_time: "09:10:00"
@@ -162,8 +191,18 @@ D1_intraday_entry:
     conservative_slippage_applies: true
     do_not_assume_fill_when_locked_limit_up: true
   no_chase_rule:
-    status: provisional
-    D1_open_gap_from_D0_close_max: 0.05
+    status: locked_v1
+    D1_open_gap_lte_0_05: normal_breakout_entry_allowed
+    D1_open_gap_gt_0_05_lte_0_07: pullback_confirmation_only
+    D1_open_gap_gt_0_07: reject_D1_intraday_entry
+    pullback_confirmation_requires:
+      - pullback_does_not_break_stop
+      - price_reclaims_intraday_vwap
+      - reward_risk_still_acceptable
+    sensitivity_gap_caps:
+      - 0.03
+      - 0.05
+      - 0.07
 
 risk_and_position_sizing:
   risk_budget_fraction_of_equity: 0.005
@@ -267,16 +306,19 @@ backtest:
       - sector
       - liquidity_bucket
 
-open_questions_before_status_locked:
-  - id: OQ1
-    question: Should the 2000-lot fallback fill the list to 5 names or include every qualifying fallback name?
-    V1_default: fill_to_5
-  - id: OQ2
-    question: Is the D2+ invalidation support the higher of D1 low and D0 low?
-    V1_default: higher_of_the_two
-  - id: OQ3
-    question: Should the D1 no-chase opening gap cap remain at 5 percent?
-    V1_default: 5_percent
-  - id: OQ4
-    question: Are the provisional 09:15 market-regime thresholds acceptable for V1 sensitivity testing?
-    V1_default: use_as_written
+resolved_decisions:
+  - id: RD1
+    decision: >
+      Event backtests include every qualifying 2000-to-4999-lot fallback
+      candidate when fewer than five primary candidates exist. Live alerts rank
+      all candidates and show at most five.
+  - id: RD2
+    decision: D2+ invalidation uses the higher of D1 low and D0 low.
+  - id: RD3
+    decision: >
+      A D1 opening gap above 5 percent forbids direct chasing but permits a
+      confirmed pullback entry. A gap above 7 percent is rejected in V1.
+  - id: RD4
+    decision: >
+      The 09:15 market-regime thresholds are locked for V1 and must also be
+      reported on the predefined sensitivity grid.

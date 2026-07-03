@@ -42,7 +42,7 @@
         <aside class="signal-card" aria-label="策略核心摘要">
           <div class="signal-card-head">
             <span>PLAYBOOK STATUS</span>
-            <span class="status-dot">V0.1</span>
+            <span class="status-dot">V1.0</span>
           </div>
           <div class="signal-value">3 PHASES</div>
           <div class="mini-chart" aria-hidden="true">
@@ -117,7 +117,8 @@
               <li>上市櫃普通股且可當沖</li>
               <li>排除處置、變更交易與停止交易</li>
               <li>日成交量優先 ≥ 5,000 張</li>
-              <li>不足時才納入 2,000–4,999 張</li>
+              <li>主要候選不足5檔時，回測納入全部2,000–4,999張備選</li>
+              <li>實際提醒依條件排序，最多顯示5檔</li>
               <li>日／週 DIF 與 Signal 均在零軸上</li>
             </ul>
             <p class="panel-note">
@@ -201,6 +202,10 @@
             <span>台指期相對強弱</span>
             <span>個股相對大盤強度</span>
           </div>
+          <p class="market-rule-note">
+            V1於09:15計分：指數漲跌±0.5%、上下家數比1.5／0.67、個股相對強弱±1個百分點，
+            加上指數是否站上VWAP；總分≥2為強勢、≤−2為弱勢，其餘為中性。
+          </p>
         </div>
       </section>
 
@@ -227,7 +232,8 @@
               <li>價格突破但量能不足</li>
               <li>有量但仍在 VWAP 下方</li>
               <li>大盤方向尚未確認</li>
-              <li>跳空過大、停損距離太遠</li>
+              <li>跳空超過5%禁止直接追價，只能等待回測確認</li>
+              <li>跳空超過7%時，V1直接放棄D1當沖</li>
             </ul>
           </article>
           <article class="decision-column cancel">
@@ -300,12 +306,12 @@
             <h3>真正觸發的條件</h3>
             <p>價格由下往上突破 D1 開盤價，連續約 3 分鐘站穩，且突破量同步增加。</p>
             <h3>失效條件</h3>
-            <p>跌破 D1 低點或 D0 漲停 K 棒低點、持續量增價跌，或 10–20 個交易日仍未觸發。</p>
+            <p>失效價取D1低點與D0漲停K棒低點的較高者；跌破即失效。持續量增價跌，或20個交易日仍未觸發也刪除。</p>
           </div>
         </div>
         <p class="open-question">
-          <strong>待確認：</strong>「跌破漲停板價格」目前依範例解讀為跌破 D0 漲停 K 棒低點，
-          而不是跌破 D0 的漲停收盤價。
+          <strong>V1已鎖定：</strong>D2+失效價取D1低點與D0漲停K棒低點的較高者；
+          這代表任一較高支撐先被跌破，就停止觀察。
         </p>
       </section>
 
@@ -370,7 +376,7 @@
           本頁是策略規則與研究框架，不構成投資建議、獲利保證或自動下單授權。
           所有門檻均為待驗證的初始參數，正式使用前應納入滑價、交易成本與樣本外回測。
         </p>
-        <span>最後整理：2026-07-03 · Logic V0.1</span>
+        <span>最後整理：2026-07-03 · Logic V1.0</span>
       </section>
     </main>
 

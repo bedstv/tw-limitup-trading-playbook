@@ -22,7 +22,7 @@ required_sections = %w[
   D2_plus_reclaim_watch
   transaction_costs
   backtest
-  open_questions_before_status_locked
+  resolved_decisions
 ]
 
 missing_sections = required_sections - rules.keys
@@ -57,8 +57,29 @@ examples.each do |row|
   end
 end
 
+raise "V1 status is not locked" unless rules.fetch("status") == "locked_v1"
+
+fallback = rules.dig("candidate", "liquidity", "fallback_activation")
+unless fallback.fetch("event_backtest_action") == "include_all_qualifying_fallback_candidates" &&
+       fallback.fetch("live_notification_max_candidates") == 5
+  raise "Fallback candidate decision is not locked"
+end
+
+unless rules.dig("D2_plus_reclaim_watch", "invalidation_price", "formula") ==
+       "max_D1_low_and_D0_low"
+  raise "D2+ invalidation decision is not locked"
+end
+
+no_chase = rules.dig("D1_intraday_entry", "no_chase_rule")
+unless no_chase.fetch("D1_open_gap_gt_0_05_lte_0_07") ==
+       "pullback_confirmation_only" &&
+       no_chase.fetch("D1_open_gap_gt_0_07") == "reject_D1_intraday_entry"
+  raise "D1 gap decision is not locked"
+end
+
 puts "rules_version=#{rules.fetch('version')}"
+puts "rules_status=#{rules.fetch('status')}"
 puts "top_level_sections=#{rules.keys.size}"
-puts "open_questions=#{rules.fetch('open_questions_before_status_locked').size}"
+puts "resolved_decisions=#{rules.fetch('resolved_decisions').size}"
 puts "manual_cases=#{examples.size}"
 puts "validation=PASS"
