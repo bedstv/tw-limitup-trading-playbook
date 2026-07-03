@@ -1,0 +1,16 @@
+schema_version: "1.0.0"
+provider: tw-market-data
+home_env: TW_MARKET_DATA_HOME
+default_home: ../tw-market-data
+required_inputs:
+  security_master: data/processed/security_master.csv
+  daily_price: data/processed/daily_price_sample.csv
+  eps_ytd: data/processed/eps_ytd_sample.csv
+  warning_snapshot: data/processed/market_warning_snapshot.csv
+  manifest: data/manifests/p1_sample_manifest.json
+  health_report: data/manifests/p1_data_health.json
+reuse_policy:
+  strategy_projects_must_not_write_shared_processed_data: true
+  strategy_projects_must_record_manifest_sha256: true
+  raw_data_is_owned_by_shared_layer: true
+  tokens_must_not_be_copied_into_strategy_projects: true
