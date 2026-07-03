@@ -1,0 +1,282 @@
+version: "1.0.0"
+status: provisional
+effective_date: "2026-07-03"
+timezone: Asia/Taipei
+trading_day_basis: TWSE_TPEx_calendar
+
+objective:
+  primary: validate_limit_up_next_day_strategy
+  modes:
+    - event_study
+    - daily_portfolio_backtest
+    - intraday_execution_backtest
+  optimization_policy: >
+    V1 thresholds are fixed before testing. Report sensitivity around thresholds,
+    but do not select the best full-sample result and call it validated.
+
+notation:
+  D_minus_1: trading day before the limit-up day
+  D0: limit-up candidate day
+  D1: next trading day after D0
+  D2_plus: second and later trading days after D0
+
+universe:
+  markets:
+    - TWSE
+    - TPEx
+  security_type: common_stock
+  require_day_trade_eligible_for_D1_intraday: true
+  exclude_on_D0:
+    - currently_disposed
+    - altered_trading_method
+    - suspended_or_halted_full_day
+    - no_daily_price_limit
+    - missing_required_history
+  survivorship_policy: include_delisted_stocks_when_data_available
+
+candidate:
+  limit_up:
+    require_close_at_official_limit_up_price: true
+    price_source: exchange_official_or_tick_rounded_reconstruction
+    approximate_return_threshold_not_allowed: true
+  liquidity:
+    volume_unit: lots
+    shares_per_lot: 1000
+    primary_min_lots: 5000
+    fallback_min_lots: 2000
+    fallback_max_lots_exclusive: 5000
+    fallback_activation:
+      condition: primary_candidate_count_below
+      threshold: 5
+      action: append_fallback_candidates_until_total_reaches_5
+  macd:
+    price_field: close
+    fast_ema: 12
+    slow_ema: 26
+    signal_ema: 9
+    daily:
+      require_dif_above_zero: true
+      require_signal_above_zero: true
+      fresh_golden_cross_lookback_bars: 3
+      fresh_cross_is_hard_filter: false
+    weekly:
+      aggregation: exchange_trading_week
+      hard_filter_uses: previous_completed_week
+      require_dif_above_zero: true
+      require_signal_above_zero: true
+      fresh_golden_cross_lookback_bars: 3
+      fresh_cross_is_hard_filter: false
+      current_incomplete_week_use: score_only
+  warnings:
+    possible_disposition_next_day:
+      action: mark_only
+      definition: >
+        True only when the D0 after-hours official TWSE or TPEx cumulative
+        attention list states that another attention event on the next trading
+        day may trigger disposition.
+      never_backfill_from_actual_future_disposition: true
+    negative_ytd_eps:
+      action: mark_only
+      field: latest_announced_basic_eps_ytd
+      condition: value_below_zero
+      unavailable_label: data_unavailable
+      availability_rule: announcement_timestamp_on_or_before_D0_after_hours
+
+setup_classification:
+  allow_AB_label_when_both_match: true
+  setup_A_consolidation_low_volume:
+    prior_window_options_days:
+      - 5
+      - 10
+      - 15
+    selection_rule: use_longest_qualifying_window
+    minimum_window_days: 5
+    range_formula: max_high_div_min_low_minus_1
+    max_range: 0.08
+    require_atr5_below_atr20: true
+    D0_volume_div_median20_max: 1.20
+  setup_B_prior_high_breakout:
+    prior_high_lookback_days: 20
+    breakout_rule: D0_close_above_prior_20_day_max_high
+    D0_volume_div_median20_min: 1.50
+  unclassified_limit_up:
+    keep_for_baseline_comparison: true
+    trade_in_rule_strategy: false
+
+market_regime_D1:
+  evaluation_time: "09:15:00"
+  data_cutoff: "09:15:00"
+  score_components:
+    taiex_return_from_previous_close:
+      bullish_if_gte: 0.005
+      bearish_if_lte: -0.005
+    taiex_vs_intraday_vwap:
+      bullish_if_above: true
+      bearish_if_below: true
+    market_breadth_up_down_ratio:
+      bullish_if_gte: 1.50
+      bearish_if_lte: 0.67
+    candidate_relative_return_vs_taiex:
+      bullish_if_gte_percentage_points: 1.00
+      bearish_if_lte_percentage_points: -1.00
+  classification:
+    strong_if_score_gte: 2
+    weak_if_score_lte: -2
+    otherwise: neutral
+  routing:
+    strong_market:
+      prefer:
+        - A
+      downrank:
+        - B
+    weak_market:
+      prefer:
+        - B
+      additional_requirements:
+        - candidate_above_vwap
+        - candidate_above_opening_low
+        - candidate_relative_strength_positive
+    neutral_market:
+      allow:
+        - A
+        - B
+        - AB
+      maximum_candidates: 3
+  provisional_parameters:
+    - taiex_return_thresholds
+    - breadth_thresholds
+    - relative_strength_thresholds
+
+D1_intraday_entry:
+  earliest_entry_time: "09:10:00"
+  opening_range_minutes: 5
+  all_required:
+    - price_above_intraday_vwap
+    - price_crosses_above_first_5_minute_high
+    - cumulative_volume_above_historical_same_time_median
+    - market_regime_route_allows_setup
+    - candidate_relative_strength_positive
+  cumulative_volume_history_days: 20
+  entry_fill_model:
+    preferred: next_tradable_price_after_confirmed_cross
+    conservative_slippage_applies: true
+    do_not_assume_fill_when_locked_limit_up: true
+  no_chase_rule:
+    status: provisional
+    D1_open_gap_from_D0_close_max: 0.05
+
+risk_and_position_sizing:
+  risk_budget_fraction_of_equity: 0.005
+  minimum_trade_unit_shares: 1000
+  stop_reference:
+    formula: max_D_minus_1_close_and_D0_open
+    trigger: first_tradable_price_at_or_below_stop
+    gap_through_stop: fill_at_first_available_price
+  quantity:
+    formula: floor_to_lot(risk_budget_amount / (entry_price - stop_price + estimated_cost_per_share))
+    skip_trade_if_quantity_below_one_lot: true
+  intraday_reentry_after_stop: false
+
+D1_hold_or_exit:
+  evaluation_time: "13:10:00"
+  only_evaluate_if_unrealized_pnl_lte_zero: true
+  hold_requires_all:
+    - price_above_intraday_vwap
+    - stock_return_minus_taiex_return_gte_2_percentage_points
+    - intraday_range_position_gte_0_50
+    - stop_not_breached
+  otherwise: exit_before_close
+  overnight_position:
+    stop_formula: max_D_minus_1_close_and_D0_open
+    gap_risk_disclosure_required: true
+
+D2_plus_reclaim_watch:
+  enter_watch_if_all:
+    - D1_open_above_D0_close
+    - D1_close_below_D1_open
+    - D1_volume_div_D0_volume_gte_1_50
+    - D1_volume_div_D0_volume_lte_2_00
+  trigger_price: D1_open
+  warning_distance_below_trigger: 0.01
+  trigger_confirmation:
+    direction: cross_from_below
+    consecutive_minutes_above: 3
+    require_volume_expansion: true
+    volume_expansion_definition: minute_volume_above_20_day_same_minute_median
+  invalidation_price:
+    formula: max_D1_low_and_D0_low
+    rationale: breaking_either_support_invalidates
+  maximum_watch_trading_days: 20
+
+transaction_costs:
+  commission_each_side_rate: 0.001425
+  commission_discount: 1.00
+  minimum_commission_twd: 20
+  stock_transaction_tax_sell:
+    intraday_round_trip_rate: 0.0015
+    overnight_or_swing_rate: 0.003
+  slippage_each_side:
+    daily_backtest_rate: 0.0015
+    minute_backtest_rate: 0.0010
+  sensitivity_rates_each_side:
+    - 0.0005
+    - 0.0010
+    - 0.0020
+    - 0.0030
+
+backtest:
+  first_stage_daily:
+    event_horizons_trading_days:
+      - 1
+      - 3
+      - 5
+      - 10
+      - 20
+    daily_data_cannot_claim:
+      - exact_0910_entry
+      - vwap_execution
+      - intraday_stop_ordering
+      - three_minute_reclaim_confirmation
+  second_stage_minute:
+    bar_interval: 1min
+    fetch_scope: event_dates_and_candidates_first
+  time_splits:
+    development: "2016-01-01/2022-12-31"
+    validation: "2023-01-01/2024-12-31"
+    holdout: "2025-01-01/latest"
+    random_split_forbidden: true
+  reports:
+    required_metrics:
+      - event_count
+      - trigger_rate
+      - net_win_rate
+      - mean_return
+      - median_return
+      - expectancy
+      - profit_factor
+      - max_drawdown
+      - MFE
+      - MAE
+      - turnover
+    required_breakdowns:
+      - setup_A_B_AB
+      - market_regime
+      - negative_ytd_eps
+      - possible_disposition_next_day
+      - year
+      - sector
+      - liquidity_bucket
+
+open_questions_before_status_locked:
+  - id: OQ1
+    question: Should the 2000-lot fallback fill the list to 5 names or include every qualifying fallback name?
+    V1_default: fill_to_5
+  - id: OQ2
+    question: Is the D2+ invalidation support the higher of D1 low and D0 low?
+    V1_default: higher_of_the_two
+  - id: OQ3
+    question: Should the D1 no-chase opening gap cap remain at 5 percent?
+    V1_default: 5_percent
+  - id: OQ4
+    question: Are the provisional 09:15 market-regime thresholds acceptable for V1 sensitivity testing?
+    V1_default: use_as_written
