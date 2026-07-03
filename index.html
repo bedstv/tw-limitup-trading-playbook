@@ -111,7 +111,7 @@
         <div class="rule-layout" id="rules">
           <article class="rule-panel rule-panel-dark">
             <p class="panel-kicker">HARD FILTERS</p>
-            <h3>先通過必要條件</h3>
+            <h3>先通過必要條件與警示</h3>
             <ul class="check-list">
               <li>收盤仍為正式漲停價</li>
               <li>上市櫃普通股且可當沖</li>
@@ -123,6 +123,16 @@
             <p class="panel-note">
               前一個完整週 MACD 作為硬條件；未收完的本週訊號僅加分，避免訊號重繪。
             </p>
+            <div class="risk-flags">
+              <div>
+                <strong>可能處置</strong>
+                <span>若官方名單顯示「次一營業日再達注意標準即處置」，候選股加上紅色警示，但不自動刪除。</span>
+              </div>
+              <div>
+                <strong>累積 EPS 虧損</strong>
+                <span>最新已公告的當年度累積基本 EPS &lt; 0 時加上警示；尚未公布則標示資料不足。</span>
+              </div>
+            </div>
           </article>
 
           <div class="setup-grid">
@@ -234,7 +244,7 @@
         <div class="risk-box">
           <div>
             <p class="panel-kicker">POSITION SIZING</p>
-            <h3>先決定能承受多少損失，才決定買多少。</h3>
+            <h3>先把這一筆最多願意賠多少錢固定下來。</h3>
           </div>
           <div class="formula">
             <span>最大股數</span>
@@ -244,8 +254,26 @@
             <span>進場價－停損價＋成本</span>
           </div>
           <p>
-            單筆風險初始設定為總資金的 0.25%–0.5%。停損參考開盤低點、VWAP、
-            突破 K 棒低點與 D0 支撐；當沖最晚於 13:15–13:20 處理。
+            例：資金 50 萬元，單筆最多願意損失 0.5%，就是 2,500 元。若預計 64 元買進、
+            62.5 元停損，加上成本後每股約承擔 1.7 元風險，2,500 ÷ 1.7 約為 1,470 股；
+            保守取整後最多買 1 張。這是在控制「停損時會賠多少」，不是預測一定會賺多少。
+          </p>
+        </div>
+
+        <div class="hold-box">
+          <div>
+            <p class="panel-kicker">HOLD OR EXIT</p>
+            <h3>當沖沒有獲利，但相對強勢時才考慮留倉。</h3>
+          </div>
+          <ul>
+            <li>13:10 後仍站在 VWAP 上方。</li>
+            <li>個股當日漲跌幅至少比加權指數強 2 個百分點。</li>
+            <li>價格位於當日高低區間的上半部，且沒有跌破停損線。</li>
+          </ul>
+          <p>
+            任一時間跌破 <strong>D−1 收盤價</strong>或<strong>D0 開盤價</strong>即建議停損；
+            系統停損價取兩者較高者，因為跌破較高價時就已符合「跌破任一條」。
+            留倉會承擔隔夜跳空風險，若隔日直接跳空跌破，實際成交可能低於設定停損價。
           </p>
         </div>
       </section>
@@ -268,7 +296,7 @@
           </div>
           <div class="reclaim-copy">
             <h3>進入觀察的條件</h3>
-            <p>D1 跳空開高、收盤低於開盤，且成交量約為 D0 的 1.8–2.2 倍以上。</p>
+            <p>D1 跳空開高、收盤低於開盤，且成交量約為 D0 的 1.5–2 倍。</p>
             <h3>真正觸發的條件</h3>
             <p>價格由下往上突破 D1 開盤價，連續約 3 分鐘站穩，且突破量同步增加。</p>
             <h3>失效條件</h3>
@@ -296,7 +324,7 @@
             </div>
             <div class="alert-row" role="row">
               <strong>D0 · 18:30</strong>
-              <span>漲停候選、A/B 分型、排序與 D1 條件式計畫</span>
+              <span>漲停候選、A/B 分型、可能處置與累積 EPS 警示</span>
               <em>候選</em>
             </div>
             <div class="alert-row" role="row">
@@ -311,8 +339,8 @@
             </div>
             <div class="alert-row" role="row">
               <strong>D1 · 14:00</strong>
-              <span>當沖結果與 D2+ 爆量換手觀察</span>
-              <em>結束／轉觀察</em>
+              <span>當沖結果、留倉／停損判斷與 D2+ 爆量換手觀察</span>
+              <em>停損／留倉／轉觀察</em>
             </div>
             <div class="alert-row" role="row">
               <strong>D2+ · 盤中</strong>
