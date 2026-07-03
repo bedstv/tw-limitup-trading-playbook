@@ -5,10 +5,13 @@ default_home: ../tw-market-data
 required_inputs:
   security_master: data/processed/security_master.csv
   daily_price: data/processed/daily_price_sample.csv
+  daily_price_full_market_p11: data/processed/daily_price_full_market_p11.csv
+  d0_limitup_events_p11: data/processed/d0_limitup_events_p11.csv
   eps_ytd: data/processed/eps_ytd_sample.csv
   warning_snapshot: data/processed/market_warning_snapshot.csv
   manifest: data/manifests/p1_sample_manifest.json
   health_report: data/manifests/p1_data_health.json
+  p11_event_health_report: data/manifests/p11_event_health.json
 reuse_policy:
   strategy_projects_must_not_write_shared_processed_data: true
   strategy_projects_must_record_manifest_sha256: true

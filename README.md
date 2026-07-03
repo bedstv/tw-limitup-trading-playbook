@@ -16,6 +16,11 @@ P1 已建立跨專案共用資料層 `../tw-market-data`，並完成 20 檔、20
 樣本。實抓結果與尚缺資料見
 [P1 共用資料層可行性報告](references/p1_data_feasibility.md)。
 
+P1.1 已建立全市場官方漲停價事件產生器；目前完成 2026-06-01 至 2026-07-03
+事件輸出，仍因歷史處置、EPS公告時間、TPEx下櫃主檔及一個TWSE暖機缺日而標示
+為 provisional。詳見
+[P1.1 全市場 D0 漲停事件表](references/p11_limitup_event_table.md)。
+
 網站為純 HTML、CSS、JavaScript，可直接由 GitHub Pages 從 `main` 分支根目錄發布。
 
 > 本專案僅為策略研究框架，不構成投資建議或獲利保證。所有參數均需經樣本外回測驗證。
