@@ -33,6 +33,10 @@ P1.3 已完成 D1／D2 日線 outcome labels；9,900 筆候選全部輸出，其
 收綠且量 >= D0 1.5 倍者 969 筆，D2+ 五日內重返警示價者 504 筆。詳見
 [P1.3 D1／D2 日線 outcome labels](references/p13_daily_outcome_labels.md)。
 
+P1.4 已完成日線可驗證訊號統計；V1 候選池 D1 blowoff 後五日內曾重返警示價為
+52.0%，但要求重返早於失效價時降為 22.8%，放寬同日排序不明為 32.1%。詳見
+[P1.4 日線可驗證訊號統計](references/p14_daily_signal_statistics.md)。
+
 網站為純 HTML、CSS、JavaScript，可直接由 GitHub Pages 從 `main` 分支根目錄發布。
 
 > 本專案僅為策略研究框架，不構成投資建議或獲利保證。所有參數均需經樣本外回測驗證。
