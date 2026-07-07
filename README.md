@@ -37,6 +37,11 @@ P1.4 已完成日線可驗證訊號統計；V1 候選池 D1 blowoff 後五日內
 52.0%，但要求重返早於失效價時降為 22.8%，放寬同日排序不明為 32.1%。詳見
 [P1.4 日線可驗證訊號統計](references/p14_daily_signal_statistics.md)。
 
+P1.5 已完成保守日線事件回測；D1 blowoff 969 筆中，保守進場 221 筆，成本後勝率
+40.7%，平均報酬 +1.24%，中位數 -2.39%。結果顯示訊號不是高勝率策略，平均值主要
+由少數大漲事件貢獻。詳見
+[P1.5 保守日線事件回測](references/p15_conservative_daily_event_backtest.md)。
+
 網站為純 HTML、CSS、JavaScript，可直接由 GitHub Pages 從 `main` 分支根目錄發布。
 
 > 本專案僅為策略研究框架，不構成投資建議或獲利保證。所有參數均需經樣本外回測驗證。
