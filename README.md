@@ -46,6 +46,12 @@ P1.6 已完成子集合規則分析；5,000 張以上主池優於 fallback，D1/
 >3x 優於 1.5～2x，少數組合可讓中位數轉正但樣本太小，需 walk-forward 驗證。詳見
 [P1.6 子集合規則分析](references/p16_rule_subset_analysis.md)。
 
+P1.7 已完成 walk-forward 驗證；2016～2021 為探索期、2022～2026 為驗證期。結果顯示
+可升級的只有 5,000 張以上主池；P1.6 的量比 2～3x 在驗證期失效，小樣本組合僅列觀察。
+詳見 [P1.7 walk-forward 驗證](references/p17_walk_forward_validation.md)。
+
+後續工作清單見 [roadmap next steps](references/roadmap_next_steps.md)。
+
 網站為純 HTML、CSS、JavaScript，可直接由 GitHub Pages 從 `main` 分支根目錄發布。
 
 > 本專案僅為策略研究框架，不構成投資建議或獲利保證。所有參數均需經樣本外回測驗證。
