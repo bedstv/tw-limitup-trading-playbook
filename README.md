@@ -21,6 +21,10 @@ P1.1 已建立全市場官方漲停價事件產生器；目前完成 2026-06-01 
 為 provisional。詳見
 [P1.1 全市場 D0 漲停事件表](references/p11_limitup_event_table.md)。
 
+P1.2a 已完成 2016 Q1 歷史回填試跑，確認官方逐日全市場資料可支援舊年度事件表；
+試跑產出 299,400 筆價格列、1,015 筆 D0 漲停事件與 106 筆事件回測候選。詳見
+[P1.2a 歷史回填試跑](references/p12_historical_backfill_pilot.md)。
+
 網站為純 HTML、CSS、JavaScript，可直接由 GitHub Pages 從 `main` 分支根目錄發布。
 
 > 本專案僅為策略研究框架，不構成投資建議或獲利保證。所有參數均需經樣本外回測驗證。
