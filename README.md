@@ -58,6 +58,10 @@ prototype。P1 系列已收斂，可進入 P2。詳見
 
 後續工作清單見 [roadmap next steps](references/roadmap_next_steps.md)。
 
+P2.0 已建立每日候選股 brief prototype，可從既有 processed data 產生 D0 候選、D1 觀察、
+D2+ 重返觀察與 Markdown brief。詳見
+[P2.0 每日候選股 brief prototype](references/p20_daily_brief_prototype.md)。
+
 網站為純 HTML、CSS、JavaScript，可直接由 GitHub Pages 從 `main` 分支根目錄發布。
 
 > 本專案僅為策略研究框架，不構成投資建議或獲利保證。所有參數均需經樣本外回測驗證。
