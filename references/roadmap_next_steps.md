@@ -6,7 +6,7 @@
 
 - P1 系列已完成：全市場歷史事件、D1/D2 outcome labels、日線統計、保守日線回測、walk-forward、日線大盤 regime proxy、EPS/處置風險 prototype。
 - P2.0 已完成：每日 brief prototype，可輸出 D0 候選、D1 觀察、D2+ 重返觀察與 Markdown/CSV。
-- 目前已有一頁式 GitHub Pages playbook，但尚未有可互動查詢每日候選股、風險標記與觀察狀態的 dashboard。
+- 目前已有一頁式 GitHub Pages playbook，並已加入靜態 Dashboard MVP，可查看每日候選股、風險標記與觀察狀態。
 
 ## P2.1 每日晚間資料更新 pipeline
 
@@ -35,9 +35,12 @@
 
 目的：把每日 brief 變成可以打開看的候選股介面，而不是只看 Markdown/CSV。
 
+狀態：已完成 GitHub Pages 靜態 MVP，讀取 `data/daily/index.json` 與每日 JSON artifact。
+詳見 [P2.2 GitHub Pages Dashboard MVP](p22_dashboard_mvp.md)。
+
 待做：
 
-- 在 GitHub Pages 上新增「每日 Dashboard」區塊或獨立頁面。
+- 讓 P2.1 pipeline 自動產生 dashboard JSON artifact。
 - 讀取最新一份 `daily_brief` JSON/CSV artifact，顯示：
   - D0 盤後候選股
   - D1 可觀察/不可追價/異常跳空檢查

@@ -18,6 +18,7 @@
         <span>Limit-up Playbook</span>
       </a>
       <nav aria-label="主要導覽">
+        <a href="#dashboard">每日看板</a>
         <a href="#screening">盤後選股</a>
         <a href="#routing">開盤路由</a>
         <a href="#entry">進場風控</a>
@@ -68,6 +69,117 @@
         <span>盤整突破看量縮</span>
         <span>前高突破要放量</span>
         <span>條件不齊全就不交易</span>
+      </section>
+
+      <section id="dashboard" class="section-shell content-section dashboard-section">
+        <div class="section-heading">
+          <p class="eyebrow">DAILY DASHBOARD · P2.2 MVP</p>
+          <h2>每日候選股看板</h2>
+          <p>
+            讀取 P2.1 盤後 pipeline 產出的靜態資料，顯示 D0 候選、D1 觀察、
+            D2+ 重返觀察與資料健康狀態。這裡是候選/觀察中心，不是自動下單介面。
+          </p>
+        </div>
+
+        <div class="dashboard-toolbar">
+          <label for="dashboard-date">資料日</label>
+          <select id="dashboard-date" aria-label="選擇 dashboard 資料日"></select>
+          <span id="dashboard-source" class="dashboard-source">載入中…</span>
+        </div>
+
+        <div class="dashboard-status" id="dashboard-status" aria-live="polite">
+          <div class="status-tile">
+            <span>Trade Ready</span>
+            <strong id="trade-ready">--</strong>
+          </div>
+          <div class="status-tile">
+            <span>D0 候選</span>
+            <strong id="d0-count">--</strong>
+          </div>
+          <div class="status-tile">
+            <span>D1 觀察</span>
+            <strong id="d1-count">--</strong>
+          </div>
+          <div class="status-tile">
+            <span>D2+ 觀察</span>
+            <strong id="d2-count">--</strong>
+          </div>
+        </div>
+
+        <div class="dashboard-warning" id="dashboard-warning">
+          <strong>資料狀態：</strong>
+          <span>等待載入。</span>
+        </div>
+
+        <div class="dashboard-grid">
+          <article class="dashboard-panel">
+            <div class="dashboard-panel-head">
+              <p class="panel-kicker">D0 AFTER-HOURS</p>
+              <h3>盤後候選</h3>
+            </div>
+            <div class="dashboard-table-wrap">
+              <table class="dashboard-table">
+                <thead>
+                  <tr>
+                    <th>股票</th>
+                    <th>型態</th>
+                    <th>收盤</th>
+                    <th>量</th>
+                    <th>風險</th>
+                    <th>下一步</th>
+                  </tr>
+                </thead>
+                <tbody id="d0-table"></tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="dashboard-panel">
+            <div class="dashboard-panel-head">
+              <p class="panel-kicker">D1 WATCH</p>
+              <h3>開盤後觀察</h3>
+            </div>
+            <div class="dashboard-table-wrap">
+              <table class="dashboard-table">
+                <thead>
+                  <tr>
+                    <th>股票</th>
+                    <th>D0</th>
+                    <th>Gap</th>
+                    <th>異常</th>
+                    <th>警示價</th>
+                    <th>停損</th>
+                    <th>下一步</th>
+                  </tr>
+                </thead>
+                <tbody id="d1-table"></tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="dashboard-panel dashboard-panel-wide">
+            <div class="dashboard-panel-head">
+              <p class="panel-kicker">D2+ RECLAIM</p>
+              <h3>重返警示價觀察</h3>
+            </div>
+            <div class="dashboard-table-wrap">
+              <table class="dashboard-table">
+                <thead>
+                  <tr>
+                    <th>股票</th>
+                    <th>D0</th>
+                    <th>D1</th>
+                    <th>警示價</th>
+                    <th>失效價</th>
+                    <th>狀態</th>
+                    <th>下一步</th>
+                  </tr>
+                </thead>
+                <tbody id="d2-table"></tbody>
+              </table>
+            </div>
+          </article>
+        </div>
       </section>
 
       <section id="workflow" class="section-shell content-section">
