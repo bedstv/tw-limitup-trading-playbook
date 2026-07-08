@@ -5,7 +5,8 @@ P2.1 已建立在 `tw-market-data` 的每日盤後 orchestration script：
 ```bash
 python3 scripts/run_p21_afterhours_pipeline.py \
   --as-of-date 2026-07-07 \
-  --workers 1
+  --workers 1 \
+  --dashboard-output-dir ../tw-limitup-trading-playbook/data/daily
 ```
 
 ## 目的
@@ -25,6 +26,7 @@ python3 scripts/run_p21_afterhours_pipeline.py \
 | refresh_risk_flags | 重建 EPS/處置風險標記 prototype |
 | refresh_taiex_regime_proxy | 重建 D0 日線 TAIEX regime proxy |
 | build_daily_brief | 產出 D0/D1/D2 brief 與 Markdown |
+| write_dashboard_artifact | 若指定 `--dashboard-output-dir`，產出 GitHub Pages dashboard JSON 與 index |
 
 ## 2026-07-07 驗證結果
 
@@ -50,6 +52,11 @@ python3 scripts/run_p21_afterhours_pipeline.py \
 每日報表：
 
 - `tw-market-data/data/reports/daily_brief_2026-07-07.md`
+
+Dashboard artifacts：
+
+- `tw-limitup-trading-playbook/data/daily/2026-07-07.json`
+- `tw-limitup-trading-playbook/data/daily/index.json`
 
 ## 已知限制
 
@@ -77,6 +84,8 @@ P2.1 產生的 artifacts 可直接作為 P2.2 Dashboard MVP 的資料來源：
 - `daily_brief_d1_watch_<date>.csv`
 - `daily_brief_d2_watch_<date>.csv`
 - `p21_afterhours_<date>_health.json`
+- `data/daily/<date>.json`
+- `data/daily/index.json`
 
 Dashboard 第一版應先顯示：
 

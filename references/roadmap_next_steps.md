@@ -35,12 +35,12 @@
 
 目的：把每日 brief 變成可以打開看的候選股介面，而不是只看 Markdown/CSV。
 
-狀態：已完成 GitHub Pages 靜態 MVP，讀取 `data/daily/index.json` 與每日 JSON artifact。
+狀態：已完成 GitHub Pages 靜態 MVP，讀取 `data/daily/index.json` 與每日 JSON artifact；
+P2.1 pipeline 已可用 `--dashboard-output-dir` 自動產生 dashboard JSON。
 詳見 [P2.2 GitHub Pages Dashboard MVP](p22_dashboard_mvp.md)。
 
 待做：
 
-- 讓 P2.1 pipeline 自動產生 dashboard JSON artifact。
 - 讀取最新一份 `daily_brief` JSON/CSV artifact，顯示：
   - D0 盤後候選股
   - D1 可觀察/不可追價/異常跳空檢查

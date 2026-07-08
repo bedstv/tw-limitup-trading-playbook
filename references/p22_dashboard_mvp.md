@@ -28,7 +28,15 @@ Dashboard MVP 讀取：
 
 - `data/daily/2026-07-07.json`
 
-這份資料來自 `tw-market-data` 的 P2.1 afterhours pipeline 摘要，不包含大型歷史行情。
+這份資料已可由 `tw-market-data` 的 P2.1 afterhours pipeline 自動產生，不包含大型歷史行情。
+範例：
+
+```bash
+python3 scripts/run_p21_afterhours_pipeline.py \
+  --as-of-date 2026-07-07 \
+  --workers 1 \
+  --dashboard-output-dir ../tw-limitup-trading-playbook/data/daily
+```
 
 ## 2026-07-07 範例資料狀態
 
@@ -56,8 +64,7 @@ Dashboard MVP 讀取：
 
 ## 下一步
 
-1. 讓 P2.1 pipeline 自動產生 dashboard JSON artifact。
-2. Dashboard 支援最近 20 個交易日資料日切換。
-3. 加入排序與篩選：主池/備選、A/B 型、風險標記、量比、gap、regime。
-4. 接 corporate-action feed，降低 abnormal gap 誤報。
-5. 接 09:15 分時大盤後，再顯示 D1 intraday regime 與相對強弱。
+1. Dashboard 支援最近 20 個交易日資料日切換。
+2. 加入排序與篩選：主池/備選、A/B 型、風險標記、量比、gap、regime。
+3. 接 corporate-action feed，降低 abnormal gap 誤報。
+4. 接 09:15 分時大盤後，再顯示 D1 intraday regime 與相對強弱。

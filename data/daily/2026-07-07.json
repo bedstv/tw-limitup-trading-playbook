@@ -15,7 +15,9 @@
     "d2_watch_count": 1,
     "d2_reclaimed_count": 1,
     "partial_market_dates": {
-      "2026-07-07": ["TPEx"]
+      "2026-07-07": [
+        "TPEx"
+      ]
     },
     "limitations": [
       "尚未接 D1 09:15 分時大盤 regime。",
@@ -30,12 +32,15 @@
       "market": "TWSE",
       "name": "順德",
       "d0_date": "2026-07-06",
+      "d1_date": "2026-07-07",
       "d1_open_gap_pct": "-71.84%",
       "abnormal_gap_check": true,
       "d1_volume_ratio_d0": "0.0967224336",
       "d1_blowoff_observation": false,
       "alert_reclaim_price": "",
       "stop_loss_price": "216.0",
+      "d1_stop_touched_daily": true,
+      "d1_hold_candidate_daily_proxy": false,
       "eps_ytd_negative": false,
       "possible_disposition_next_day": false,
       "next_step": "No D2 reclaim setup; monitor only if relative strength confirmed"
@@ -45,12 +50,15 @@
       "market": "TWSE",
       "name": "佳世達",
       "d0_date": "2026-07-06",
+      "d1_date": "2026-07-07",
       "d1_open_gap_pct": "-33.62%",
       "abnormal_gap_check": true,
       "d1_volume_ratio_d0": "0.4738471804",
       "d1_blowoff_observation": false,
       "alert_reclaim_price": "",
       "stop_loss_price": "33.0",
+      "d1_stop_touched_daily": true,
+      "d1_hold_candidate_daily_proxy": false,
       "eps_ytd_negative": false,
       "possible_disposition_next_day": false,
       "next_step": "No D2 reclaim setup; monitor only if relative strength confirmed"
@@ -60,12 +68,15 @@
       "market": "TWSE",
       "name": "全漢",
       "d0_date": "2026-07-06",
+      "d1_date": "2026-07-07",
       "d1_open_gap_pct": "-67.25%",
       "abnormal_gap_check": true,
       "d1_volume_ratio_d0": "0.0236098795",
       "d1_blowoff_observation": false,
       "alert_reclaim_price": "",
       "stop_loss_price": "71.0",
+      "d1_stop_touched_daily": true,
+      "d1_hold_candidate_daily_proxy": false,
       "eps_ytd_negative": false,
       "possible_disposition_next_day": false,
       "next_step": "No D2 reclaim setup; monitor only if relative strength confirmed"
@@ -75,12 +86,15 @@
       "market": "TWSE",
       "name": "福懋科",
       "d0_date": "2026-07-06",
+      "d1_date": "2026-07-07",
       "d1_open_gap_pct": "-65.75%",
       "abnormal_gap_check": true,
       "d1_volume_ratio_d0": "0.0776676206",
       "d1_blowoff_observation": false,
       "alert_reclaim_price": "",
       "stop_loss_price": "76.4",
+      "d1_stop_touched_daily": true,
+      "d1_hold_candidate_daily_proxy": false,
       "eps_ytd_negative": false,
       "possible_disposition_next_day": false,
       "next_step": "No D2 reclaim setup; monitor only if relative strength confirmed"
@@ -91,6 +105,7 @@
       "stock_id": "2645",
       "market": "TWSE",
       "name": "長榮航太",
+      "as_of_date": "2026-07-07",
       "d0_date": "2026-07-01",
       "d1_date": "2026-07-02",
       "alert_reclaim_price": "209.5",
