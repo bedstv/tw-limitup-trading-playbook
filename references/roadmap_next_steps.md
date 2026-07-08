@@ -56,7 +56,35 @@ MVP 原則：
 - 顯示「候選/觀察/失效」狀態，但不包裝成買賣保證。
 - 每個欄位都能追溯到 pipeline 輸出的 CSV/manifest。
 
-## P2.3 A 型策略修正
+## P2.3 資料完整性修正
+
+目的：修掉 Dashboard 因 TPEx partial market 與錯日期/空資料快取造成的不可用問題。
+
+狀態：已完成。2026-07-07 current-year `partial_market_dates` 已由 `TPEx` 缺漏修正為空，
+`download_complete=true`。詳見 [P2.3 資料完整性修正](p23_data_completeness.md)。
+
+已完成：
+
+- 新增 TWSE/TPEx payload 日期解析與驗證。
+- 若 cache 日期不符 requested date，強制重抓。
+- 若 cache 為空行情列，強制重抓一次。
+- 2026-07-07 Dashboard 已重新產生，D0 候選 2 檔、D1 觀察 10 檔、D1 abnormal gap 0。
+
+## P2.4 Corporate action feed
+
+目的：接上除權息、減資、分割等資料源，避免 D1 gap / D2 reclaim 因價格基準改變而誤判。
+
+待做：
+
+- 盤後資料加入除權息、減資、股票分割等 corporate action 標記。
+- Dashboard 對受 corporate action 影響的股票顯示原因，而不是只顯示 abnormal gap。
+- 回測與每日 brief 排除或降權價格基準不連續的事件。
+- 對 D1 gap、停損價、D2+ 警示價建立除權息調整邏輯。
+
+## P2.5 A 型策略修正
+
+> 2026-07-08 調整：原 P2.3 被前移處理資料可用性阻塞。A 型策略修正順延到資料完整性、
+> corporate action 與風險 as-of 封存之後。
 
 目前問題：
 
@@ -69,7 +97,7 @@ MVP 原則：
 - 檢查目前 A 型是否被 MACD、量能、突破條件排除太多。
 - 設計 A 型專屬候選池，不要被 B 型規則吞掉。
 
-## P2.4 分時資料與真實當沖回測
+## P2.6 分時資料與真實當沖回測
 
 目的：解決日線無法知道觸價順序的問題。
 
@@ -80,7 +108,7 @@ MVP 原則：
 - 模擬 D1 開盤後進場、停損、留倉。
 - 解決同日同時觸發進場價與停損價的排序問題。
 
-## P2.5 每日晚間候選股系統
+## P2.7 每日晚間候選股系統
 
 目的：開始從研究變成可運作系統。
 
@@ -91,7 +119,7 @@ MVP 原則：
 - 產生 D1 盤中或盤後更新。
 - 產生 D2 觀察清單。
 
-## P2.6 通知系統
+## P2.8 通知系統
 
 目的：符合你一開始提出的「晚上知道候選股，D+1 再通知可考慮購入」。
 
@@ -102,7 +130,7 @@ MVP 原則：
 - 每日排程。
 - 建立失敗告警。
 
-## P2.7 GitHub / 共用資料層整理
+## P2.9 GitHub / 共用資料層整理
 
 目的：讓後續股票專案都能共用資料層。
 
@@ -113,7 +141,7 @@ MVP 原則：
 - 補資料字典。
 - 設定 artifacts 或本地 cache 備份策略。
 
-## P2.8 Dashboard production 化
+## P2.10 Dashboard production 化
 
 目的：讓 dashboard 成為每日決策中心，而不只是報表瀏覽頁。
 
@@ -125,7 +153,7 @@ MVP 原則：
 - 加入匯出功能：CSV、Markdown、通知摘要。
 - 建立 dashboard 測試資料與 UI smoke test，避免欄位變動造成頁面空白。
 
-## P2.9 Paper trading
+## P2.11 Paper trading
 
 目的：避免只依賴歷史回測。
 
