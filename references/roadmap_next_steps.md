@@ -12,9 +12,12 @@
 
 目的：讓每日 brief 不只靠既有 processed data，而是能在盤後更新當天資料後自動產生。
 
+狀態：已建立 `tw-market-data/scripts/run_p21_afterhours_pipeline.py`，並以 2026-07-07 完成
+端到端驗證。詳見 [P2.1 每日盤後資料更新 pipeline](p21_afterhours_pipeline.md)。
+
 待做：
 
-- 建立 `run_p21_afterhours_pipeline.py`，輸入 `--as-of-date` 後更新當年度行情、事件表與每日 brief。
+- 將 `run_p21_afterhours_pipeline.py` 接上每日排程。
 - 重新產出 D0 候選、D1 觀察、D2+ 觀察與 data health manifest。
 - 處理部分市場資料缺漏、官方端點延遲、TWSE/TPEx 任一市場失敗時的健康狀態。
 - 加入除權息/減資/分割等異常跳空檢查，避免 D1 gap 被誤判為交易訊號。
