@@ -1,39 +1,56 @@
 # 後續工作清單
 
-此清單從目前 P1.7 狀態往可用系統推進，依優先順序排列。
+此清單從目前 P2.0 狀態往可用系統推進，依優先順序排列。
 
-## P1.8 大盤 regime filter
+## 目前狀態
 
-目的：驗證原始策略假設中「大盤強弱影響該選量縮或帶量」是否成立。
+- P1 系列已完成：全市場歷史事件、D1/D2 outcome labels、日線統計、保守日線回測、walk-forward、日線大盤 regime proxy、EPS/處置風險 prototype。
+- P2.0 已完成：每日 brief prototype，可輸出 D0 候選、D1 觀察、D2+ 重返觀察與 Markdown/CSV。
+- 目前已有一頁式 GitHub Pages playbook，但尚未有可互動查詢每日候選股、風險標記與觀察狀態的 dashboard。
 
-待做：
+## P2.1 每日晚間資料更新 pipeline
 
-- 建立 TAIEX 日線 regime：強、普通、弱、大跌。
-- 先用日線 regime 測試 D0／D1 條件。
-- 若日線 regime 有效，再補 09:15 分時大盤。
-- 比較強盤/弱盤下，量縮與帶量候選的表現。
-
-資料來源：
-
-- TWSE 指數日線官方資料。
-- 後續可用 FinMind 補期貨、外資、匯率等 regime 特徵。
-
-## P1.9 風險標記：處置與 EPS
-
-目的：把你指定的兩個候選股警示條件接入回測與每日通知。
+目的：讓每日 brief 不只靠既有 processed data，而是能在盤後更新當天資料後自動產生。
 
 待做：
 
-- 候選股若 1 日內可能遭處置，需標示。
-- 候選股若當年累積 EPS 為虧損，需標示。
-- 回測中不可用未來公告資料；EPS 需公告日或保守 lag。
+- 建立 `run_p21_afterhours_pipeline.py`，輸入 `--as-of-date` 後更新當年度行情、事件表與每日 brief。
+- 重新產出 D0 候選、D1 觀察、D2+ 觀察與 data health manifest。
+- 處理部分市場資料缺漏、官方端點延遲、TWSE/TPEx 任一市場失敗時的健康狀態。
+- 加入除權息/減資/分割等異常跳空檢查，避免 D1 gap 被誤判為交易訊號。
+- 保持 `tw-market-data` 的資料 schema 可被後續股票專案重複使用。
 
-資料來源：
+輸出：
 
-- 官方注意/處置資料。
-- FinMind 或官方財報資料。
+- `daily_brief_d0_candidates_<date>.csv`
+- `daily_brief_d1_watch_<date>.csv`
+- `daily_brief_d2_watch_<date>.csv`
+- `daily_brief_<date>.md`
+- `daily_brief_<date>_health.json`
 
-## P2.0 A 型策略修正
+## P2.2 Dashboard MVP
+
+目的：把每日 brief 變成可以打開看的候選股介面，而不是只看 Markdown/CSV。
+
+待做：
+
+- 在 GitHub Pages 上新增「每日 Dashboard」區塊或獨立頁面。
+- 讀取最新一份 `daily_brief` JSON/CSV artifact，顯示：
+  - D0 盤後候選股
+  - D1 可觀察/不可追價/異常跳空檢查
+  - D2+ 重返警示價觀察
+  - 處置風險與 EPS 虧損標記
+  - 警示價、停損價、失效價、下一步建議
+- 加入資料健康狀態：資料日、缺漏市場、是否 trade-ready、是否含 current-only 風險快照。
+- 支援日期切換，至少能查看最近 20 個交易日 brief。
+
+MVP 原則：
+
+- 先做靜態 dashboard，不做登入、不做下單、不做即時報價。
+- 顯示「候選/觀察/失效」狀態，但不包裝成買賣保證。
+- 每個欄位都能追溯到 pipeline 輸出的 CSV/manifest。
+
+## P2.3 A 型策略修正
 
 目前問題：
 
@@ -46,7 +63,7 @@
 - 檢查目前 A 型是否被 MACD、量能、突破條件排除太多。
 - 設計 A 型專屬候選池，不要被 B 型規則吞掉。
 
-## P2.1 分時資料與真實當沖回測
+## P2.4 分時資料與真實當沖回測
 
 目的：解決日線無法知道觸價順序的問題。
 
@@ -57,7 +74,7 @@
 - 模擬 D1 開盤後進場、停損、留倉。
 - 解決同日同時觸發進場價與停損價的排序問題。
 
-## P2.2 每日晚間候選股系統
+## P2.5 每日晚間候選股系統
 
 目的：開始從研究變成可運作系統。
 
@@ -68,7 +85,7 @@
 - 產生 D1 盤中或盤後更新。
 - 產生 D2 觀察清單。
 
-## P2.3 通知系統
+## P2.6 通知系統
 
 目的：符合你一開始提出的「晚上知道候選股，D+1 再通知可考慮購入」。
 
@@ -79,7 +96,7 @@
 - 每日排程。
 - 建立失敗告警。
 
-## P2.4 GitHub / 共用資料層整理
+## P2.7 GitHub / 共用資料層整理
 
 目的：讓後續股票專案都能共用資料層。
 
@@ -90,7 +107,19 @@
 - 補資料字典。
 - 設定 artifacts 或本地 cache 備份策略。
 
-## P2.5 Paper trading
+## P2.8 Dashboard production 化
+
+目的：讓 dashboard 成為每日決策中心，而不只是報表瀏覽頁。
+
+待做：
+
+- 將 dashboard 與排程 pipeline 串接，盤後自動更新。
+- 提供個股狀態歷程：D0 候選 → D1 觀察 → D2+ 觸發/失效。
+- 加入排序與篩選：主池/備選、A/B 型、風險標記、量比、gap、regime。
+- 加入匯出功能：CSV、Markdown、通知摘要。
+- 建立 dashboard 測試資料與 UI smoke test，避免欄位變動造成頁面空白。
+
+## P2.9 Paper trading
 
 目的：避免只依賴歷史回測。
 
