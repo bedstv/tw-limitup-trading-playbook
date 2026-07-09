@@ -1,5 +1,5 @@
 {
-  "schema_version": "2.2.0",
+  "schema_version": "2.3.0",
   "source": "tw-market-data P2.1 afterhours pipeline",
   "as_of_date": "2026-07-07",
   "effective_date": "2026-07-07",
@@ -38,7 +38,11 @@
       "possible_disposition_next_day": false,
       "currently_disposed_snapshot": false,
       "risk_flags_trade_ready": false,
-      "next_step": "D1 open watch; avoid direct chase if D1 open gap >5%"
+      "next_step": "D1 open watch; avoid direct chase if D1 open gap >5%",
+      "industry_code": "24",
+      "industry": "半導體業",
+      "industry_candidate_count": 1,
+      "industry_consensus": false
     },
     {
       "stock_id": "6259",
@@ -56,7 +60,11 @@
       "possible_disposition_next_day": false,
       "currently_disposed_snapshot": false,
       "risk_flags_trade_ready": false,
-      "next_step": "D1 open watch; avoid direct chase if D1 open gap >5%"
+      "next_step": "D1 open watch; avoid direct chase if D1 open gap >5%",
+      "industry_code": "28",
+      "industry": "電子零組件業",
+      "industry_candidate_count": 1,
+      "industry_consensus": false
     }
   ],
   "d1_watch": [
@@ -76,7 +84,11 @@
       "d1_hold_candidate_daily_proxy": false,
       "eps_ytd_negative": false,
       "possible_disposition_next_day": false,
-      "next_step": "Add to D2 reclaim watch"
+      "next_step": "Add to D2 reclaim watch",
+      "industry_code": "24",
+      "industry": "半導體業",
+      "industry_candidate_count": 3,
+      "industry_consensus": true
     },
     {
       "stock_id": "4931",
@@ -94,7 +106,11 @@
       "d1_hold_candidate_daily_proxy": false,
       "eps_ytd_negative": false,
       "possible_disposition_next_day": false,
-      "next_step": "Add to D2 reclaim watch"
+      "next_step": "Add to D2 reclaim watch",
+      "industry_code": "25",
+      "industry": "電腦及週邊設備",
+      "industry_candidate_count": 2,
+      "industry_consensus": true
     },
     {
       "stock_id": "3066",
@@ -112,7 +128,11 @@
       "d1_hold_candidate_daily_proxy": true,
       "eps_ytd_negative": false,
       "possible_disposition_next_day": false,
-      "next_step": "No D2 reclaim setup; monitor only if relative strength confirmed"
+      "next_step": "No D2 reclaim setup; monitor only if relative strength confirmed",
+      "industry_code": "26",
+      "industry": "光電業",
+      "industry_candidate_count": 1,
+      "industry_consensus": false
     },
     {
       "stock_id": "3511",
@@ -130,7 +150,11 @@
       "d1_hold_candidate_daily_proxy": true,
       "eps_ytd_negative": false,
       "possible_disposition_next_day": false,
-      "next_step": "No D2 reclaim setup; monitor only if relative strength confirmed"
+      "next_step": "No D2 reclaim setup; monitor only if relative strength confirmed",
+      "industry_code": "28",
+      "industry": "電子零組件業",
+      "industry_candidate_count": 2,
+      "industry_consensus": true
     },
     {
       "stock_id": "4541",
@@ -148,7 +172,11 @@
       "d1_hold_candidate_daily_proxy": false,
       "eps_ytd_negative": false,
       "possible_disposition_next_day": false,
-      "next_step": "No D2 reclaim setup; monitor only if relative strength confirmed"
+      "next_step": "No D2 reclaim setup; monitor only if relative strength confirmed",
+      "industry_code": "20",
+      "industry": "其他",
+      "industry_candidate_count": 1,
+      "industry_consensus": false
     },
     {
       "stock_id": "2351",
@@ -166,7 +194,11 @@
       "d1_hold_candidate_daily_proxy": false,
       "eps_ytd_negative": false,
       "possible_disposition_next_day": false,
-      "next_step": "No D2 reclaim setup; monitor only if relative strength confirmed"
+      "next_step": "No D2 reclaim setup; monitor only if relative strength confirmed",
+      "industry_code": "24",
+      "industry": "半導體業",
+      "industry_candidate_count": 3,
+      "industry_consensus": true
     },
     {
       "stock_id": "2352",
@@ -184,7 +216,11 @@
       "d1_hold_candidate_daily_proxy": false,
       "eps_ytd_negative": false,
       "possible_disposition_next_day": false,
-      "next_step": "No D2 reclaim setup; monitor only if relative strength confirmed"
+      "next_step": "No D2 reclaim setup; monitor only if relative strength confirmed",
+      "industry_code": "25",
+      "industry": "電腦及週邊設備",
+      "industry_candidate_count": 2,
+      "industry_consensus": true
     },
     {
       "stock_id": "2645",
@@ -202,7 +238,11 @@
       "d1_hold_candidate_daily_proxy": false,
       "eps_ytd_negative": false,
       "possible_disposition_next_day": false,
-      "next_step": "No D2 reclaim setup; monitor only if relative strength confirmed"
+      "next_step": "No D2 reclaim setup; monitor only if relative strength confirmed",
+      "industry_code": "15",
+      "industry": "航運業",
+      "industry_candidate_count": 1,
+      "industry_consensus": false
     },
     {
       "stock_id": "3015",
@@ -220,7 +260,11 @@
       "d1_hold_candidate_daily_proxy": false,
       "eps_ytd_negative": false,
       "possible_disposition_next_day": false,
-      "next_step": "No D2 reclaim setup; monitor only if relative strength confirmed"
+      "next_step": "No D2 reclaim setup; monitor only if relative strength confirmed",
+      "industry_code": "28",
+      "industry": "電子零組件業",
+      "industry_candidate_count": 2,
+      "industry_consensus": true
     },
     {
       "stock_id": "8131",
@@ -238,7 +282,11 @@
       "d1_hold_candidate_daily_proxy": false,
       "eps_ytd_negative": false,
       "possible_disposition_next_day": false,
-      "next_step": "No D2 reclaim setup; monitor only if relative strength confirmed"
+      "next_step": "No D2 reclaim setup; monitor only if relative strength confirmed",
+      "industry_code": "24",
+      "industry": "半導體業",
+      "industry_candidate_count": 3,
+      "industry_consensus": true
     }
   ],
   "d2_watch": [
@@ -253,7 +301,11 @@
       "invalidation_price": "12.5",
       "first_reclaim_date": "2026-07-03",
       "status": "reclaimed",
-      "next_step": "Consider only after intraday confirmation; daily sequence still ambiguous"
+      "next_step": "Consider only after intraday confirmation; daily sequence still ambiguous",
+      "industry_code": "21",
+      "industry": "化學工業",
+      "industry_candidate_count": 1,
+      "industry_consensus": false
     },
     {
       "stock_id": "2645",
@@ -266,7 +318,11 @@
       "invalidation_price": "194.5",
       "first_reclaim_date": "2026-07-03",
       "status": "reclaimed",
-      "next_step": "Consider only after intraday confirmation; daily sequence still ambiguous"
+      "next_step": "Consider only after intraday confirmation; daily sequence still ambiguous",
+      "industry_code": "15",
+      "industry": "航運業",
+      "industry_candidate_count": 1,
+      "industry_consensus": false
     },
     {
       "stock_id": "1409",
@@ -279,7 +335,11 @@
       "invalidation_price": "29.5",
       "first_reclaim_date": "",
       "status": "watching",
-      "next_step": "Consider only after intraday confirmation; daily sequence still ambiguous"
+      "next_step": "Consider only after intraday confirmation; daily sequence still ambiguous",
+      "industry_code": "04",
+      "industry": "紡織纖維",
+      "industry_candidate_count": 1,
+      "industry_consensus": false
     }
   ]
 }

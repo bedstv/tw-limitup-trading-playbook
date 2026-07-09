@@ -47,6 +47,14 @@ const stockLabel = (row) =>
 const badge = (label, type = "") =>
   `<span class="badge ${type ? `badge-${type}` : ""}">${label}</span>`;
 
+const industryBadges = (row) => {
+  const labels = [badge(text(row.industry, "未分類"), "industry")];
+  if (row.industry_consensus) {
+    labels.push(badge(`板塊共識 ×${row.industry_candidate_count}`, "consensus"));
+  }
+  return labels.join("");
+};
+
 const riskBadges = (row) => {
   const badges = [];
   if (row.eps_ytd_negative) badges.push(badge("EPS虧損", "risk"));
@@ -89,7 +97,7 @@ const renderDashboard = (data) => {
     6,
     (row) => `
       <tr>
-        <td>${stockLabel(row)}<br><span class="badge">${text(row.market)}</span></td>
+        <td>${stockLabel(row)}<br>${industryBadges(row)}</td>
         <td>${text(row.setup_type)}</td>
         <td>${text(row.close)}</td>
         <td>${text(row.volume_lots)}</td>
@@ -106,7 +114,7 @@ const renderDashboard = (data) => {
     7,
     (row) => `
       <tr>
-        <td>${stockLabel(row)}<br><span class="badge">${text(row.market)}</span></td>
+        <td>${stockLabel(row)}<br>${industryBadges(row)}</td>
         <td>${text(row.d0_date)}</td>
         <td>${text(row.d1_open_gap_pct)}</td>
         <td>${row.abnormal_gap_check ? badge("需檢查", "warn") : badge("否", "ok")}</td>
@@ -124,7 +132,7 @@ const renderDashboard = (data) => {
     7,
     (row) => `
       <tr>
-        <td>${stockLabel(row)}<br><span class="badge">${text(row.market)}</span></td>
+        <td>${stockLabel(row)}<br>${industryBadges(row)}</td>
         <td>${text(row.d0_date)}</td>
         <td>${text(row.d1_date)}</td>
         <td>${text(row.alert_reclaim_price)}</td>

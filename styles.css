@@ -772,6 +772,17 @@ nav a:focus-visible::after {
   background: rgba(255, 191, 71, 0.32);
 }
 
+.badge-industry {
+  background: #e8edf4;
+  color: #34445a;
+}
+
+.badge-consensus {
+  background: #ffe08a;
+  color: #5b4300;
+  font-weight: 800;
+}
+
 .decision-board {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
