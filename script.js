@@ -96,9 +96,12 @@ const renderDashboard = (data) => {
     .map(([date, markets]) => `${date}: ${markets.join("/")}`)
     .join("；");
   const limitations = data.health?.limitations || [];
+  const d1Text = data.d1_watch_ready
+    ? `本頁 ${data.health?.regime_0915_date || data.effective_date} 的 09:15 大盤僅套用 D1 觀察名單。`
+    : "D1 觀察名單尚未取得同日 09:15 大盤。";
   const statusText = data.trade_ready
-    ? "資料已標示為 trade-ready；仍需依實際盤中條件確認。"
-    : `目前 trade_ready=false：${limitations.join(" ")}${partialDates ? ` Partial market：${partialDates}。` : ""}`;
+    ? `D0 已取得次一交易日 09:15 資料。${d1Text}`
+    : `${limitations.join(" ")} ${d1Text}${partialDates ? ` Partial market：${partialDates}。` : ""}`;
 
   dashboard.warning.classList.toggle("is-ok", Boolean(data.trade_ready));
   dashboard.warning.innerHTML = `<strong>資料狀態：</strong><span>${statusText}</span>`;

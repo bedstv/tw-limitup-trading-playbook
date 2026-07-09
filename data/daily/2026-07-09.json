@@ -4,7 +4,9 @@
   "as_of_date": "2026-07-09",
   "effective_date": "2026-07-09",
   "previous_trade_date": "2026-07-08",
-  "trade_ready": true,
+  "trade_ready": false,
+  "afterhours_ready": true,
+  "d1_watch_ready": true,
   "health": {
     "step_count": 9,
     "failed_step_count": 0,
@@ -17,11 +19,15 @@
     "partial_market_dates": {},
     "risk_snapshot_ready": true,
     "regime_0915_ready": true,
+    "regime_0915_date": "2026-07-09",
+    "regime_0915_applies_to": "d1_watch",
     "market_regime_0915": "NEUTRAL",
     "taiex_return_0915": -4.9415746262049254e-05,
     "eps_snapshot_stock_count": 1969,
     "warning_snapshot_row_count": 43,
-    "limitations": []
+    "limitations": [
+      "2026-07-09 盤後 D0 候選須等待下一交易日 09:15 大盤資料，尚不可標示可交易。"
+    ]
   },
   "d0_candidates": [
     {
@@ -40,13 +46,14 @@
       "possible_disposition_next_day": false,
       "currently_disposed_snapshot": false,
       "risk_flags_trade_ready": true,
-      "next_step": "D1 open watch; avoid direct chase if D1 open gap >5%",
+      "next_step": "Wait for next trading day 09:15 market regime; D1 open watch; avoid direct chase if D1 open gap >5%",
       "industry_code": "28",
       "industry": "電子零組件業",
       "industry_candidate_count": 1,
       "industry_consensus": false,
       "eps_ytd": "0.09",
-      "eps_snapshot_date": "2026-07-09"
+      "eps_snapshot_date": "2026-07-09",
+      "market_regime_0915": "PENDING_NEXT_TRADING_DAY"
     }
   ],
   "d1_watch": [

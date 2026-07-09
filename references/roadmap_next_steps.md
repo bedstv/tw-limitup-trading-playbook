@@ -123,7 +123,8 @@ MVP 原則：
 - 使用 TWSE MIS 官方當日分鐘指數與即時指數資料。
 - 僅使用 09:01–09:15 資料，封存 `STRONG／NEUTRAL／WEAK`。
 - Dashboard D1 顯示 09:15 regime 與相對昨收報酬。
-- 2026-07-09 首次完整同日 pipeline 已達 `trade_ready=true`。
+- 2026-07-09 的 regime 正確套用於 7/8 D0、7/9 D1 觀察；7/9 D0 仍須等待
+  下一交易日 09:15，不能提前標示可交易。
 
 待做：
 

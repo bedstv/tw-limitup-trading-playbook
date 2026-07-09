@@ -18,5 +18,5 @@
 - 09:01–09:15 平均：45,734.05
 - 分類：`NEUTRAL`
 
-當日行情、EPS／處置、公司行動與 09:15 regime 均為同日快照，Dashboard
-首次標示 `trade_ready=true`。
+這份 7/9 regime 只適用於「7/8 盤後候選、7/9 D1 觀察」。7/9 盤後產生的 D0
+候選必須等待 7/10 09:15，因此 Dashboard 不得把 7/9 D0 標示為 `trade_ready=true`。
