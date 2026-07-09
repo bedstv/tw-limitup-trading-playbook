@@ -58,6 +58,7 @@ const industryBadges = (row) => {
 const riskBadges = (row) => {
   const badges = [];
   if (row.eps_ytd_negative) badges.push(badge("EPS虧損", "risk"));
+  if (row.currently_disposed_snapshot) badges.push(badge("處置中", "risk"));
   if (row.possible_disposition_next_day) badges.push(badge("可能處置", "risk"));
   if (!badges.length) badges.push(badge("未標示", "ok"));
   return badges.join("");
