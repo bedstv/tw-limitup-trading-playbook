@@ -75,6 +75,13 @@ const regimeBadge = (row) => {
   return badge(`${regime} ${text(row.taiex_return_0915, "")}`.trim(), type);
 };
 
+const decisionBadge = (row) => {
+  if (!row.d1_decision_ready) return "";
+  const status = text(row.d1_decision_status);
+  const type = status === "WATCH" ? "ok" : status === "PULLBACK_ONLY" ? "warn" : "risk";
+  return `<br>${badge(status, type)}`;
+};
+
 const emptyRow = (columns, message) =>
   `<tr><td class="dashboard-empty" colspan="${columns}">${message}</td></tr>`;
 
@@ -99,9 +106,10 @@ const renderDashboard = (data) => {
   const d1Text = data.d1_watch_ready
     ? `本頁 ${data.health?.regime_0915_date || data.effective_date} 的 09:15 大盤僅套用 D1 觀察名單。`
     : "D1 觀察名單尚未取得同日 09:15 大盤。";
-  const statusText = data.trade_ready
-    ? `D0 已取得次一交易日 09:15 資料。${d1Text}`
-    : `${limitations.join(" ")} ${d1Text}${partialDates ? ` Partial market：${partialDates}。` : ""}`;
+  const d0Text = data.d0_decision_ready
+    ? `D0 已完成 ${data.d0_decision_date} 09:15 判定，可觀察 ${data.health?.d0_eligible_count ?? 0} 檔。`
+    : limitations.join(" ");
+  const statusText = `${d0Text} ${d1Text}${partialDates ? ` Partial market：${partialDates}。` : ""}`;
 
   dashboard.warning.classList.toggle("is-ok", Boolean(data.trade_ready));
   dashboard.warning.innerHTML = `<strong>資料狀態：</strong><span>${statusText}</span>`;
@@ -113,7 +121,7 @@ const renderDashboard = (data) => {
     (row) => `
       <tr>
         <td>${stockLabel(row)}<br>${industryBadges(row)}</td>
-        <td>${text(row.setup_type)}</td>
+        <td>${text(row.setup_type)}${decisionBadge(row)}</td>
         <td>${text(row.close)}</td>
         <td>${text(row.volume_lots)}</td>
         <td>${riskBadges(row)}</td>
