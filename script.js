@@ -69,6 +69,12 @@ const corporateActionBadge = (row) =>
     ? badge(`公司行動：${text(row.corporate_action_detail, row.corporate_action_type)}`, "risk")
     : "";
 
+const regimeBadge = (row) => {
+  const regime = text(row.market_regime_0915);
+  const type = regime === "STRONG" ? "ok" : regime === "WEAK" ? "risk" : "warn";
+  return badge(`${regime} ${text(row.taiex_return_0915, "")}`.trim(), type);
+};
+
 const emptyRow = (columns, message) =>
   `<tr><td class="dashboard-empty" colspan="${columns}">${message}</td></tr>`;
 
@@ -117,12 +123,13 @@ const renderDashboard = (data) => {
   renderRows(
     dashboard.d1Table,
     data.d1_watch || [],
-    7,
+    8,
     (row) => `
       <tr>
         <td>${stockLabel(row)}<br>${industryBadges(row)}</td>
         <td>${text(row.d0_date)}</td>
         <td>${text(row.d1_open_gap_pct)}</td>
+        <td>${regimeBadge(row)}</td>
         <td>${corporateActionBadge(row) || (row.abnormal_gap_check ? badge("需檢查", "warn") : badge("否", "ok"))}</td>
         <td>${text(row.alert_reclaim_price)}</td>
         <td>${text(row.stop_loss_price)}</td>
@@ -183,7 +190,7 @@ const showDashboardError = (error) => {
   dashboard.warning.classList.remove("is-ok");
   dashboard.warning.innerHTML = `<strong>資料狀態：</strong><span>${error.message}</span>`;
   renderRows(dashboard.d0Table, [], 6, () => "", "Dashboard data 載入失敗。");
-  renderRows(dashboard.d1Table, [], 7, () => "", "Dashboard data 載入失敗。");
+  renderRows(dashboard.d1Table, [], 8, () => "", "Dashboard data 載入失敗。");
   renderRows(dashboard.d2Table, [], 7, () => "", "Dashboard data 載入失敗。");
 };
 
