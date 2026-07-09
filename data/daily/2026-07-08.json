@@ -17,8 +17,7 @@
     "partial_market_dates": {},
     "limitations": [
       "尚未接 D1 09:15 分時大盤 regime。",
-      "EPS / 處置仍是 prototype，尚非完整 as-of 風險封存。",
-      "Corporate action 目前只用 abnormal gap flag 標示，尚未接專門資料源。"
+      "EPS / 處置仍是 prototype，尚非完整 as-of 風險封存。"
     ]
   },
   "d0_candidates": [
@@ -110,7 +109,10 @@
       "industry_code": "28",
       "industry": "電子零組件業",
       "industry_candidate_count": 1,
-      "industry_consensus": false
+      "industry_consensus": false,
+      "corporate_action": false,
+      "corporate_action_type": "",
+      "corporate_action_detail": ""
     },
     {
       "stock_id": "6525",
@@ -132,7 +134,10 @@
       "industry_code": "24",
       "industry": "半導體業",
       "industry_candidate_count": 1,
-      "industry_consensus": false
+      "industry_consensus": false,
+      "corporate_action": false,
+      "corporate_action_type": "",
+      "corporate_action_detail": ""
     }
   ],
   "d2_watch": [
@@ -151,7 +156,10 @@
       "industry_code": "21",
       "industry": "化學工業",
       "industry_candidate_count": 1,
-      "industry_consensus": false
+      "industry_consensus": false,
+      "corporate_action": false,
+      "corporate_action_type": "",
+      "corporate_action_detail": ""
     },
     {
       "stock_id": "2645",
@@ -168,7 +176,10 @@
       "industry_code": "15",
       "industry": "航運業",
       "industry_candidate_count": 1,
-      "industry_consensus": false
+      "industry_consensus": false,
+      "corporate_action": false,
+      "corporate_action_type": "",
+      "corporate_action_detail": ""
     },
     {
       "stock_id": "4931",
@@ -185,7 +196,10 @@
       "industry_code": "25",
       "industry": "電腦及週邊設備",
       "industry_candidate_count": 1,
-      "industry_consensus": false
+      "industry_consensus": false,
+      "corporate_action": false,
+      "corporate_action_type": "",
+      "corporate_action_detail": ""
     }
   ]
 }

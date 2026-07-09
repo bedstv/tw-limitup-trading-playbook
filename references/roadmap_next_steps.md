@@ -74,12 +74,17 @@ MVP 原則：
 
 目的：接上除權息、減資、分割等資料源，避免 D1 gap / D2 reclaim 因價格基準改變而誤判。
 
-待做：
+狀態：已完成 V1 官方資料接線。資料來自 TWSE／TPEx 官方除權息、減資、分割／面額
+變更端點；每日 pipeline 會建立 `corporate_actions_<date>.csv`。
 
-- 盤後資料加入除權息、減資、股票分割等 corporate action 標記。
-- Dashboard 對受 corporate action 影響的股票顯示原因，而不是只顯示 abnormal gap。
-- 回測與每日 brief 排除或降權價格基準不連續的事件。
-- 對 D1 gap、停損價、D2+ 警示價建立除權息調整邏輯。
+已完成：
+
+- D0 當日公司行動候選直接排除。
+- D1 公司行動日停止一般 gap 判讀並顯示原因。
+- D2 若 D1 價格基準改變則標示排除，不再使用原警示價。
+- Dashboard 健康限制已移除 corporate-action 未接線警告。
+
+後續研究版仍可加入調整後價格序列；交易版目前採排除法，較保守且不會誤用未調整價格。
 
 ## P2.5 A 型策略修正
 

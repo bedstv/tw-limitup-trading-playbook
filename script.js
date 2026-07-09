@@ -63,6 +63,11 @@ const riskBadges = (row) => {
   return badges.join("");
 };
 
+const corporateActionBadge = (row) =>
+  row.corporate_action
+    ? badge(`公司行動：${text(row.corporate_action_detail, row.corporate_action_type)}`, "risk")
+    : "";
+
 const emptyRow = (columns, message) =>
   `<tr><td class="dashboard-empty" colspan="${columns}">${message}</td></tr>`;
 
@@ -117,7 +122,7 @@ const renderDashboard = (data) => {
         <td>${stockLabel(row)}<br>${industryBadges(row)}</td>
         <td>${text(row.d0_date)}</td>
         <td>${text(row.d1_open_gap_pct)}</td>
-        <td>${row.abnormal_gap_check ? badge("需檢查", "warn") : badge("否", "ok")}</td>
+        <td>${corporateActionBadge(row) || (row.abnormal_gap_check ? badge("需檢查", "warn") : badge("否", "ok"))}</td>
         <td>${text(row.alert_reclaim_price)}</td>
         <td>${text(row.stop_loss_price)}</td>
         <td>${text(row.next_step)}</td>
@@ -137,7 +142,7 @@ const renderDashboard = (data) => {
         <td>${text(row.d1_date)}</td>
         <td>${text(row.alert_reclaim_price)}</td>
         <td>${text(row.invalidation_price)}</td>
-        <td>${row.status === "reclaimed" ? badge("已重返", "ok") : badge(text(row.status), "warn")}</td>
+        <td>${corporateActionBadge(row) || (row.status === "reclaimed" ? badge("已重返", "ok") : badge(text(row.status), "warn"))}</td>
         <td>${text(row.next_step)}</td>
       </tr>
     `,
