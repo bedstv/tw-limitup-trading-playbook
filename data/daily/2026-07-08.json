@@ -4,7 +4,7 @@
   "as_of_date": "2026-07-08",
   "effective_date": "2026-07-08",
   "previous_trade_date": "2026-07-07",
-  "trade_ready": false,
+  "trade_ready": true,
   "health": {
     "step_count": 6,
     "failed_step_count": 0,
@@ -16,9 +16,10 @@
     "d2_reclaimed_count": 3,
     "partial_market_dates": {},
     "limitations": [
-      "尚未接 D1 09:15 分時大盤 regime。",
-      "EPS / 處置仍是 prototype，尚非完整 as-of 風險封存。"
-    ]
+      "個股 09:15 價格當時未封存；本次中性盤 routing 僅使用已驗證的 D1 開盤 Gap 與風險資料。"
+    ],
+    "d0_eligible_count": 1,
+    "d0_regime_0915_date": "2026-07-09"
   },
   "d0_candidates": [
     {
@@ -33,15 +34,29 @@
       "liquidity_bucket": "PRIMARY_5000_PLUS",
       "market_regime": "NEUTRAL",
       "taiex_change_pct": "0.56%",
-      "eps_ytd_negative": false,
+      "eps_ytd_negative": true,
       "possible_disposition_next_day": false,
       "currently_disposed_snapshot": false,
       "risk_flags_trade_ready": false,
-      "next_step": "D1 open watch; avoid direct chase if D1 open gap >5%",
+      "next_step": "D1 opening gap exceeded 7%.",
       "industry_code": "27",
       "industry": "通信網路業",
       "industry_candidate_count": 1,
-      "industry_consensus": false
+      "industry_consensus": false,
+      "eps_ytd": "-0.05",
+      "eps_snapshot_date": "2026-07-09",
+      "corporate_action": false,
+      "corporate_action_type": "",
+      "corporate_action_detail": "",
+      "stop_loss_price": "19.95",
+      "d1_trade_date": "2026-07-09",
+      "market_regime_0915": "NEUTRAL",
+      "taiex_return_0915": -4.9415746262049254e-05,
+      "d1_open_gap_pct": 0.09820000000000001,
+      "price_0915": null,
+      "d1_decision_status": "REJECT",
+      "d1_decision_reason": "D1 opening gap exceeded 7%.",
+      "d1_decision_ready": true
     },
     {
       "stock_id": "2395",
@@ -59,11 +74,25 @@
       "possible_disposition_next_day": false,
       "currently_disposed_snapshot": false,
       "risk_flags_trade_ready": false,
-      "next_step": "D1 open watch; avoid direct chase if D1 open gap >5%",
+      "next_step": "Neutral market allows A/B setup; await actual entry trigger.",
       "industry_code": "25",
       "industry": "電腦及週邊設備",
       "industry_candidate_count": 1,
-      "industry_consensus": false
+      "industry_consensus": false,
+      "eps_ytd": "3.85",
+      "eps_snapshot_date": "2026-07-09",
+      "corporate_action": false,
+      "corporate_action_type": "",
+      "corporate_action_detail": "",
+      "stop_loss_price": "546.0",
+      "d1_trade_date": "2026-07-09",
+      "market_regime_0915": "NEUTRAL",
+      "taiex_return_0915": -4.9415746262049254e-05,
+      "d1_open_gap_pct": 0.0018,
+      "price_0915": null,
+      "d1_decision_status": "WATCH",
+      "d1_decision_reason": "Neutral market allows A/B setup; await actual entry trigger.",
+      "d1_decision_ready": true
     },
     {
       "stock_id": "8033",
@@ -81,11 +110,25 @@
       "possible_disposition_next_day": false,
       "currently_disposed_snapshot": true,
       "risk_flags_trade_ready": false,
-      "next_step": "D1 open watch; avoid direct chase if D1 open gap >5%",
+      "next_step": "Stock was under disposition on D1.",
       "industry_code": "20",
       "industry": "其他",
       "industry_candidate_count": 1,
-      "industry_consensus": false
+      "industry_consensus": false,
+      "eps_ytd": "0.34",
+      "eps_snapshot_date": "2026-07-09",
+      "corporate_action": false,
+      "corporate_action_type": "",
+      "corporate_action_detail": "",
+      "stop_loss_price": "223.0",
+      "d1_trade_date": "2026-07-09",
+      "market_regime_0915": "NEUTRAL",
+      "taiex_return_0915": -4.9415746262049254e-05,
+      "d1_open_gap_pct": -0.011000000000000001,
+      "price_0915": null,
+      "d1_decision_status": "REJECT",
+      "d1_decision_reason": "Stock was under disposition on D1.",
+      "d1_decision_ready": true
     }
   ],
   "d1_watch": [
@@ -201,5 +244,7 @@
       "corporate_action_type": "",
       "corporate_action_detail": ""
     }
-  ]
+  ],
+  "d0_decision_ready": true,
+  "d0_decision_date": "2026-07-09"
 }
