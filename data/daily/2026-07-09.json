@@ -25,9 +25,9 @@
     "taiex_return_0915": -4.9415746262049254e-05,
     "eps_snapshot_stock_count": 1969,
     "warning_snapshot_row_count": 43,
-    "limitations": [
-      "2026-07-09 盤後 D0 候選須等待下一交易日 09:15 大盤資料，尚不可標示可交易。"
-    ]
+    "limitations": [],
+    "d0_eligible_count": 0,
+    "d0_regime_0915_date": "2026-07-13"
   },
   "d0_candidates": [
     {
@@ -46,14 +46,29 @@
       "possible_disposition_next_day": false,
       "currently_disposed_snapshot": false,
       "risk_flags_trade_ready": true,
-      "next_step": "Wait for next trading day 09:15 market regime; D1 open watch; avoid direct chase if D1 open gap >5%",
+      "next_step": "D1 opening gap exceeded 7%.",
       "industry_code": "28",
       "industry": "電子零組件業",
       "industry_candidate_count": 1,
       "industry_consensus": false,
       "eps_ytd": "0.09",
       "eps_snapshot_date": "2026-07-09",
-      "market_regime_0915": "PENDING_NEXT_TRADING_DAY"
+      "market_regime_0915": "NEUTRAL",
+      "d1_trade_date": "2026-07-13",
+      "taiex_return_0915": 0.01622701639370283,
+      "d1_open": 17.8,
+      "price_0915": 17.8,
+      "d1_open_gap_pct": 0.09876543209876543,
+      "stock_return_0915": 0.09876543209876543,
+      "stock_minus_taiex_return_pp": 8.25384157050626,
+      "above_intraday_mean_0915": true,
+      "intraday_mean_available_0915": true,
+      "above_opening_low_0915": true,
+      "d1_decision_status": "REJECT",
+      "d1_decision_reason": "D1 opening gap exceeded 7%.",
+      "d1_decision_ready": true,
+      "d1_quote_source": "Fugle 1m completed 09:15 bar",
+      "stop_loss_price": 15.0
     }
   ],
   "d1_watch": [
@@ -204,5 +219,7 @@
       "corporate_action_type": "",
       "corporate_action_detail": ""
     }
-  ]
+  ],
+  "d0_decision_ready": true,
+  "d0_decision_date": "2026-07-13"
 }
