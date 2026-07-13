@@ -137,6 +137,10 @@ MVP 原則：
 FinMind 帳號未開放歷史 `TaiwanStockKBar`；取得授權分鐘資料後，補 coverage manifest
 即可執行歷史回放，不能在資料缺口時宣稱真實回測完成。
 
+2026-07-13 更新：已接上 Fugle 免費 API。盤後排程會為當日已完成 09:15 判斷的
+`WATCH`／`PULLBACK_ONLY` 候選封存 1 分 K 與 coverage manifest；可從現在起累積
+forward paper-trading 資料。富果分 K 只回傳近 30 日，仍不構成 2016 至今的歷史回測。
+
 ## P2.7 每日晚間候選股系統
 
 目的：開始從研究變成可運作系統。
