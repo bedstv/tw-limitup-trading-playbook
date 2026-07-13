@@ -174,12 +174,11 @@ MVP 原則：
 
 目的：讓後續股票專案都能共用資料層。
 
-待做：
+狀態：已完成。
 
-- 將 `tw-market-data` 建成獨立 GitHub repo。
-- 設定版本號與資料 schema。
-- 補資料字典。
-- 設定 artifacts 或本地 cache 備份策略。
+- `tw-market-data` 已建立為私有 GitHub repo：[`bedstv/tw-market-data`](https://github.com/bedstv/tw-market-data)。
+- 套件版本為 `0.2.0`，並新增資料契約、schema 相容規則與本機 cache 備份政策。
+- raw、processed、manifest 與 report 資料都維持在本機，不會被推送；repo 只保存程式、設定與資料文件。
 
 ## P2.10 Dashboard production 化
 
