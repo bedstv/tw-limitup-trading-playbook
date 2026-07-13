@@ -16,4 +16,5 @@ const history = buildHistoryByStock(documents);
 assert.ok(history.size > 0, "history must include tracked stocks");
 assert.match(csvForRows(filtered), /stock_id/, "CSV export must have headers");
 assert.match(markdownForRows(filtered, index.latest), /台股候選匯出/, "Markdown export must have a title");
+assert.match(await readFile(new URL("../index.html", import.meta.url), "utf8"), /看板欄位怎麼看/, "dashboard must include a glossary");
 console.log(`dashboard_smoke=PASS dates=${documents.length} tracked_stocks=${history.size}`);

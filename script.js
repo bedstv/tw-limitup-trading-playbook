@@ -32,6 +32,23 @@ const state = { current: null, histories: new Map() };
 const escapeHtml = (value) => text(value, "").replace(/[&<>"]/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[char]);
 const badge = (label, type = "") => `<span class="badge ${type ? `badge-${type}` : ""}">${escapeHtml(label)}</span>`;
 const stockLabel = (row) => `${escapeHtml(text(row.stock_id))} ${escapeHtml(text(row.name, ""))}`.trim();
+const setupLabel = (value) => ({ A: "A 型：盤整量縮漲停", B: "B 型：突破前高、帶量漲停" }[value] || text(value));
+const decisionLabel = (value) => ({ WATCH: "可觀察（WATCH）", PULLBACK_ONLY: "等拉回（PULLBACK_ONLY）", DOWNRANK: "降權觀察（DOWNRANK）", REJECT: "不介入（REJECT）", PENDING: "等待 D1 判定" }[value] || value);
+const nextStepChinese = (value) => ({
+  "D1 open watch; avoid direct chase if D1 open gap >5%": "D1 開盤後觀察；若開盤跳空超過 5%，不可直接追價。",
+  "Consider only after intraday confirmation; daily sequence still ambiguous": "待盤中條件確認後才考慮；日線無法判定先進場或先停損。",
+  "Neutral market allows A/B setup; await actual entry trigger.": "09:15 大盤為中性；可保留 A／B 型，但須等待實際進場觸發。",
+  "D1 opening gap exceeded 7%.": "D1 開盤跳空超過 7%，不介入。",
+  "Stock was under disposition on D1.": "D1 已列處置股，不介入。",
+  "No D2 reclaim setup; monitor only if relative strength confirmed": "尚未形成 D2 重返警示價條件；僅在相對強勢確認後持續追蹤。",
+  "Add to D2 reclaim watch": "納入 D2+ 重返警示價觀察。",
+}[text(value, "")] || text(value));
+const regimeLabel = (row) => {
+  const regime = text(row.market_regime_0915);
+  const returnText = text(row.taiex_return_0915, "");
+  const name = ({ STRONG: "強勢盤", NEUTRAL: "中性盤", WEAK: "弱勢盤" }[regime] || regime);
+  return `${name}${returnText ? ` ${returnText}` : ""}`;
+};
 const industryBadges = (row) => [badge(text(row.industry, "未分類"), "industry"), row.industry_consensus ? badge(`板塊共識 ×${row.industry_candidate_count}`, "consensus") : ""].join("");
 const riskBadges = (row) => {
   const labels = [];
@@ -40,7 +57,7 @@ const riskBadges = (row) => {
   if (row.possible_disposition_next_day) labels.push(badge("可能處置", "risk"));
   return labels.length ? labels.join("") : badge("未標示", "ok");
 };
-const decisionBadge = (row) => row.d1_decision_ready ? `<br>${badge(decisionStatus(row), decisionStatus(row) === "WATCH" ? "ok" : decisionStatus(row) === "PULLBACK_ONLY" ? "warn" : "risk")}` : "";
+const decisionBadge = (row) => row.d1_decision_ready ? `<br>${badge(decisionLabel(decisionStatus(row)), decisionStatus(row) === "WATCH" ? "ok" : decisionStatus(row) === "PULLBACK_ONLY" ? "warn" : "risk")}` : "";
 const emptyRow = (columns, message) => `<tr><td class="dashboard-empty" colspan="${columns}">${message}</td></tr>`;
 const renderRows = (target, rows, columns, renderer, emptyMessage) => { target.innerHTML = rows.length ? rows.map(renderer).join("") : emptyRow(columns, emptyMessage); };
 const filters = () => ({ setup: dashboard.setup.value, liquidity: dashboard.liquidity.value, risk: dashboard.risk.value, decision: dashboard.decision.value, sort: dashboard.sort.value });
@@ -63,10 +80,10 @@ const renderDashboard = (data) => {
   const d0Text = data.d0_decision_ready ? `D0 已完成 ${data.d0_decision_date} 09:15 判定，可觀察 ${data.health?.d0_eligible_count ?? 0} 檔。` : (data.health?.limitations || []).join(" ");
   const d1Text = data.d1_watch_ready ? `本頁 ${data.health?.regime_0915_date || data.effective_date} 的 09:15 大盤僅套用 D1 觀察名單。` : "D1 觀察名單尚未取得同日 09:15 大盤。";
   dashboard.warning.classList.toggle("is-ok", Boolean(data.trade_ready));
-  dashboard.warning.innerHTML = `<strong>資料狀態：</strong><span>${escapeHtml(`${d0Text} ${d1Text}${partialDates ? ` Partial market：${partialDates}。` : ""}`)}</span>`;
-  renderRows(dashboard.d0Table, rows(data.d0_candidates), 6, (row) => `<tr><td>${stockLabel(row)}<br>${industryBadges(row)}</td><td>${escapeHtml(text(row.setup_type))}${decisionBadge(row)}</td><td>${escapeHtml(text(row.close))}</td><td>${escapeHtml(text(row.volume_lots))}</td><td>${riskBadges(row)}</td><td>${escapeHtml(text(row.next_step))}</td></tr>`, "沒有符合目前篩選條件的 D0 候選。");
-  renderRows(dashboard.d1Table, rows(data.d1_watch), 8, (row) => `<tr><td>${stockLabel(row)}<br>${industryBadges(row)}</td><td>${escapeHtml(text(row.d0_date))}</td><td>${escapeHtml(text(row.d1_open_gap_pct))}</td><td>${badge(`${text(row.market_regime_0915)} ${text(row.taiex_return_0915, "")}`.trim(), row.market_regime_0915 === "STRONG" ? "ok" : row.market_regime_0915 === "WEAK" ? "risk" : "warn")}</td><td>${row.corporate_action ? badge("公司行動", "risk") : row.abnormal_gap_check ? badge("需檢查", "warn") : badge("否", "ok")}</td><td>${escapeHtml(text(row.alert_reclaim_price))}</td><td>${escapeHtml(text(row.stop_loss_price))}</td><td>${escapeHtml(text(row.next_step))}</td></tr>`, "沒有符合目前篩選條件的 D1 觀察名單。");
-  renderRows(dashboard.d2Table, rows(data.d2_watch), 7, (row) => `<tr><td>${stockLabel(row)}<br>${industryBadges(row)}</td><td>${escapeHtml(text(row.d0_date))}</td><td>${escapeHtml(text(row.d1_date))}</td><td>${escapeHtml(text(row.alert_reclaim_price))}</td><td>${escapeHtml(text(row.invalidation_price))}</td><td>${badge(text(row.status), row.status === "reclaimed" ? "ok" : "warn")}</td><td>${escapeHtml(text(row.next_step))}</td></tr>`, "沒有符合目前篩選條件的 D2+ 重返觀察。");
+  dashboard.warning.innerHTML = `<strong>資料狀態：</strong><span>${escapeHtml(`${d0Text} ${d1Text}${partialDates ? ` 部分市場資料：${partialDates}。` : ""}`)}</span>`;
+  renderRows(dashboard.d0Table, rows(data.d0_candidates), 6, (row) => `<tr><td>${stockLabel(row)}<br>${industryBadges(row)}</td><td title="${escapeHtml(setupLabel(row.setup_type))}">${escapeHtml(setupLabel(row.setup_type))}${decisionBadge(row)}</td><td>${escapeHtml(text(row.close))}</td><td>${escapeHtml(text(row.volume_lots))}</td><td>${riskBadges(row)}</td><td>${escapeHtml(nextStepChinese(row.next_step))}</td></tr>`, "沒有符合目前篩選條件的 D0 候選。");
+  renderRows(dashboard.d1Table, rows(data.d1_watch), 8, (row) => `<tr><td>${stockLabel(row)}<br>${industryBadges(row)}</td><td>${escapeHtml(text(row.d0_date))}</td><td title="D1 開盤價相對 D0 收盤價的變動百分比。正值為跳空開高，負值為跳空開低。">${escapeHtml(text(row.d1_open_gap_pct))}</td><td title="09:15 加權指數相對前一日收盤的變動；-0.00% 是極小負值四捨五入後的顯示。">${badge(regimeLabel(row), row.market_regime_0915 === "STRONG" ? "ok" : row.market_regime_0915 === "WEAK" ? "risk" : "warn")}</td><td>${row.corporate_action ? badge("公司行動", "risk") : row.abnormal_gap_check ? badge("需檢查", "warn") : badge("否", "ok")}</td><td>${escapeHtml(text(row.alert_reclaim_price))}</td><td>${escapeHtml(text(row.stop_loss_price))}</td><td>${escapeHtml(nextStepChinese(row.next_step))}</td></tr>`, "沒有符合目前篩選條件的 D1 觀察名單。");
+  renderRows(dashboard.d2Table, rows(data.d2_watch), 7, (row) => `<tr><td>${stockLabel(row)}<br>${industryBadges(row)}</td><td>${escapeHtml(text(row.d0_date))}</td><td>${escapeHtml(text(row.d1_date))}</td><td>${escapeHtml(text(row.alert_reclaim_price))}</td><td>${escapeHtml(text(row.invalidation_price))}</td><td>${badge(text(row.status), row.status === "reclaimed" ? "ok" : "warn")}</td><td>${escapeHtml(nextStepChinese(row.next_step))}</td></tr>`, "沒有符合目前篩選條件的 D2+ 重返觀察。");
 };
 
 const download = (content, name, type) => { const link = document.createElement("a"); link.href = URL.createObjectURL(new Blob([content], { type })); link.download = name; link.click(); URL.revokeObjectURL(link.href); };

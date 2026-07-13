@@ -742,6 +742,43 @@ nav a:focus-visible::after {
   color: #2d3b17;
 }
 
+.dashboard-guide {
+  margin-top: 16px;
+  padding: 14px 18px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.62);
+}
+
+.dashboard-guide summary {
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 900;
+}
+
+.dashboard-guide-grid {
+  display: grid;
+  margin-top: 12px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 22px;
+}
+
+.dashboard-guide-grid p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.55;
+}
+
+.dashboard-guide-grid strong {
+  color: var(--ink);
+}
+
+.dashboard-guide code {
+  color: var(--ink);
+  font-weight: 900;
+}
+
 .dashboard-grid {
   display: grid;
   margin-top: 22px;

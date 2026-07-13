@@ -154,6 +154,18 @@
           <span>等待載入。</span>
         </div>
 
+        <details class="dashboard-guide" open>
+          <summary>看板欄位怎麼看？</summary>
+          <div class="dashboard-guide-grid">
+            <p><strong>A 型</strong>：至少 5 日盤整、量縮後漲停，重點是籌碼相對乾淨。</p>
+            <p><strong>B 型</strong>：突破前 20 日高點且帶量漲停，重點是主動買盤承接套牢賣壓。</p>
+            <p><strong>GAP（開盤跳空）</strong>：D1 開盤價相對 D0 收盤價的百分比；跳空過大代表追價風險提高。</p>
+            <p><strong>09:15 大盤</strong>：加權指數在 09:15 相對前收的變動。強勢／中性／弱勢用於調整 D1 觀察方式；<code>-0.00%</code> 代表數值接近 0 的微幅下跌。</p>
+            <p><strong>警示價／停損</strong>：警示價是後續重返時的觀察門檻；停損為跌破後建議退出的風險界線。</p>
+            <p><strong>下一步</strong>：是目前條件下的操作限制或觀察動作，不是保證買賣指令。</p>
+          </div>
+        </details>
+
         <div class="dashboard-grid">
           <article class="dashboard-panel">
             <div class="dashboard-panel-head">
@@ -165,7 +177,7 @@
                 <thead>
                   <tr>
                     <th>股票</th>
-                    <th>型態</th>
+                    <th title="A 型：盤整量縮漲停；B 型：突破前高、帶量漲停。">型態</th>
                     <th>收盤</th>
                     <th>量</th>
                     <th>風險</th>
@@ -188,8 +200,8 @@
                   <tr>
                     <th>股票</th>
                     <th>D0</th>
-                    <th>Gap</th>
-                    <th>09:15大盤</th>
+                    <th title="D1 開盤價相對 D0 收盤價的變動百分比。">開盤跳空 GAP</th>
+                    <th title="09:15 加權指數相對前收的變動與強弱分類。">09:15 大盤</th>
                     <th>異常</th>
                     <th>警示價</th>
                     <th>停損</th>
