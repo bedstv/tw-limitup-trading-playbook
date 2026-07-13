@@ -184,13 +184,13 @@ MVP 原則：
 
 目的：讓 dashboard 成為每日決策中心，而不只是報表瀏覽頁。
 
-待做：
+狀態：已完成。
 
-- 將 dashboard 與排程 pipeline 串接，盤後自動更新。
-- 提供個股狀態歷程：D0 候選 → D1 觀察 → D2+ 觸發/失效。
-- 加入排序與篩選：主池/備選、A/B 型、風險標記、量比、gap、regime。
-- 加入匯出功能：CSV、Markdown、通知摘要。
-- 建立 dashboard 測試資料與 UI smoke test，避免欄位變動造成頁面空白。
+- 既有盤後與 D1 排程發布每日 JSON 後，Dashboard 日期選擇器自動讀取新資料。
+- 已提供個股 D0 → D1 → D2+ 狀態歷程。
+- 已加入 A/B 型、主池/備選、風險、D1 狀態篩選與策略／量能／風險排序。
+- 已加入目前篩選結果的 CSV 與 Markdown 匯出。
+- 已加入每日 artifact 與資料邏輯 smoke test；前端資料載入錯誤會明確顯示，不會靜默空白。
 
 ## P2.11 Paper trading
 

@@ -1,0 +1,8 @@
+{
+  "name": "tw-limitup-trading-playbook",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test:dashboard": "node tests/dashboard_smoke.mjs"
+  }
+}

@@ -67,12 +67,16 @@ D1/D2 outcome、風險標記、大盤 regime proxy 與每日 brief。詳見
 [P2.1 每日盤後資料更新 pipeline](references/p21_afterhours_pipeline.md)。
 
 Dashboard 已納入開發規劃：P2.2 先做 GitHub Pages 靜態 MVP，顯示每日 D0/D1/D2+
-候選與風險標記；P2.8 再 production 化，加入日期切換、狀態歷程、排序篩選與匯出。
+候選與風險標記；P2.10 再 production 化，加入日期切換、狀態歷程、排序篩選與匯出。
 詳見 [roadmap next steps](references/roadmap_next_steps.md)。
 
 P2.2 已建立 GitHub Pages Dashboard MVP，讀取 `data/daily/index.json` 與每日 JSON artifact，
 顯示候選股、觀察名單與 data health。詳見
 [P2.2 GitHub Pages Dashboard MVP](references/p22_dashboard_mvp.md)。
+
+P2.10 已將 Dashboard production 化：可檢視 D0 → D1 → D2+ 狀態歷程、篩選排序與
+CSV／Markdown 匯出，並有每日 artifact smoke test。詳見
+[P2.10 Dashboard production 化](references/p210_dashboard_production.md)。
 
 P2.3 已修正 2026-07-07 TPEx partial market 與錯日期/空資料快取風險；Dashboard 不再因
 該日 TPEx 缺漏而降級，D0/D1/D2 名單也已重新產生。詳見
