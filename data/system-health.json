@@ -9,6 +9,16 @@
       "reasons": [],
       "local_commit": "4ac09440a687ababb28b4e953eb78f0f363c3a0f",
       "remote_commit": "4ac09440a687ababb28b4e953eb78f0f363c3a0f"
+    },
+    "afterhours": {
+      "schema_version": "p0.1",
+      "phase": "afterhours",
+      "date": "2026-07-14",
+      "checked_at": "2026-07-14T21:45:49.910580+08:00",
+      "status": "ok",
+      "reasons": [],
+      "local_commit": "7d5a19d1d4596a95ae1933cdde2ee59906067bdc",
+      "remote_commit": "7d5a19d1d4596a95ae1933cdde2ee59906067bdc"
     }
   }
 }
