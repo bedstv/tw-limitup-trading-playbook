@@ -21,7 +21,7 @@ const dashboard = {
   dateSelect: document.querySelector("#dashboard-date"), source: document.querySelector("#dashboard-source"),
   tradeReady: document.querySelector("#trade-ready"), d0Count: document.querySelector("#d0-count"),
   d1Count: document.querySelector("#d1-count"), d2Count: document.querySelector("#d2-count"),
-  warning: document.querySelector("#dashboard-warning"), d0Table: document.querySelector("#d0-table"),
+  warning: document.querySelector("#dashboard-warning"), systemHealth: document.querySelector("#dashboard-system-health"), d0Table: document.querySelector("#d0-table"),
   d1Table: document.querySelector("#d1-table"), d2Table: document.querySelector("#d2-table"),
   setup: document.querySelector("#filter-setup"), liquidity: document.querySelector("#filter-liquidity"),
   risk: document.querySelector("#filter-risk"), decision: document.querySelector("#filter-decision"),
@@ -86,6 +86,14 @@ const renderDashboard = (data) => {
   const d1Text = data.d1_watch_ready ? `本頁 ${data.health?.regime_0915_date || data.effective_date} 的 09:15 大盤僅套用 D1 觀察名單。` : "D1 觀察名單尚未取得同日 09:15 大盤。";
   dashboard.warning.classList.toggle("is-ok", Boolean(data.trade_ready));
   dashboard.warning.innerHTML = `<strong>資料狀態：</strong><span>${escapeHtml(`${d0Text} ${d1Text}${partialDates ? ` 部分市場資料：${partialDates}。` : ""}`)}</span>`;
+  const checks = state.systemHealth?.checks || {};
+  const healthText = ["d1", "afterhours"].map((phase) => {
+    const check = checks[phase];
+    if (!check) return `${phase === "d1" ? "09:15" : "盤後"}：尚無健康紀錄`;
+    return `${phase === "d1" ? "09:15" : "盤後"}：${check.status === "ok" ? "已確認" : check.status === "skipped" ? "跳過" : "異常"}（${check.checked_at || "時間未知"}）`;
+  }).join("；");
+  dashboard.systemHealth.classList.toggle("is-ok", Object.values(checks).every((check) => check.status === "ok"));
+  dashboard.systemHealth.innerHTML = `<strong>自動更新：</strong><span>${escapeHtml(healthText)}</span>`;
   renderRows(dashboard.d0Table, rows(data.d0_candidates), 6, (row) => `<tr><td>${stockLabel(row)}<br>${industryBadges(row)}</td><td title="${escapeHtml(setupLabel(row.setup_type))}">${escapeHtml(setupLabel(row.setup_type))}${decisionBadge(row)}</td><td>${escapeHtml(text(row.close))}</td><td>${escapeHtml(text(row.volume_lots))}</td><td>${riskBadges(row)}</td><td>${escapeHtml(nextStepChinese(row.next_step))}</td></tr>`, "沒有符合目前篩選條件的 D0 候選。");
   renderRows(dashboard.d1Table, rows(data.d1_watch), 8, (row) => `<tr><td>${stockLabel(row)}<br>${industryBadges(row)}</td><td>${escapeHtml(text(row.d0_date))}</td><td title="D1 開盤價相對 D0 收盤價的變動百分比。正值為跳空開高，負值為跳空開低。">${escapeHtml(text(row.d1_open_gap_pct))}</td><td title="09:15 加權指數相對前一日收盤的變動；-0.00% 是極小負值四捨五入後的顯示。">${badge(regimeLabel(row), row.market_regime_0915 === "STRONG" ? "ok" : row.market_regime_0915 === "WEAK" ? "risk" : "warn")}</td><td>${row.corporate_action ? badge("公司行動", "risk") : row.abnormal_gap_check ? badge("需檢查", "warn") : badge("否", "ok")}</td><td>${escapeHtml(text(row.alert_reclaim_price))}</td><td>${escapeHtml(text(row.stop_loss_price))}</td><td>${escapeHtml(nextStepChinese(row.next_step))}</td></tr>`, "沒有符合目前篩選條件的 D1 觀察名單。");
   renderRows(dashboard.d2Table, rows(data.d2_watch), 7, (row) => `<tr><td>${stockLabel(row)}<br>${industryBadges(row)}</td><td>${escapeHtml(text(row.d0_date))}</td><td>${escapeHtml(text(row.d1_date))}</td><td>${escapeHtml(text(row.alert_reclaim_price))}</td><td>${escapeHtml(text(row.invalidation_price))}</td><td>${badge(text(row.status), row.status === "reclaimed" ? "ok" : "warn")}</td><td>${escapeHtml(nextStepChinese(row.next_step))}</td></tr>`, "沒有符合目前篩選條件的 D2+ 重返觀察。");
@@ -106,6 +114,7 @@ const initDashboard = async () => {
     const dates = index.available_dates || [];
     dashboard.dateSelect.innerHTML = dates.map((date) => `<option value="${date}">${date}</option>`).join("");
     const documents = await Promise.all(dates.map(async (date) => (await fetch(`data/daily/${date}.json`, { cache: "no-store" })).json()));
+    state.systemHealth = await (await fetch("data/system-health.json", { cache: "no-store" })).json().catch(() => ({ checks: {} }));
     state.documents = new Map(documents.map((document) => [document.as_of_date, document]));
     state.histories = buildHistoryByStock(documents);
     dashboard.historyStock.innerHTML = [...state.histories.values()].sort((a, b) => a.stock_id.localeCompare(b.stock_id)).map((item) => `<option value="${item.stock_id}">${item.stock_id} ${escapeHtml(item.name)}</option>`).join("");
