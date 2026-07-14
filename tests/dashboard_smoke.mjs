@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
-import { buildHistoryByStock, csvForRows, filterAndSortRows, markdownForRows } from "../dashboard-core.js";
+import { buildHistoryByStock, csvForRows, filterAndSortRows, markdownForRows, paperProgress } from "../dashboard-core.js";
 
 const index = JSON.parse(await readFile(new URL("../data/daily/index.json", import.meta.url)));
 const documents = await Promise.all(index.available_dates.map(async (date) => JSON.parse(await readFile(new URL(`../data/daily/${date}.json`, import.meta.url)))));
@@ -17,4 +17,5 @@ assert.ok(history.size > 0, "history must include tracked stocks");
 assert.match(csvForRows(filtered), /stock_id/, "CSV export must have headers");
 assert.match(markdownForRows(filtered, index.latest), /台股候選匯出/, "Markdown export must have a title");
 assert.match(await readFile(new URL("../index.html", import.meta.url), "utf8"), /看板欄位怎麼看/, "dashboard must include a glossary");
+assert.equal(paperProgress([{ paper_trading: { candidate_count: 1, watch_count: 1, executed_count: 0 } }]).remaining_days, 19, "paper progress must count D1 decision days");
 console.log(`dashboard_smoke=PASS dates=${documents.length} tracked_stocks=${history.size}`);

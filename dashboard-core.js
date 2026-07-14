@@ -10,6 +10,19 @@ export const riskCount = (row) =>
 
 export const decisionStatus = (row) => row.d1_decision_status || "PENDING";
 
+export const paperProgress = (documents, minimumDays = 20) => {
+  const summaries = documents.map((document) => document.paper_trading).filter(Boolean);
+  const total = (field) => summaries.reduce((sum, row) => sum + Number(row[field] || 0), 0);
+  return {
+    decision_days: summaries.length,
+    remaining_days: Math.max(0, minimumDays - summaries.length),
+    candidate_count: total("candidate_count"),
+    watch_count: total("watch_count"),
+    executed_count: total("executed_count"),
+    data_incomplete_count: total("data_incomplete_count"),
+  };
+};
+
 export const rowsForExport = (data) => [
   ...(data.d0_candidates || []).map((row) => ({ ...row, stage: "D0" })),
   ...(data.d1_watch || []).map((row) => ({ ...row, stage: "D1" })),

@@ -4,6 +4,7 @@ import {
   decisionStatus,
   filterAndSortRows,
   markdownForRows,
+  paperProgress,
   text,
 } from "./dashboard-core.js";
 
@@ -27,6 +28,7 @@ const dashboard = {
   sort: document.querySelector("#sort-by"), exportCsv: document.querySelector("#export-csv"),
   exportMarkdown: document.querySelector("#export-markdown"), historyStock: document.querySelector("#history-stock"),
   historyTimeline: document.querySelector("#history-timeline"),
+  paperProgress: document.querySelector("#paper-progress"),
 };
 const state = { current: null, histories: new Map() };
 const escapeHtml = (value) => text(value, "").replace(/[&<>"]/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[char]);
@@ -76,6 +78,8 @@ const renderDashboard = (data) => {
   dashboard.d0Count.textContent = data.health?.d0_candidate_count ?? data.d0_candidates.length;
   dashboard.d1Count.textContent = data.health?.d1_watch_count ?? data.d1_watch.length;
   dashboard.d2Count.textContent = data.health?.d2_watch_count ?? data.d2_watch.length;
+  const progress = paperProgress([...state.documents.values()]);
+  dashboard.paperProgress.innerHTML = `<strong>P2.11 紙上交易進度</strong><span>已累積 ${progress.decision_days}／20 個 D1 判斷日；尚差 ${progress.remaining_days} 日。候選 ${progress.candidate_count}、可交易 ${progress.watch_count}、實際觸發 ${progress.executed_count}、資料不足 ${progress.data_incomplete_count}。</span>`;
   const partialDates = Object.entries(data.health?.partial_market_dates || {}).map(([date, markets]) => `${date}: ${markets.join("/")}`).join("；");
   const d0Text = data.d0_decision_ready ? `D0 已完成 ${data.d0_decision_date} 09:15 判定，可觀察 ${data.health?.d0_eligible_count ?? 0} 檔。` : (data.health?.limitations || []).join(" ");
   const d1Text = data.d1_watch_ready ? `本頁 ${data.health?.regime_0915_date || data.effective_date} 的 09:15 大盤僅套用 D1 觀察名單。` : "D1 觀察名單尚未取得同日 09:15 大盤。";
@@ -101,6 +105,7 @@ const initDashboard = async () => {
     const dates = index.available_dates || [];
     dashboard.dateSelect.innerHTML = dates.map((date) => `<option value="${date}">${date}</option>`).join("");
     const documents = await Promise.all(dates.map(async (date) => (await fetch(`data/daily/${date}.json`, { cache: "no-store" })).json()));
+    state.documents = new Map(documents.map((document) => [document.as_of_date, document]));
     state.histories = buildHistoryByStock(documents);
     dashboard.historyStock.innerHTML = [...state.histories.values()].sort((a, b) => a.stock_id.localeCompare(b.stock_id)).map((item) => `<option value="${item.stock_id}">${item.stock_id} ${escapeHtml(item.name)}</option>`).join("");
     dashboard.dateSelect.value = index.latest || dates.at(-1);

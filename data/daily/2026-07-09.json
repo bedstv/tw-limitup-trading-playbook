@@ -221,5 +221,14 @@
     }
   ],
   "d0_decision_ready": true,
-  "d0_decision_date": "2026-07-13"
+  "d0_decision_date": "2026-07-13",
+  "paper_trading": {
+    "rule_version": "p2.11_v1",
+    "decision_date": "2026-07-13",
+    "candidate_count": 1,
+    "watch_count": 0,
+    "executed_count": 0,
+    "data_incomplete_count": 0,
+    "output": "data/processed/p211_paper_trade_log.csv"
+  }
 }
