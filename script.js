@@ -22,6 +22,7 @@ const dashboard = {
   tradeReady: document.querySelector("#trade-ready"), d0Count: document.querySelector("#d0-count"),
   d1Count: document.querySelector("#d1-count"), d2Count: document.querySelector("#d2-count"),
   warning: document.querySelector("#dashboard-warning"), systemHealth: document.querySelector("#dashboard-system-health"), d0Table: document.querySelector("#d0-table"),
+  provenance: document.querySelector("#dashboard-provenance"),
   d1Table: document.querySelector("#d1-table"), d2Table: document.querySelector("#d2-table"),
   setup: document.querySelector("#filter-setup"), liquidity: document.querySelector("#filter-liquidity"),
   risk: document.querySelector("#filter-risk"), decision: document.querySelector("#filter-decision"),
@@ -64,6 +65,20 @@ const emptyRow = (columns, message) => `<tr><td class="dashboard-empty" colspan=
 const renderRows = (target, rows, columns, renderer, emptyMessage) => { target.innerHTML = rows.length ? rows.map(renderer).join("") : emptyRow(columns, emptyMessage); };
 const filters = () => ({ setup: dashboard.setup.value, liquidity: dashboard.liquidity.value, risk: dashboard.risk.value, decision: dashboard.decision.value, sort: dashboard.sort.value });
 const rows = (source) => filterAndSortRows(source || [], filters());
+const unique = (items) => [...new Set(items.filter(Boolean))];
+const sourceName = (source) => ({
+  "Fugle 1m completed 09:15 bar": "Fugle 1 分鐘線（已完成 09:15 K）",
+  "TWSE MIS live quote": "TWSE 即時行情（09:15）",
+  "Fugle:historical/candles:1m": "Fugle 1 分鐘線",
+}[source] || source);
+const renderProvenance = (data) => {
+  const d1Sources = unique((data.d0_candidates || []).filter((row) => row.d1_decision_ready).map((row) => row.d1_quote_source));
+  const minuteSources = unique((data.paper_trading_records || []).map((row) => row.minute_bar_source));
+  const afterhours = data.afterhours_ready ? "可用" : "候選可顯示，但風險快照或公司行動資料尚未完整";
+  const d1 = d1Sources.length ? `可用：${d1Sources.map(sourceName).join("、")}` : "尚未取得；不可據此做 D1 進場判斷";
+  const paper = minuteSources.length ? `已封存：${minuteSources.map(sourceName).join("、")}` : "尚無已封存的分鐘線紙上交易紀錄";
+  dashboard.provenance.innerHTML = `<strong>資料來源與可用性：</strong><span>盤後候選：TWSE／TPEx 官方日行情（${escapeHtml(afterhours)}）。09:15 判斷：${escapeHtml(d1)}。紙上交易分鐘線：${escapeHtml(paper)}。</span>`;
+};
 
 const renderHistory = () => {
   const history = state.histories.get(dashboard.historyStock.value);
@@ -97,6 +112,7 @@ const renderDashboard = (data) => {
   }).join("；");
   dashboard.systemHealth.classList.toggle("is-ok", Object.values(checks).every((check) => check.status === "ok"));
   dashboard.systemHealth.innerHTML = `<strong>自動更新：</strong><span>${escapeHtml(healthText)}</span>`;
+  renderProvenance(data);
   renderRows(dashboard.d0Table, rows(data.d0_candidates), 6, (row) => `<tr><td>${stockLabel(row)}<br>${industryBadges(row)}</td><td title="${escapeHtml(setupLabel(row.setup_type))}">${escapeHtml(setupLabel(row.setup_type))}${decisionBadge(row)}</td><td>${escapeHtml(text(row.close))}</td><td>${escapeHtml(text(row.volume_lots))}</td><td>${riskBadges(row)}</td><td>${escapeHtml(nextStepChinese(row.next_step))}</td></tr>`, "沒有符合目前篩選條件的 D0 候選。");
   renderRows(dashboard.d1Table, rows(data.d1_watch), 8, (row) => `<tr><td>${stockLabel(row)}<br>${industryBadges(row)}</td><td>${escapeHtml(text(row.d0_date))}</td><td title="D1 開盤價相對 D0 收盤價的變動百分比。正值為跳空開高，負值為跳空開低。">${escapeHtml(text(row.d1_open_gap_pct))}</td><td title="09:15 加權指數相對前一日收盤的變動；-0.00% 是極小負值四捨五入後的顯示。">${badge(regimeLabel(row), row.market_regime_0915 === "STRONG" ? "ok" : row.market_regime_0915 === "WEAK" ? "risk" : "warn")}</td><td>${row.corporate_action ? badge("公司行動", "risk") : row.abnormal_gap_check ? badge("需檢查", "warn") : badge("否", "ok")}</td><td>${escapeHtml(text(row.alert_reclaim_price))}</td><td>${escapeHtml(text(row.stop_loss_price))}</td><td>${escapeHtml(nextStepChinese(row.next_step))}</td></tr>`, "沒有符合目前篩選條件的 D1 觀察名單。");
   renderRows(dashboard.d2Table, rows(data.d2_watch), 7, (row) => `<tr><td>${stockLabel(row)}<br>${industryBadges(row)}</td><td>${escapeHtml(text(row.d0_date))}</td><td>${escapeHtml(text(row.d1_date))}</td><td>${escapeHtml(text(row.alert_reclaim_price))}</td><td>${escapeHtml(text(row.invalidation_price))}</td><td>${badge(text(row.status), row.status === "reclaimed" ? "ok" : "warn")}</td><td>${escapeHtml(nextStepChinese(row.next_step))}</td></tr>`, "沒有符合目前篩選條件的 D2+ 重返觀察。");
@@ -110,7 +126,7 @@ const bindControls = () => {
   dashboard.exportCsv.addEventListener("click", () => download(csvForRows(exportRows()), `tw-candidates-${state.current.as_of_date}.csv`, "text/csv;charset=utf-8"));
   dashboard.exportMarkdown.addEventListener("click", () => download(markdownForRows(exportRows(), state.current.as_of_date), `tw-candidates-${state.current.as_of_date}.md`, "text/markdown;charset=utf-8"));
 };
-const showDashboardError = (error) => { dashboard.source.textContent = "載入失敗"; dashboard.warning.innerHTML = `<strong>資料狀態：</strong><span>${escapeHtml(error.message)}</span>`; [dashboard.d0Table, dashboard.d1Table, dashboard.d2Table].forEach((table, index) => renderRows(table, [], [6, 8, 7][index], () => "", "Dashboard data 載入失敗。")); };
+const showDashboardError = (error) => { dashboard.source.textContent = "載入失敗"; dashboard.warning.innerHTML = `<strong>資料狀態：</strong><span>${escapeHtml(error.message)}</span>`; dashboard.provenance.innerHTML = "<strong>資料來源與可用性：</strong><span>無法載入。</span>"; [dashboard.d0Table, dashboard.d1Table, dashboard.d2Table].forEach((table, index) => renderRows(table, [], [6, 8, 7][index], () => "", "Dashboard data 載入失敗。")); };
 const initDashboard = async () => {
   try {
     const index = await (await fetch("data/daily/index.json", { cache: "no-store" })).json();
