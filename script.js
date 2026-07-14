@@ -90,7 +90,8 @@ const renderDashboard = (data) => {
   const healthText = ["d1", "afterhours"].map((phase) => {
     const check = checks[phase];
     if (!check) return `${phase === "d1" ? "09:15" : "盤後"}：尚無健康紀錄`;
-    return `${phase === "d1" ? "09:15" : "盤後"}：${check.status === "ok" ? "已確認" : check.status === "skipped" ? "跳過" : "異常"}（${check.checked_at || "時間未知"}）`;
+    const telegram = check.telegram_delivery_status ? `，Telegram ${check.telegram_delivery_status === "sent" ? "已送出" : check.telegram_delivery_status}` : "";
+    return `${phase === "d1" ? "09:15" : "盤後"}：${check.status === "ok" ? "已確認" : check.status === "skipped" ? "跳過" : "異常"}${telegram}（${check.checked_at || "時間未知"}）`;
   }).join("；");
   dashboard.systemHealth.classList.toggle("is-ok", Object.values(checks).every((check) => check.status === "ok"));
   dashboard.systemHealth.innerHTML = `<strong>自動更新：</strong><span>${escapeHtml(healthText)}</span>`;
