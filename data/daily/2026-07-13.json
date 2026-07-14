@@ -184,5 +184,16 @@
   ],
   "d2_watch": [],
   "d0_decision_ready": true,
-  "d0_decision_date": "2026-07-14"
+  "d0_decision_date": "2026-07-14",
+  "paper_trading": {
+    "rule_version": "p2.11_v2",
+    "decision_date": "2026-07-14",
+    "candidate_count": 3,
+    "watch_count": 0,
+    "executed_count": 0,
+    "data_incomplete_count": 0,
+    "hold_review_count": 0,
+    "market_close_verified": false,
+    "output": "data/processed/p211_paper_trade_log.csv"
+  }
 }
