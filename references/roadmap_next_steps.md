@@ -162,6 +162,12 @@ forward paper-trading 資料。富果分 K 只回傳近 30 日，仍不構成 20
 - 有效資料日、partial-market 與 afterhours-ready 發布前驗證。
 - 成功／失敗 macOS 通知與本機日誌。
 
+### P0 排程健康監控
+
+狀態：已完成。每個工作日 09:20 檢查 D1 09:15 artifact，15:45 檢查盤後 artifact；兩者都會
+驗證資料完整性與 GitHub Pages 遠端提交一致性。失敗時寫入本機 health manifest 並發送 macOS
+通知；休市或沒有前一日 dashboard 時則明確標記為跳過，不誤報成功。
+
 ### D1 09:15 自動更新
 
 狀態：已完成並安裝 macOS LaunchAgent。工作日 09:16 自動把當日 09:15 資料套用到
