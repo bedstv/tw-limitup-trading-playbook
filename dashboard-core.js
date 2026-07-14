@@ -14,7 +14,13 @@ export const paperProgress = (documents, minimumDays = 20) => {
   const summaries = documents.map((document) => document.paper_trading).filter(Boolean);
   const ruleVersion = "p2.11_v2";
   const active = summaries.filter((row) => row.rule_version === ruleVersion);
+  const records = documents.flatMap((document) => document.paper_trading_records || [])
+    .filter((row) => row.rule_version === ruleVersion);
   const total = (field) => active.reduce((sum, row) => sum + Number(row[field] || 0), 0);
+  const netReturns = records
+    .filter((row) => row.net_return !== "" && row.net_return !== null && row.net_return !== undefined)
+    .map((row) => Number(row.net_return))
+    .filter(Number.isFinite);
   return {
     rule_version: ruleVersion,
     decision_days: active.length,
@@ -24,6 +30,9 @@ export const paperProgress = (documents, minimumDays = 20) => {
     executed_count: total("executed_count"),
     data_incomplete_count: total("data_incomplete_count"),
     hold_review_count: total("hold_review_count"),
+    recorded_count: records.length,
+    settled_count: netReturns.length,
+    net_return_sum: netReturns.reduce((sum, value) => sum + value, 0),
   };
 };
 
