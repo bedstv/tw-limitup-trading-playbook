@@ -80,7 +80,9 @@ const renderDashboard = (data) => {
   dashboard.d2Count.textContent = data.health?.d2_watch_count ?? data.d2_watch.length;
   const progress = paperProgress([...state.documents.values()]);
   const measured = progress.recorded_count ? ` 已封存 ${progress.recorded_count} 筆分鐘線結果，已結算 ${progress.settled_count} 筆${progress.settled_count ? `，累計淨報酬 ${(progress.net_return_sum * 100).toFixed(2)}%` : ""}。` : " 分鐘線結果會隨後續 D1 自動累積。";
-  dashboard.paperProgress.innerHTML = `<strong>P2.11 紙上交易進度</strong><span>${escapeHtml(progress.rule_version)}：已累積 ${progress.decision_days}／20 個 D1 判斷日；尚差 ${progress.remaining_days} 日。候選 ${progress.candidate_count}、可交易 ${progress.watch_count}、實際觸發 ${progress.executed_count}、留倉覆核 ${progress.hold_review_count}、資料不足 ${progress.data_incomplete_count}。${escapeHtml(measured)}</span>`;
+  const evaluation = state.paperEvaluation;
+  const evaluationText = evaluation ? ` 評估狀態：${evaluation.status === "ready_for_review" ? "樣本已達門檻，可人工檢視" : "固定規則樣本收集中"}（${evaluation.decision_day_count}/${evaluation.minimum_decision_days} 日）。` : "";
+  dashboard.paperProgress.innerHTML = `<strong>P2.11 紙上交易進度</strong><span>${escapeHtml(progress.rule_version)}：已累積 ${progress.decision_days}／20 個 D1 判斷日；尚差 ${progress.remaining_days} 日。候選 ${progress.candidate_count}、可交易 ${progress.watch_count}、實際觸發 ${progress.executed_count}、留倉覆核 ${progress.hold_review_count}、資料不足 ${progress.data_incomplete_count}。${escapeHtml(measured + evaluationText)}</span>`;
   const partialDates = Object.entries(data.health?.partial_market_dates || {}).map(([date, markets]) => `${date}: ${markets.join("/")}`).join("；");
   const d0Text = data.d0_decision_ready ? `D0 已完成 ${data.d0_decision_date} 09:15 判定，可觀察 ${data.health?.d0_eligible_count ?? 0} 檔。` : (data.health?.limitations || []).join(" ");
   const d1Text = data.d1_watch_ready ? `本頁 ${data.health?.regime_0915_date || data.effective_date} 的 09:15 大盤僅套用 D1 觀察名單。` : "D1 觀察名單尚未取得同日 09:15 大盤。";
@@ -116,6 +118,7 @@ const initDashboard = async () => {
     dashboard.dateSelect.innerHTML = dates.map((date) => `<option value="${date}">${date}</option>`).join("");
     const documents = await Promise.all(dates.map(async (date) => (await fetch(`data/daily/${date}.json`, { cache: "no-store" })).json()));
     state.systemHealth = await (await fetch("data/system-health.json", { cache: "no-store" })).json().catch(() => ({ checks: {} }));
+    state.paperEvaluation = await (await fetch("data/paper-evaluation.json", { cache: "no-store" })).json().catch(() => null);
     state.documents = new Map(documents.map((document) => [document.as_of_date, document]));
     state.histories = buildHistoryByStock(documents);
     dashboard.historyStock.innerHTML = [...state.histories.values()].sort((a, b) => a.stock_id.localeCompare(b.stock_id)).map((item) => `<option value="${item.stock_id}">${item.stock_id} ${escapeHtml(item.name)}</option>`).join("");
