@@ -79,7 +79,7 @@ const renderDashboard = (data) => {
   dashboard.d1Count.textContent = data.health?.d1_watch_count ?? data.d1_watch.length;
   dashboard.d2Count.textContent = data.health?.d2_watch_count ?? data.d2_watch.length;
   const progress = paperProgress([...state.documents.values()]);
-  dashboard.paperProgress.innerHTML = `<strong>P2.11 紙上交易進度</strong><span>已累積 ${progress.decision_days}／20 個 D1 判斷日；尚差 ${progress.remaining_days} 日。候選 ${progress.candidate_count}、可交易 ${progress.watch_count}、實際觸發 ${progress.executed_count}、資料不足 ${progress.data_incomplete_count}。</span>`;
+  dashboard.paperProgress.innerHTML = `<strong>P2.11 紙上交易進度</strong><span>${escapeHtml(progress.rule_version)}：已累積 ${progress.decision_days}／20 個 D1 判斷日；尚差 ${progress.remaining_days} 日。候選 ${progress.candidate_count}、可交易 ${progress.watch_count}、實際觸發 ${progress.executed_count}、留倉覆核 ${progress.hold_review_count}、資料不足 ${progress.data_incomplete_count}。</span>`;
   const partialDates = Object.entries(data.health?.partial_market_dates || {}).map(([date, markets]) => `${date}: ${markets.join("/")}`).join("；");
   const d0Text = data.d0_decision_ready ? `D0 已完成 ${data.d0_decision_date} 09:15 判定，可觀察 ${data.health?.d0_eligible_count ?? 0} 檔。` : (data.health?.limitations || []).join(" ");
   const d1Text = data.d1_watch_ready ? `本頁 ${data.health?.regime_0915_date || data.effective_date} 的 09:15 大盤僅套用 D1 觀察名單。` : "D1 觀察名單尚未取得同日 09:15 大盤。";
