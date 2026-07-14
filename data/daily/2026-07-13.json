@@ -4,7 +4,7 @@
   "as_of_date": "2026-07-13",
   "effective_date": "2026-07-13",
   "previous_trade_date": "2026-07-09",
-  "trade_ready": false,
+  "trade_ready": true,
   "afterhours_ready": false,
   "d1_watch_ready": false,
   "health": {
@@ -25,11 +25,9 @@
     "taiex_return_0915": null,
     "eps_snapshot_stock_count": 0,
     "warning_snapshot_row_count": 0,
-    "limitations": [
-      "2026-07-13 盤後 D0 候選須等待下一交易日 09:15 大盤資料，尚不可標示可交易。",
-      "本資料日 D1 觀察尚無 09:15 大盤快照。",
-      "EPS / 處置尚無本資料日的完整 as-of 快照。"
-    ]
+    "limitations": [],
+    "d0_eligible_count": 1,
+    "d0_regime_0915_date": "2026-07-14"
   },
   "d0_candidates": [
     {
@@ -48,12 +46,29 @@
       "possible_disposition_next_day": false,
       "currently_disposed_snapshot": false,
       "risk_flags_trade_ready": false,
-      "next_step": "Wait for next trading day 09:15 market regime; D1 open watch; avoid direct chase if D1 open gap >5%",
+      "next_step": "D1 opening gap exceeded 5%; direct chase prohibited.",
       "industry_code": "21",
       "industry": "化學工業",
       "industry_candidate_count": 1,
       "industry_consensus": false,
-      "market_regime_0915": "PENDING_NEXT_TRADING_DAY"
+      "market_regime_0915": "WEAK",
+      "d1_trade_date": "2026-07-14",
+      "taiex_return_0915": -0.017402621212802227,
+      "d1_open": 28.3,
+      "price_0915": 27.65,
+      "d1_open_gap_pct": 0.05597014925373145,
+      "stock_return_0915": 0.03171641791044766,
+      "stock_minus_taiex_return_pp": 4.911903912324989,
+      "above_intraday_mean_0915": true,
+      "intraday_mean_available_0915": true,
+      "above_opening_low_0915": true,
+      "d1_decision_status": "PULLBACK_ONLY",
+      "d1_decision_reason": "D1 opening gap exceeded 5%; direct chase prohibited.",
+      "d1_decision_ready": true,
+      "d1_quote_source": "Fugle 1m completed 09:15 bar",
+      "paper_trade_rule_version": "p2.11_v1",
+      "paper_entry_trigger_price": "",
+      "stop_loss_price": 26.3
     },
     {
       "stock_id": "5488",
@@ -71,12 +86,29 @@
       "possible_disposition_next_day": false,
       "currently_disposed_snapshot": false,
       "risk_flags_trade_ready": false,
-      "next_step": "Wait for next trading day 09:15 market regime; D1 open watch; avoid direct chase if D1 open gap >5%",
+      "next_step": "Weak market B setup failed a required strength check.",
       "industry_code": "28",
       "industry": "電子零組件業",
       "industry_candidate_count": 1,
       "industry_consensus": false,
-      "market_regime_0915": "PENDING_NEXT_TRADING_DAY"
+      "market_regime_0915": "WEAK",
+      "d1_trade_date": "2026-07-14",
+      "taiex_return_0915": -0.017402621212802227,
+      "d1_open": 18.55,
+      "price_0915": 16.85,
+      "d1_open_gap_pct": 0.042134831460674205,
+      "stock_return_0915": -0.053370786516853896,
+      "stock_minus_taiex_return_pp": -3.596816530405167,
+      "above_intraday_mean_0915": false,
+      "intraday_mean_available_0915": true,
+      "above_opening_low_0915": true,
+      "d1_decision_status": "REJECT",
+      "d1_decision_reason": "Weak market B setup failed a required strength check.",
+      "d1_decision_ready": true,
+      "d1_quote_source": "Fugle 1m completed 09:15 bar",
+      "paper_trade_rule_version": "p2.11_v1",
+      "paper_entry_trigger_price": "",
+      "stop_loss_price": 17.8
     },
     {
       "stock_id": "8383",
@@ -94,12 +126,29 @@
       "possible_disposition_next_day": false,
       "currently_disposed_snapshot": false,
       "risk_flags_trade_ready": false,
-      "next_step": "Wait for next trading day 09:15 market regime; D1 open watch; avoid direct chase if D1 open gap >5%",
+      "next_step": "D1 opening gap exceeded 7%.",
       "industry_code": "24",
       "industry": "半導體業",
       "industry_candidate_count": 1,
       "industry_consensus": false,
-      "market_regime_0915": "PENDING_NEXT_TRADING_DAY"
+      "market_regime_0915": "WEAK",
+      "d1_trade_date": "2026-07-14",
+      "taiex_return_0915": -0.017402621212802227,
+      "d1_open": 83.0,
+      "price_0915": 84.2,
+      "d1_open_gap_pct": 0.08355091383812008,
+      "stock_return_0915": 0.09921671018276768,
+      "stock_minus_taiex_return_pp": 11.66193313955699,
+      "above_intraday_mean_0915": true,
+      "intraday_mean_available_0915": true,
+      "above_opening_low_0915": true,
+      "d1_decision_status": "REJECT",
+      "d1_decision_reason": "D1 opening gap exceeded 7%.",
+      "d1_decision_ready": true,
+      "d1_quote_source": "Fugle 1m completed 09:15 bar",
+      "paper_trade_rule_version": "p2.11_v1",
+      "paper_entry_trigger_price": "",
+      "stop_loss_price": 76.6
     }
   ],
   "d1_watch": [
@@ -133,5 +182,7 @@
       "corporate_action_detail": ""
     }
   ],
-  "d2_watch": []
+  "d2_watch": [],
+  "d0_decision_ready": true,
+  "d0_decision_date": "2026-07-14"
 }
