@@ -79,7 +79,7 @@
       "d1_decision_reason": "Strong market downranks volume-breakout B setups in V1.",
       "d1_decision_ready": true,
       "d1_quote_source": "Fugle 1m completed 09:15 bar",
-      "paper_trade_rule_version": "p2.11_v1",
+      "paper_trade_rule_version": "p2.11_v2",
       "paper_entry_trigger_price": "",
       "stop_loss_price": 173.0,
       "d1_quote_valid_bar_count": 14
@@ -122,7 +122,7 @@
       "d1_decision_reason": "Strong market downranks volume-breakout B setups in V1.",
       "d1_decision_ready": true,
       "d1_quote_source": "Fugle 1m completed 09:15 bar",
-      "paper_trade_rule_version": "p2.11_v1",
+      "paper_trade_rule_version": "p2.11_v2",
       "paper_entry_trigger_price": "",
       "stop_loss_price": 27.5,
       "d1_quote_valid_bar_count": 15
@@ -165,7 +165,7 @@
       "d1_decision_reason": "09:15 個股報價資料不足，已排除此檔；不以缺失資料產生交易判斷。",
       "d1_decision_ready": false,
       "d1_quote_source": "09:15 個股報價不足",
-      "paper_trade_rule_version": "p2.11_v1",
+      "paper_trade_rule_version": "p2.11_v2",
       "paper_entry_trigger_price": "",
       "stop_loss_price": 83.0
     },
@@ -207,7 +207,7 @@
       "d1_decision_reason": "Strong market downranks volume-breakout B setups in V1.",
       "d1_decision_ready": true,
       "d1_quote_source": "Fugle 1m completed 09:15 bar",
-      "paper_trade_rule_version": "p2.11_v1",
+      "paper_trade_rule_version": "p2.11_v2",
       "paper_entry_trigger_price": "",
       "stop_loss_price": 233.5,
       "d1_quote_valid_bar_count": 15
@@ -321,5 +321,96 @@
     "missing_stock_ids": [
       "8383"
     ]
-  }
+  },
+  "paper_trading": {
+    "rule_version": "p2.11_v2",
+    "decision_date": "2026-07-15",
+    "candidate_count": 4,
+    "watch_count": 0,
+    "executed_count": 0,
+    "data_incomplete_count": 1,
+    "hold_review_count": 0,
+    "settled_count": 0,
+    "evidence_pending_count": 1,
+    "market_close_verified": false,
+    "output": "data/processed/p211_paper_trade_log.csv"
+  },
+  "paper_trading_records": [
+    {
+      "rule_version": "p2.11_v2",
+      "candidate_date": "2026-07-14",
+      "decision_date": "2026-07-15",
+      "stock_id": "8039",
+      "market": "TWSE",
+      "name": "台虹",
+      "setup_type": "B",
+      "d1_decision_status": "DOWNRANK",
+      "d1_decision_ready": true,
+      "d1_quote_source": "Fugle 1m completed 09:15 bar",
+      "d1_quote_valid_bar_count": 14,
+      "entry_watch_price": 186.0,
+      "stop_price": 173.0,
+      "minute_bar_source": "not_captured",
+      "paper_status": "not_traded",
+      "paper_reason": "d1_status_not_watch",
+      "settlement_status": "settled_not_entered"
+    },
+    {
+      "rule_version": "p2.11_v2",
+      "candidate_date": "2026-07-14",
+      "decision_date": "2026-07-15",
+      "stock_id": "1810",
+      "market": "TWSE",
+      "name": "和成",
+      "setup_type": "B",
+      "d1_decision_status": "DOWNRANK",
+      "d1_decision_ready": true,
+      "d1_quote_source": "Fugle 1m completed 09:15 bar",
+      "d1_quote_valid_bar_count": 15,
+      "entry_watch_price": 27.85,
+      "stop_price": 27.5,
+      "minute_bar_source": "not_captured",
+      "paper_status": "not_traded",
+      "paper_reason": "d1_status_not_watch",
+      "settlement_status": "settled_not_entered"
+    },
+    {
+      "rule_version": "p2.11_v2",
+      "candidate_date": "2026-07-14",
+      "decision_date": "2026-07-15",
+      "stock_id": "8383",
+      "market": "TPEx",
+      "name": "千附",
+      "setup_type": "B",
+      "d1_decision_status": "REJECT",
+      "d1_decision_ready": false,
+      "d1_quote_source": "09:15 個股報價不足",
+      "d1_quote_valid_bar_count": 0,
+      "entry_watch_price": "",
+      "stop_price": 83.0,
+      "minute_bar_source": "not_captured",
+      "paper_status": "data_incomplete",
+      "paper_reason": "missing_verified_0915_quote",
+      "settlement_status": "evidence_pending"
+    },
+    {
+      "rule_version": "p2.11_v2",
+      "candidate_date": "2026-07-14",
+      "decision_date": "2026-07-15",
+      "stock_id": "6829",
+      "market": "TPEx",
+      "name": "千附精密",
+      "setup_type": "B",
+      "d1_decision_status": "DOWNRANK",
+      "d1_decision_ready": true,
+      "d1_quote_source": "Fugle 1m completed 09:15 bar",
+      "d1_quote_valid_bar_count": 15,
+      "entry_watch_price": 248.0,
+      "stop_price": 233.5,
+      "minute_bar_source": "not_captured",
+      "paper_status": "not_traded",
+      "paper_reason": "d1_status_not_watch",
+      "settlement_status": "settled_not_entered"
+    }
+  ]
 }
