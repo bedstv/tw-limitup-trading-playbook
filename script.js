@@ -34,6 +34,7 @@ const dashboard = {
   exportMarkdown: document.querySelector("#export-markdown"), copyViewLink: document.querySelector("#copy-view-link"), historyStock: document.querySelector("#history-stock"),
   historyTimeline: document.querySelector("#history-timeline"),
   paperProgress: document.querySelector("#paper-progress"),
+  strategyEvaluationSummary: document.querySelector("#strategy-evaluation-summary"), strategyEvaluationSplits: document.querySelector("#strategy-evaluation-splits"),
   paperEvidenceSummary: document.querySelector("#paper-evidence-summary"), paperEvidenceTable: document.querySelector("#paper-evidence-table"),
   backtestPeriod: document.querySelector("#backtest-period"), backtestConclusion: document.querySelector("#backtest-conclusion"),
   backtestMethod: document.querySelector("#backtest-method"), backtestSignals: document.querySelector("#backtest-signals"),
@@ -140,6 +141,21 @@ const renderPaperEvidence = () => {
     ? `固定規則 ${progress.rule_version}：已封存 ${progress.recorded_count} 筆紀錄；以下顯示最近 20 筆。這是模擬驗證，並非真實下單紀錄。`
     : `固定規則 ${progress.rule_version} 正在收集樣本。目前尚無可顯示的個股模擬紀錄；D1 09:15 判斷後會自動加入。`;
   renderRows(dashboard.paperEvidenceTable, records.slice(0, 20), 7, (row) => `<tr><td>${escapeHtml(text(row.decision_date))}</td><td>${escapeHtml(text(row.stock_id))} ${escapeHtml(text(row.name, ""))}</td><td>${escapeHtml(paperDecisionLabel(row.d1_decision_status))}</td><td>${escapeHtml(paperOutcomeLabel(row.status))}</td><td>進場 ${paperPrice(row.entry_price)}<br>停損 ${paperPrice(row.stop_loss_price)}</td><td>${escapeHtml(paperSourceLabel(row.minute_bar_source))}</td><td>${percent(row.net_return)}</td></tr>`, "目前尚無固定規則 V2 的紙上交易紀錄。");
+};
+const renderStrategyEvaluation = () => {
+  if (!dashboard.strategyEvaluationSummary || !dashboard.strategyEvaluationSplits) return;
+  const evaluation = state.strategyEvaluation;
+  if (!evaluation) { dashboard.strategyEvaluationSummary.textContent = "目前尚未載入固定規則評估。"; return; }
+  const overall = evaluation.overall || {};
+  const collecting = evaluation.status !== "ready_for_review";
+  dashboard.strategyEvaluationSummary.textContent = collecting
+    ? `樣本收集中：${evaluation.decision_day_count}/${evaluation.minimum_decision_days} 個 D1 判斷日；已結算 ${overall.settled_count || 0} 筆，待補證據／留倉覆核 ${evaluation.unsettled_count || 0} 筆。尚不可判定策略成效。`
+    : `樣本已達門檻：平均淨報酬 ${percent(overall.avg_net_return)}、中位數 ${percent(overall.median_net_return)}、勝率 ${percent(overall.win_rate)}。`;
+  const labels = { setup_type: "A／B 型", market_regime_0915: "09:15 大盤", liquidity_tier: "流動性", industry_consensus: "板塊共識", d1_decision_status: "D1 決策" };
+  dashboard.strategyEvaluationSplits.innerHTML = Object.entries(evaluation.splits || {}).map(([key, groups]) => {
+    const textGroups = Object.entries(groups).map(([name, value]) => `${name}：${value.candidate_count} 筆／已結算 ${value.settled_count} 筆`).join("；");
+    return `<p><strong>${escapeHtml(labels[key] || key)}</strong>：${escapeHtml(textGroups || "尚無資料")}</p>`;
+  }).join("");
 };
 const renderBacktestSummary = (summary) => {
   if (!dashboard.backtestConclusion) return;
@@ -301,6 +317,7 @@ const initDashboard = async () => {
     state.systemHealth = await fetchJson("data/system-health.json", { checks: {} });
     state.marketFreshness = await fetchJson("data/market-freshness.json", null);
     state.paperEvaluation = await fetchJson("data/paper-evaluation.json", null);
+    state.strategyEvaluation = await fetchJson("data/strategy-evaluation.json", null);
     state.backtestSummary = await fetchJson("data/backtest-summary.json", null);
     state.documents = new Map(documents.map((document) => [document.as_of_date, document]));
     state.histories = buildHistoryByStock(documents);
@@ -310,6 +327,7 @@ const initDashboard = async () => {
     bindControls();
     renderBacktestSummary(state.backtestSummary);
     renderPaperEvidence();
+    renderStrategyEvaluation();
     renderDashboard(documents[dates.indexOf(dashboard.dateSelect.value)]);
     renderHistory();
   } catch (error) { showDashboardError(error); }
@@ -317,11 +335,13 @@ const initDashboard = async () => {
 const initStrategy = async () => {
   try {
     state.backtestSummary = await fetchJson("data/backtest-summary.json", null);
+    state.strategyEvaluation = await fetchJson("data/strategy-evaluation.json", null);
     const index = await fetchJson("data/daily/index.json");
     const documents = await Promise.all((index.available_dates || []).map((date) => fetchJson(`data/daily/${date}.json`)));
     state.documents = new Map(documents.map((document) => [document.as_of_date, document]));
     renderBacktestSummary(state.backtestSummary);
     renderPaperEvidence();
+    renderStrategyEvaluation();
   } catch (error) {
     if (dashboard.backtestConclusion) dashboard.backtestConclusion.textContent = "目前無法載入最新驗證資料";
   }
