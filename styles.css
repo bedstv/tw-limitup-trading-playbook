@@ -1011,6 +1011,14 @@ nav a:focus-visible::after {
   vertical-align: top;
 }
 
+.next-step {
+  display: block;
+  min-width: 220px;
+  color: var(--ink);
+  font-weight: 700;
+  line-height: 1.6;
+}
+
 .dashboard-table th {
   color: var(--muted);
   background: rgba(16, 20, 23, 0.035);
