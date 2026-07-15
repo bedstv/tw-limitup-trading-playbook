@@ -1,0 +1,18 @@
+{
+  "schema_version": "p2.25",
+  "minimum_decision_days": 60,
+  "available_decision_days": 1,
+  "available_dates": [
+    "2026-07-09"
+  ],
+  "candidate_count": 1,
+  "data_incomplete_count": 0,
+  "provider_counts": {
+    "Fugle": 1
+  },
+  "finmind_unavailable_observations": 0,
+  "historical_backtest_allowed": false,
+  "status": "insufficient_historical_coverage",
+  "reason": "需有至少 60 個完整 D1 分鐘線判斷日才可重跑歷史分鐘回測；目前僅保留 forward 封存資料。",
+  "source_policy": "同一股票日只使用單一來源；Fugle 近期 1 分鐘線優先，FinMind TaiwanStockKBar 僅在帳號授權時使用。"
+}

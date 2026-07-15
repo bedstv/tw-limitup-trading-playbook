@@ -35,6 +35,7 @@ const dashboard = {
   historyTimeline: document.querySelector("#history-timeline"),
   paperProgress: document.querySelector("#paper-progress"),
   strategyEvaluationSummary: document.querySelector("#strategy-evaluation-summary"), strategyEvaluationSplits: document.querySelector("#strategy-evaluation-splits"),
+  intradayCoverageSummary: document.querySelector("#intraday-coverage-summary"),
   paperEvidenceSummary: document.querySelector("#paper-evidence-summary"), paperEvidenceTable: document.querySelector("#paper-evidence-table"),
   backtestPeriod: document.querySelector("#backtest-period"), backtestConclusion: document.querySelector("#backtest-conclusion"),
   backtestMethod: document.querySelector("#backtest-method"), backtestSignals: document.querySelector("#backtest-signals"),
@@ -156,6 +157,14 @@ const renderStrategyEvaluation = () => {
     const textGroups = Object.entries(groups).map(([name, value]) => `${name}：${value.candidate_count} 筆／已結算 ${value.settled_count} 筆`).join("；");
     return `<p><strong>${escapeHtml(labels[key] || key)}</strong>：${escapeHtml(textGroups || "尚無資料")}</p>`;
   }).join("");
+};
+const renderIntradayCoverage = () => {
+  if (!dashboard.intradayCoverageSummary) return;
+  const coverage = state.intradayCoverage;
+  if (!coverage) { dashboard.intradayCoverageSummary.textContent = "目前尚無分鐘線覆蓋檢查。"; return; }
+  dashboard.intradayCoverageSummary.textContent = coverage.historical_backtest_allowed
+    ? `分鐘線覆蓋已達 ${coverage.available_decision_days} 個判斷日，可進行保守歷史回放。`
+    : `尚不可進行歷史分鐘線回測：已完整封存 ${coverage.available_decision_days}/${coverage.minimum_decision_days} 個 D1 判斷日，資料不足 ${coverage.data_incomplete_count} 筆。${coverage.reason}`;
 };
 const renderBacktestSummary = (summary) => {
   if (!dashboard.backtestConclusion) return;
@@ -318,6 +327,7 @@ const initDashboard = async () => {
     state.marketFreshness = await fetchJson("data/market-freshness.json", null);
     state.paperEvaluation = await fetchJson("data/paper-evaluation.json", null);
     state.strategyEvaluation = await fetchJson("data/strategy-evaluation.json", null);
+    state.intradayCoverage = await fetchJson("data/intraday-backtest-coverage.json", null);
     state.backtestSummary = await fetchJson("data/backtest-summary.json", null);
     state.documents = new Map(documents.map((document) => [document.as_of_date, document]));
     state.histories = buildHistoryByStock(documents);
@@ -328,6 +338,7 @@ const initDashboard = async () => {
     renderBacktestSummary(state.backtestSummary);
     renderPaperEvidence();
     renderStrategyEvaluation();
+    renderIntradayCoverage();
     renderDashboard(documents[dates.indexOf(dashboard.dateSelect.value)]);
     renderHistory();
   } catch (error) { showDashboardError(error); }
@@ -336,12 +347,14 @@ const initStrategy = async () => {
   try {
     state.backtestSummary = await fetchJson("data/backtest-summary.json", null);
     state.strategyEvaluation = await fetchJson("data/strategy-evaluation.json", null);
+    state.intradayCoverage = await fetchJson("data/intraday-backtest-coverage.json", null);
     const index = await fetchJson("data/daily/index.json");
     const documents = await Promise.all((index.available_dates || []).map((date) => fetchJson(`data/daily/${date}.json`)));
     state.documents = new Map(documents.map((document) => [document.as_of_date, document]));
     renderBacktestSummary(state.backtestSummary);
     renderPaperEvidence();
     renderStrategyEvaluation();
+    renderIntradayCoverage();
   } catch (error) {
     if (dashboard.backtestConclusion) dashboard.backtestConclusion.textContent = "目前無法載入最新驗證資料";
   }
