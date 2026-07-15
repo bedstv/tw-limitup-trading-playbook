@@ -43,6 +43,21 @@ const dashboard = {
   tabPanels: [...document.querySelectorAll(".dashboard-tab-panel")],
 };
 const state = { current: null, histories: new Map() };
+const fetchJson = async (path, fallback) => {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 12000);
+  try {
+    const response = await fetch(path, { cache: "no-store", signal: controller.signal });
+    if (!response.ok) throw new Error(`讀取 ${path} 時收到 ${response.status}`);
+    return await response.json();
+  } catch (error) {
+    if (fallback !== undefined) return fallback;
+    const reason = error.name === "AbortError" ? "讀取逾時" : error.message;
+    throw new Error(`${path}：${reason}`);
+  } finally {
+    clearTimeout(timer);
+  }
+};
 const escapeHtml = (value) => text(value, "").replace(/[&<>"]/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[char]);
 const badge = (label, type = "") => `<span class="badge ${type ? `badge-${type}` : ""}">${escapeHtml(label)}</span>`;
 const stockLabel = (row) => `${escapeHtml(text(row.stock_id))} ${escapeHtml(text(row.name, ""))}`.trim();
@@ -220,17 +235,25 @@ const bindControls = () => {
   dashboard.exportCsv.addEventListener("click", () => download(csvForRows(exportRows()), `tw-candidates-${state.current.as_of_date}.csv`, "text/csv;charset=utf-8"));
   dashboard.exportMarkdown.addEventListener("click", () => download(markdownForRows(exportRows(), state.current.as_of_date), `tw-candidates-${state.current.as_of_date}.md`, "text/markdown;charset=utf-8"));
 };
-const showDashboardError = (error) => { dashboard.source.textContent = "載入失敗"; dashboard.warning.innerHTML = `<strong>資料狀態：</strong><span>${escapeHtml(error.message)}</span>`; dashboard.provenance.innerHTML = "<strong>資料來源與可用性：</strong><span>無法載入。</span>"; [dashboard.d0Table, dashboard.d1Table, dashboard.d2Table].forEach((table, index) => renderRows(table, [], [6, 8, 7][index], () => "", "Dashboard data 載入失敗。")); };
+const showDashboardError = (error) => {
+  dashboard.source.textContent = "載入失敗";
+  [dashboard.tradeReady, dashboard.d0Count, dashboard.d1Count, dashboard.d2Count].forEach((target) => { target.textContent = "資料異常"; });
+  dashboard.warning.innerHTML = `<strong>資料載入失敗：</strong><span>${escapeHtml(error.message)}</span><button type="button" id="retry-dashboard">重新整理資料</button>`;
+  dashboard.warning.querySelector("#retry-dashboard")?.addEventListener("click", () => window.location.reload());
+  dashboard.provenance.innerHTML = "<strong>資料來源與可用性：</strong><span>目前無法載入，請重新整理；若持續失敗，代表資料檔或網路連線需要檢查。</span>";
+  [dashboard.d0Table, dashboard.d1Table, dashboard.d2Table].forEach((table, index) => renderRows(table, [], [6, 8, 7][index], () => "", "資料尚未載入，無法顯示候選。"));
+};
 const initDashboard = async () => {
   bindDashboardTabs();
   try {
-    const index = await (await fetch("data/daily/index.json", { cache: "no-store" })).json();
+    const index = await fetchJson("data/daily/index.json");
     const dates = index.available_dates || [];
+    if (!dates.length) throw new Error("資料索引沒有可用日期");
     dashboard.dateSelect.innerHTML = dates.map((date) => `<option value="${date}">${date}</option>`).join("");
-    const documents = await Promise.all(dates.map(async (date) => (await fetch(`data/daily/${date}.json`, { cache: "no-store" })).json()));
-    state.systemHealth = await (await fetch("data/system-health.json", { cache: "no-store" })).json().catch(() => ({ checks: {} }));
-    state.paperEvaluation = await (await fetch("data/paper-evaluation.json", { cache: "no-store" })).json().catch(() => null);
-    state.backtestSummary = await (await fetch("data/backtest-summary.json", { cache: "no-store" })).json().catch(() => null);
+    const documents = await Promise.all(dates.map((date) => fetchJson(`data/daily/${date}.json`)));
+    state.systemHealth = await fetchJson("data/system-health.json", { checks: {} });
+    state.paperEvaluation = await fetchJson("data/paper-evaluation.json", null);
+    state.backtestSummary = await fetchJson("data/backtest-summary.json", null);
     state.documents = new Map(documents.map((document) => [document.as_of_date, document]));
     state.histories = buildHistoryByStock(documents);
     dashboard.historyStock.innerHTML = [...state.histories.values()].sort((a, b) => a.stock_id.localeCompare(b.stock_id)).map((item) => `<option value="${item.stock_id}">${item.stock_id} ${escapeHtml(item.name)}</option>`).join("");
@@ -245,9 +268,9 @@ const initDashboard = async () => {
 };
 const initStrategy = async () => {
   try {
-    state.backtestSummary = await (await fetch("data/backtest-summary.json", { cache: "no-store" })).json();
-    const index = await (await fetch("data/daily/index.json", { cache: "no-store" })).json();
-    const documents = await Promise.all((index.available_dates || []).map(async (date) => (await fetch(`data/daily/${date}.json`, { cache: "no-store" })).json()));
+    state.backtestSummary = await fetchJson("data/backtest-summary.json", null);
+    const index = await fetchJson("data/daily/index.json");
+    const documents = await Promise.all((index.available_dates || []).map((date) => fetchJson(`data/daily/${date}.json`)));
     state.documents = new Map(documents.map((document) => [document.as_of_date, document]));
     renderBacktestSummary(state.backtestSummary);
     renderPaperEvidence();

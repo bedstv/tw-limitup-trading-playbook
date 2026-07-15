@@ -930,6 +930,19 @@ nav a:focus-visible::after {
   color: #2d3b17;
 }
 
+.dashboard-warning button {
+  margin: 8px 0 0 10px;
+  padding: 6px 10px;
+  border: 1px solid currentColor;
+  border-radius: 8px;
+  color: inherit;
+  background: white;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 900;
+  cursor: pointer;
+}
+
 .dashboard-provenance {
   margin-top: 16px;
   padding: 14px 18px;
