@@ -1,0 +1,96 @@
+{
+  "schema_version": "p2.24",
+  "rule_version": "p2.11_v2",
+  "decision_day_count": 2,
+  "minimum_decision_days": 20,
+  "status": "collecting_fixed_rule_sample",
+  "overall": {
+    "candidate_count": 7,
+    "settled_count": 0,
+    "avg_net_return": null,
+    "median_net_return": null,
+    "win_rate": null,
+    "stop_loss_rate": 0.0,
+    "max_drawdown_equal_weight": null
+  },
+  "unsettled_count": 1,
+  "splits": {
+    "setup_type": {
+      "B": {
+        "candidate_count": 7,
+        "settled_count": 0,
+        "avg_net_return": null,
+        "median_net_return": null,
+        "win_rate": null,
+        "stop_loss_rate": 0.0,
+        "max_drawdown_equal_weight": null
+      }
+    },
+    "market_regime_0915": {
+      "未分類": {
+        "candidate_count": 7,
+        "settled_count": 0,
+        "avg_net_return": null,
+        "median_net_return": null,
+        "win_rate": null,
+        "stop_loss_rate": 0.0,
+        "max_drawdown_equal_weight": null
+      }
+    },
+    "liquidity_tier": {
+      "未分類": {
+        "candidate_count": 7,
+        "settled_count": 0,
+        "avg_net_return": null,
+        "median_net_return": null,
+        "win_rate": null,
+        "stop_loss_rate": 0.0,
+        "max_drawdown_equal_weight": null
+      }
+    },
+    "industry_consensus": {
+      "未分類": {
+        "candidate_count": 7,
+        "settled_count": 0,
+        "avg_net_return": null,
+        "median_net_return": null,
+        "win_rate": null,
+        "stop_loss_rate": 0.0,
+        "max_drawdown_equal_weight": null
+      }
+    },
+    "d1_decision_status": {
+      "DOWNRANK": {
+        "candidate_count": 3,
+        "settled_count": 0,
+        "avg_net_return": null,
+        "median_net_return": null,
+        "win_rate": null,
+        "stop_loss_rate": 0.0,
+        "max_drawdown_equal_weight": null
+      },
+      "PULLBACK_ONLY": {
+        "candidate_count": 1,
+        "settled_count": 0,
+        "avg_net_return": null,
+        "median_net_return": null,
+        "win_rate": null,
+        "stop_loss_rate": 0.0,
+        "max_drawdown_equal_weight": null
+      },
+      "REJECT": {
+        "candidate_count": 3,
+        "settled_count": 0,
+        "avg_net_return": null,
+        "median_net_return": null,
+        "win_rate": null,
+        "stop_loss_rate": 0.0,
+        "max_drawdown_equal_weight": null
+      }
+    }
+  },
+  "limitations": [
+    "固定規則 forward paper trading，樣本未達 20 個判斷日前只顯示收集中。",
+    "分組數字為描述統計，不可據以調參或下單。"
+  ]
+}
