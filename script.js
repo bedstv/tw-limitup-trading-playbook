@@ -31,7 +31,7 @@ const dashboard = {
   setup: document.querySelector("#filter-setup"), liquidity: document.querySelector("#filter-liquidity"),
   risk: document.querySelector("#filter-risk"), decision: document.querySelector("#filter-decision"),
   sort: document.querySelector("#sort-by"), exportCsv: document.querySelector("#export-csv"),
-  exportMarkdown: document.querySelector("#export-markdown"), historyStock: document.querySelector("#history-stock"),
+  exportMarkdown: document.querySelector("#export-markdown"), copyViewLink: document.querySelector("#copy-view-link"), historyStock: document.querySelector("#history-stock"),
   historyTimeline: document.querySelector("#history-timeline"),
   paperProgress: document.querySelector("#paper-progress"),
   paperEvidenceSummary: document.querySelector("#paper-evidence-summary"), paperEvidenceTable: document.querySelector("#paper-evidence-table"),
@@ -95,6 +95,22 @@ const renderRows = (target, rows, columns, renderer, emptyMessage) => { target.i
 const cell = (label, content) => `<td data-label="${escapeHtml(label)}">${content}</td>`;
 const filters = () => ({ setup: dashboard.setup.value, liquidity: dashboard.liquidity.value, risk: dashboard.risk.value, decision: dashboard.decision.value, sort: dashboard.sort.value });
 const rows = (source) => filterAndSortRows(source || [], filters());
+const restoreMarketView = (dates) => {
+  const params = new URLSearchParams(window.location.search);
+  const requestedDate = params.get("date");
+  dashboard.dateSelect.value = dates.includes(requestedDate) ? requestedDate : (dates.at(-1) || "");
+  [[dashboard.setup, "setup"], [dashboard.liquidity, "liquidity"], [dashboard.risk, "risk"], [dashboard.decision, "decision"], [dashboard.sort, "sort"]].forEach(([control, key]) => {
+    const requested = params.get(key);
+    if ([...control.options].some((option) => option.value === requested)) control.value = requested;
+  });
+};
+const saveMarketView = () => {
+  if (document.body.dataset.page !== "market") return;
+  const params = new URLSearchParams(window.location.search);
+  params.set("date", dashboard.dateSelect.value);
+  Object.entries(filters()).forEach(([key, value]) => params.set(key, value));
+  window.history.replaceState({}, "", `${window.location.pathname}?${params.toString()}`);
+};
 const bindDashboardTabs = () => {
   dashboard.tabs.forEach((tab) => tab.addEventListener("click", () => {
     const active = tab.dataset.dashboardTab;
@@ -225,6 +241,7 @@ const renderDashboard = (data) => {
   renderRows(dashboard.d0Table, rows(data.d0_candidates), 6, (row) => `<tr>${cell("股票", `${stockLabel(row)}<br>${industryBadges(row)}`)}${cell("型態", `${escapeHtml(setupLabel(row.setup_type))}${decisionBadge(row)}`)}${cell("收盤", escapeHtml(text(row.close)))}${cell("成交量", escapeHtml(text(row.volume_lots)))}${cell("風險", riskBadges(row))}${cell("下一步", nextStep(row.next_step))}</tr>`, "沒有符合目前篩選條件的 D0 候選。");
   renderRows(dashboard.d1Table, rows(data.d1_watch), 8, (row) => `<tr>${cell("股票", `${stockLabel(row)}<br>${industryBadges(row)}`)}${cell("D0", escapeHtml(text(row.d0_date)))}${cell("開盤跳空 GAP", escapeHtml(text(row.d1_open_gap_pct)))}${cell("09:15 大盤", badge(regimeLabel(row), row.market_regime_0915 === "STRONG" ? "ok" : row.market_regime_0915 === "WEAK" ? "risk" : "warn"))}${cell("異常", row.corporate_action ? badge("公司行動", "risk") : row.abnormal_gap_check ? badge("需檢查", "warn") : badge("否", "ok"))}${cell("警示價", escapeHtml(text(row.alert_reclaim_price)))}${cell("停損", escapeHtml(text(row.stop_loss_price)))}${cell("下一步", nextStep(row.next_step))}</tr>`, "沒有符合目前篩選條件的 D1 觀察名單。");
   renderRows(dashboard.d2Table, rows(data.d2_watch), 7, (row) => `<tr>${cell("股票", `${stockLabel(row)}<br>${industryBadges(row)}`)}${cell("D0", escapeHtml(text(row.d0_date)))}${cell("D1", escapeHtml(text(row.d1_date)))}${cell("警示價", escapeHtml(text(row.alert_reclaim_price)))}${cell("失效價", escapeHtml(text(row.invalidation_price)))}${cell("狀態", badge(text(row.status), row.status === "reclaimed" ? "ok" : "warn"))}${cell("下一步", nextStep(row.next_step))}</tr>`, "沒有符合目前篩選條件的 D2+ 重返觀察。");
+  saveMarketView();
 };
 
 const download = (content, name, type) => { const link = document.createElement("a"); link.href = URL.createObjectURL(new Blob([content], { type })); link.download = name; link.click(); URL.revokeObjectURL(link.href); };
@@ -234,6 +251,15 @@ const bindControls = () => {
   dashboard.historyStock.addEventListener("change", renderHistory);
   dashboard.exportCsv.addEventListener("click", () => download(csvForRows(exportRows()), `tw-candidates-${state.current.as_of_date}.csv`, "text/csv;charset=utf-8"));
   dashboard.exportMarkdown.addEventListener("click", () => download(markdownForRows(exportRows(), state.current.as_of_date), `tw-candidates-${state.current.as_of_date}.md`, "text/markdown;charset=utf-8"));
+  dashboard.copyViewLink.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      dashboard.copyViewLink.textContent = "已複製連結";
+    } catch {
+      dashboard.copyViewLink.textContent = "請從網址列複製";
+    }
+    setTimeout(() => { dashboard.copyViewLink.textContent = "複製目前連結"; }, 1800);
+  });
 };
 const showDashboardError = (error) => {
   dashboard.source.textContent = "載入失敗";
@@ -257,7 +283,7 @@ const initDashboard = async () => {
     state.documents = new Map(documents.map((document) => [document.as_of_date, document]));
     state.histories = buildHistoryByStock(documents);
     dashboard.historyStock.innerHTML = [...state.histories.values()].sort((a, b) => a.stock_id.localeCompare(b.stock_id)).map((item) => `<option value="${item.stock_id}">${item.stock_id} ${escapeHtml(item.name)}</option>`).join("");
-    dashboard.dateSelect.value = index.latest || dates.at(-1);
+    restoreMarketView(dates);
     dashboard.dateSelect.addEventListener("change", async (event) => renderDashboard(documents[dates.indexOf(event.target.value)]));
     bindControls();
     renderBacktestSummary(state.backtestSummary);

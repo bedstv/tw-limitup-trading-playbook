@@ -25,6 +25,7 @@ assert.match(marketPage, /data-page="market"/, "daily market must have an indepe
 assert.match(marketPage, /id="d0-table"/, "daily market must include D0 candidates");
 assert.match(marketPage, /id="d1-table"/, "daily market must include D1 watch rows");
 assert.match(marketPage, /資料更新履歷/, "daily market must show update history");
+assert.match(marketPage, /複製目前連結/, "daily market must offer a shareable filtered view");
 assert.match(marketPage, /板塊共識/, "daily market must show industry consensus");
 assert.match(await readFile(new URL("../script.js", import.meta.url), "utf8"), /重新整理資料/, "dashboard must offer recovery when loading fails");
 assert.match(await readFile(new URL("../styles.css", import.meta.url), "utf8"), /td::before/, "daily market must have mobile card labels");

@@ -6,7 +6,7 @@
     <meta name="description" content="台股漲停後交易作戰手冊的每日候選、09:15 開盤判斷與 D2+ 觀察看板。" />
     <title>每日看盤｜漲停後交易作戰手冊</title>
     <link rel="stylesheet" href="styles.css" />
-    <script type="module" src="script.js?v=20260715-p217"></script>
+    <script type="module" src="script.js?v=20260715-p218"></script>
   </head>
   <body data-page="market">
     <header class="site-header">
@@ -42,7 +42,7 @@
           <label>風險<select id="filter-risk"><option value="all">全部</option><option value="clear">無風險標記</option><option value="flagged">有風險標記</option></select></label>
           <label>D1 狀態<select id="filter-decision"><option value="all">全部</option><option value="WATCH">可觀察</option><option value="PULLBACK_ONLY">等拉回</option><option value="REJECT">不介入</option></select></label>
           <label>排序<select id="sort-by"><option value="priority">策略優先</option><option value="volume">成交量高到低</option><option value="risk">風險低到高</option></select></label>
-          <div class="dashboard-export" aria-label="匯出目前篩選結果"><button type="button" id="export-csv">匯出 CSV</button><button type="button" id="export-markdown">匯出 Markdown</button></div>
+          <div class="dashboard-export" aria-label="匯出目前篩選結果"><button type="button" id="export-csv">匯出 CSV</button><button type="button" id="export-markdown">匯出 Markdown</button><button type="button" id="copy-view-link">複製目前連結</button></div>
         </div>
 
         <div class="dashboard-status" id="dashboard-status" aria-live="polite">
