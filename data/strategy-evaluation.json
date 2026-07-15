@@ -14,6 +14,42 @@
     "max_drawdown_equal_weight": null
   },
   "unsettled_count": 1,
+  "p1_daily_backtest_reference": {
+    "period": "2016–2026",
+    "baseline": {
+      "group_name": "all",
+      "group_value": "all",
+      "signal_count": 969,
+      "executed_count": 221,
+      "execution_rate": "0.2280701754",
+      "win_rate_net": "0.407239819",
+      "avg_net_return": "0.0124066213",
+      "median_net_return": "-0.0239102091",
+      "sum_net_return_equal_weight": "2.741863307",
+      "stop_loss_count": 85,
+      "stop_loss_rate_executed": "0.3846153846",
+      "no_entry_count": 6,
+      "invalidated_before_entry_count": 652,
+      "ambiguous_count": 90
+    },
+    "walk_forward": {
+      "rule_name": "baseline_all",
+      "period": "validate",
+      "signal_count": 596,
+      "executed_count": 126,
+      "execution_rate": "0.211409396",
+      "win_rate_net": "0.3888888889",
+      "avg_net_return": "0.0109318268",
+      "median_net_return": "-0.0275428805",
+      "sum_net_return_equal_weight": "1.3774101824",
+      "stop_loss_count": 50,
+      "stop_loss_rate_executed": "0.3968253968",
+      "invalidated_before_entry_count": 409,
+      "ambiguous_count": 59,
+      "rule_expr": "all D1 blowoff signals"
+    },
+    "note": "P1 是日線 D2+ 保守回測；P2 是 09:15 後分鐘線紙上交易，兩者不可直接合併計算。"
+  },
   "splits": {
     "setup_type": {
       "B": {
