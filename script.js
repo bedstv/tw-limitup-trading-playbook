@@ -234,9 +234,13 @@ const renderDashboard = (data) => {
     const check = checks[phase];
     if (!check) return `${phase === "d1" ? "09:15" : "盤後"}：尚無健康紀錄`;
     const telegram = check.telegram_delivery_status ? `，Telegram ${check.telegram_delivery_status === "sent" ? "已送出" : check.telegram_delivery_status}` : "";
-    return `${phase === "d1" ? "09:15" : "盤後"}：${check.status === "ok" ? "已確認" : check.status === "skipped" ? "跳過" : "異常"}${telegram}（${check.checked_at || "時間未知"}）`;
+    const completed = check.actual_finished_at ? `，完成 ${check.actual_finished_at}` : "";
+    const version = check.versions?.data_runtime_commit ? `，版本 ${check.versions.data_runtime_commit.slice(0, 7)}` : "";
+    const failure = check.status === "failed" ? `，失敗步驟：${check.failed_step || "未分類"}${check.reasons?.length ? `（${check.reasons[0]}）` : ""}` : "";
+    return `${phase === "d1" ? "09:15" : "盤後"}：${check.status === "ok" ? "已確認" : check.status === "skipped" ? "休市／跳過" : "異常"}${telegram}${completed}${version}${failure}（檢查 ${check.checked_at || "時間未知"}）`;
   }).join("；");
-  dashboard.systemHealth.classList.toggle("is-ok", Object.values(checks).every((check) => check.status === "ok"));
+  const healthChecks = Object.values(checks);
+  dashboard.systemHealth.classList.toggle("is-ok", healthChecks.length > 0 && healthChecks.every((check) => check.status === "ok"));
   dashboard.systemHealth.innerHTML = `<strong>自動更新：</strong><span>${escapeHtml(healthText)}</span>`;
   renderUpdateLedger(data);
   renderIndustryConsensus(data);
