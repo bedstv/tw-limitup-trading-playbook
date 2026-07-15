@@ -36,6 +36,7 @@ const dashboard = {
   paperProgress: document.querySelector("#paper-progress"),
   strategyEvaluationSummary: document.querySelector("#strategy-evaluation-summary"), strategyEvaluationSplits: document.querySelector("#strategy-evaluation-splits"),
   intradayCoverageSummary: document.querySelector("#intraday-coverage-summary"),
+  setupAResearchSummary: document.querySelector("#setup-a-research-summary"), setupAResearchDetails: document.querySelector("#setup-a-research-details"),
   paperEvidenceSummary: document.querySelector("#paper-evidence-summary"), paperEvidenceTable: document.querySelector("#paper-evidence-table"),
   backtestPeriod: document.querySelector("#backtest-period"), backtestConclusion: document.querySelector("#backtest-conclusion"),
   backtestMethod: document.querySelector("#backtest-method"), backtestSignals: document.querySelector("#backtest-signals"),
@@ -165,6 +166,26 @@ const renderIntradayCoverage = () => {
   dashboard.intradayCoverageSummary.textContent = coverage.historical_backtest_allowed
     ? `分鐘線覆蓋已達 ${coverage.available_decision_days} 個判斷日，可進行保守歷史回放。`
     : `尚不可進行歷史分鐘線回測：已完整封存 ${coverage.available_decision_days}/${coverage.minimum_decision_days} 個 D1 判斷日，資料不足 ${coverage.data_incomplete_count} 筆。${coverage.reason}`;
+};
+const renderSetupAResearch = () => {
+  if (!dashboard.setupAResearchSummary || !dashboard.setupAResearchDetails) return;
+  const research = state.setupAResearch;
+  if (!research) {
+    dashboard.setupAResearchSummary.textContent = "目前尚未載入 A 型研究結果。";
+    dashboard.setupAResearchDetails.innerHTML = "";
+    return;
+  }
+  const validation = research.walk_forward || {};
+  const pool = research.historical_pool || {};
+  const collecting = research.status === "research_only_insufficient_validation_trades";
+  dashboard.setupAResearchSummary.textContent = collecting
+    ? `研究中，尚未上線：驗證期僅 ${validation.validation_trade_count || 0}/${validation.minimum_validation_trades || "—"} 筆實際成交，未達門檻。本研究不會影響每日候選、09:15 判斷或 Telegram 通知。`
+    : "驗證樣本已達研究審查門檻，但仍須獨立核准後才可能調整正式規則。";
+  dashboard.setupAResearchDetails.innerHTML = [
+    `<p><strong>候選樣本</strong>：嚴格定義 ${pool.strict_candidate_count || 0} 筆；放寬研究池 ${pool.relaxed_candidate_count || 0} 筆（新增 ${pool.relaxed_incremental_count || 0} 筆）。</p>`,
+    `<p><strong>保守日線模擬</strong>：${research.conservative_daily_study?.signal_count || 0} 個訊號，${research.conservative_daily_study?.executed_count || 0} 筆可成交，${research.conservative_daily_study?.invalidated_before_entry_count || 0} 筆進場前失效。</p>`,
+    `<p><strong>研究定義</strong>：${escapeHtml(research.definition?.relaxed || "—")}</p>`,
+  ].join("");
 };
 const renderBacktestSummary = (summary) => {
   if (!dashboard.backtestConclusion) return;
@@ -328,6 +349,7 @@ const initDashboard = async () => {
     state.paperEvaluation = await fetchJson("data/paper-evaluation.json", null);
     state.strategyEvaluation = await fetchJson("data/strategy-evaluation.json", null);
     state.intradayCoverage = await fetchJson("data/intraday-backtest-coverage.json", null);
+    state.setupAResearch = await fetchJson("data/setup-a-research.json", null);
     state.backtestSummary = await fetchJson("data/backtest-summary.json", null);
     state.documents = new Map(documents.map((document) => [document.as_of_date, document]));
     state.histories = buildHistoryByStock(documents);
@@ -339,6 +361,7 @@ const initDashboard = async () => {
     renderPaperEvidence();
     renderStrategyEvaluation();
     renderIntradayCoverage();
+    renderSetupAResearch();
     renderDashboard(documents[dates.indexOf(dashboard.dateSelect.value)]);
     renderHistory();
   } catch (error) { showDashboardError(error); }
@@ -348,6 +371,7 @@ const initStrategy = async () => {
     state.backtestSummary = await fetchJson("data/backtest-summary.json", null);
     state.strategyEvaluation = await fetchJson("data/strategy-evaluation.json", null);
     state.intradayCoverage = await fetchJson("data/intraday-backtest-coverage.json", null);
+    state.setupAResearch = await fetchJson("data/setup-a-research.json", null);
     const index = await fetchJson("data/daily/index.json");
     const documents = await Promise.all((index.available_dates || []).map((date) => fetchJson(`data/daily/${date}.json`)));
     state.documents = new Map(documents.map((document) => [document.as_of_date, document]));
@@ -355,6 +379,7 @@ const initStrategy = async () => {
     renderPaperEvidence();
     renderStrategyEvaluation();
     renderIntradayCoverage();
+    renderSetupAResearch();
   } catch (error) {
     if (dashboard.backtestConclusion) dashboard.backtestConclusion.textContent = "目前無法載入最新驗證資料";
   }

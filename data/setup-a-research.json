@@ -1,0 +1,39 @@
+{
+  "schema_version": "p2.26",
+  "status": "research_only_insufficient_validation_trades",
+  "production_impact": "none",
+  "title": "A 型策略研究候選池",
+  "definition": {
+    "strict": "盤整至少 5 日、ATR5 小於 ATR20、量比不超過 1.20 倍，並通過既有硬條件。",
+    "relaxed": "盤整至少 5 日、ATR5 不超過 ATR20 的 1.10 倍、量比不超過 1.50 倍，並通過既有硬條件。"
+  },
+  "historical_pool": {
+    "all_limit_up_events": 59343,
+    "strict_candidate_count": 31,
+    "relaxed_candidate_count": 61,
+    "relaxed_incremental_count": 30
+  },
+  "conservative_daily_study": {
+    "signal_count": 14,
+    "executed_count": 4,
+    "invalidated_before_entry_count": 10,
+    "avg_net_return": "0.0945344651",
+    "median_net_return": "0.0277263755"
+  },
+  "walk_forward": {
+    "explore_period": "2016-2021",
+    "validate_period": "2022-2026",
+    "validation_trade_count": 4,
+    "minimum_validation_trades": 10,
+    "validation_avg_net_return": "0.0945344651",
+    "validation_median_net_return": "0.0277263755",
+    "validation_win_rate": "0.5",
+    "validation_stop_loss_rate": "0.5"
+  },
+  "conclusion": "驗證期實際成交未達 10 筆；A 型候選池僅供研究，不納入每日候選、09:15 判斷、紙上交易或 Telegram 通知。",
+  "next_requirement": "累積至少 10 筆可驗證的實際成交，並以分鐘線成交順序重新檢驗後，才可另行審查是否升級。",
+  "limitations": [
+    "目前結果來自保守日線模擬，不能證明盤中進場與停損的先後順序。",
+    "研究中尚未套用 09:15 大盤、EPS、處置與分鐘線流動性等正式交易限制。"
+  ]
+}

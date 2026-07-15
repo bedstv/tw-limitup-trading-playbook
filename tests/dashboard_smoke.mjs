@@ -39,4 +39,9 @@ assert.equal(records[0].decision_date, "2026-07-14", "paper evidence must retain
 const industries = industrySummary([{ stock_id: "1111", industry: "半導體業" }, { stock_id: "2222", industry: "半導體業" }, { stock_id: "3333", industry: "電子零組件業" }]);
 assert.equal(industries[0].count, 2, "industry consensus must group candidates by industry");
 assert.match(await readFile(new URL("../index.html", import.meta.url), "utf8"), /紙上交易驗證/, "dashboard must show paper-trading evidence");
+const setupAResearch = JSON.parse(await readFile(new URL("../data/setup-a-research.json", import.meta.url)));
+assert.equal(setupAResearch.production_impact, "none", "A setup research must not affect production selection");
+assert.equal(setupAResearch.walk_forward.minimum_validation_trades, 10, "A setup research must keep the ten-trade promotion gate");
+assert.match(await readFile(new URL("../index.html", import.meta.url), "utf8"), /A 型策略研究/, "dashboard must show A setup research status");
+assert.match(await readFile(new URL("../script.js", import.meta.url), "utf8"), /setup-a-research\.json/, "dashboard must load A setup research data");
 console.log(`dashboard_smoke=PASS dates=${documents.length} tracked_stocks=${history.size}`);
