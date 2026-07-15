@@ -203,7 +203,9 @@ const renderProvenance = (data) => {
   const afterhours = data.afterhours_ready ? "可用" : "候選可顯示，但風險快照或公司行動資料尚未完整";
   const d1 = d1Sources.length ? `可用：${d1Sources.map(sourceName).join("、")}` : "尚未取得；不可據此做 D1 進場判斷";
   const paper = minuteSources.length ? `已封存：${minuteSources.map(sourceName).join("、")}` : "尚無已封存的分鐘線紙上交易紀錄";
-  dashboard.provenance.innerHTML = `<strong>資料來源與可用性：</strong><span>盤後候選：TWSE／TPEx 官方日行情（${escapeHtml(afterhours)}）。09:15 判斷：${escapeHtml(d1)}。紙上交易分鐘線：${escapeHtml(paper)}。</span>`;
+  const coverage = data.d1_quote_coverage || data.health?.d1_quote_coverage;
+  const coverageText = coverage ? `09:15 個股覆蓋 ${coverage.covered_count}/${coverage.candidate_count}（${coverage.coverage_pct}%）；缺資料 ${coverage.missing_stock_ids?.length || 0} 檔。` : "09:15 個股覆蓋尚待下一次 D1 更新。";
+  dashboard.provenance.innerHTML = `<strong>資料來源與可用性：</strong><span>盤後候選：TWSE／TPEx 官方日行情（${escapeHtml(afterhours)}）。09:15 判斷：${escapeHtml(d1)}。${escapeHtml(coverageText)} 紙上交易分鐘線：${escapeHtml(paper)}。</span>`;
 };
 
 const renderHistory = () => {
