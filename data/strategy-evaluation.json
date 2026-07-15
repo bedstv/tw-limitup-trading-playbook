@@ -63,8 +63,17 @@
       }
     },
     "market_regime_0915": {
-      "未分類": {
-        "candidate_count": 7,
+      "": {
+        "candidate_count": 3,
+        "settled_count": 0,
+        "avg_net_return": null,
+        "median_net_return": null,
+        "win_rate": null,
+        "stop_loss_rate": 0.0,
+        "max_drawdown_equal_weight": null
+      },
+      "STRONG": {
+        "candidate_count": 4,
         "settled_count": 0,
         "avg_net_return": null,
         "median_net_return": null,
@@ -74,7 +83,7 @@
       }
     },
     "liquidity_tier": {
-      "未分類": {
+      "": {
         "candidate_count": 7,
         "settled_count": 0,
         "avg_net_return": null,
@@ -85,8 +94,26 @@
       }
     },
     "industry_consensus": {
-      "未分類": {
-        "candidate_count": 7,
+      "": {
+        "candidate_count": 3,
+        "settled_count": 0,
+        "avg_net_return": null,
+        "median_net_return": null,
+        "win_rate": null,
+        "stop_loss_rate": 0.0,
+        "max_drawdown_equal_weight": null
+      },
+      "False": {
+        "candidate_count": 2,
+        "settled_count": 0,
+        "avg_net_return": null,
+        "median_net_return": null,
+        "win_rate": null,
+        "stop_loss_rate": 0.0,
+        "max_drawdown_equal_weight": null
+      },
+      "True": {
+        "candidate_count": 2,
         "settled_count": 0,
         "avg_net_return": null,
         "median_net_return": null,
