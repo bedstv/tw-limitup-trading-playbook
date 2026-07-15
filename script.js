@@ -36,6 +36,7 @@ const dashboard = {
   paperProgress: document.querySelector("#paper-progress"),
   todaySummaryTitle: document.querySelector("#today-summary-title"), todaySummaryNote: document.querySelector("#today-summary-note"), todayFocusCards: document.querySelector("#today-focus-cards"),
   strategyEvaluationSummary: document.querySelector("#strategy-evaluation-summary"), strategyEvaluationSplits: document.querySelector("#strategy-evaluation-splits"),
+  strategyReviewChecklist: document.querySelector("#strategy-review-checklist"),
   intradayCoverageSummary: document.querySelector("#intraday-coverage-summary"),
   setupAResearchSummary: document.querySelector("#setup-a-research-summary"), setupAResearchDetails: document.querySelector("#setup-a-research-details"),
   paperEvidenceSummary: document.querySelector("#paper-evidence-summary"), paperEvidenceTable: document.querySelector("#paper-evidence-table"),
@@ -159,9 +160,9 @@ const renderPaperEvidence = () => {
   renderRows(dashboard.paperEvidenceTable, records.slice(0, 20), 7, (row) => `<tr><td>${escapeHtml(text(row.decision_date))}</td><td>${escapeHtml(text(row.stock_id))} ${escapeHtml(text(row.name, ""))}</td><td>${escapeHtml(paperDecisionLabel(row.d1_decision_status))}</td><td>${escapeHtml(paperOutcomeLabel(row.status))}</td><td>進場 ${paperPrice(row.entry_price)}<br>停損 ${paperPrice(row.stop_loss_price)}</td><td>${escapeHtml(paperSourceLabel(row.minute_bar_source))}</td><td>${percent(row.net_return)}</td></tr>`, "目前尚無固定規則 V2 的紙上交易紀錄。");
 };
 const renderStrategyEvaluation = () => {
-  if (!dashboard.strategyEvaluationSummary || !dashboard.strategyEvaluationSplits) return;
+  if (!dashboard.strategyEvaluationSummary || !dashboard.strategyEvaluationSplits || !dashboard.strategyReviewChecklist) return;
   const evaluation = state.strategyEvaluation;
-  if (!evaluation) { dashboard.strategyEvaluationSummary.textContent = "目前尚未載入固定規則評估。"; return; }
+  if (!evaluation) { dashboard.strategyEvaluationSummary.textContent = "目前尚未載入固定規則評估。"; dashboard.strategyReviewChecklist.innerHTML = ""; return; }
   const overall = evaluation.overall || {};
   const formalReview = evaluation.formal_review || {};
   const collecting = evaluation.status !== "ready_for_review";
@@ -173,6 +174,14 @@ const renderStrategyEvaluation = () => {
     const textGroups = Object.entries(groups).map(([name, value]) => `${name}：${value.candidate_count} 筆／已結算 ${value.settled_count} 筆`).join("；");
     return `<p><strong>${escapeHtml(labels[key] || key)}</strong>：${escapeHtml(textGroups || "尚無資料")}</p>`;
   }).join("");
+  const reviewState = formalReview.status || "collecting";
+  const checklist = [
+    [evaluation.decision_day_count >= 20, `至少 20 個 D1 判斷日：目前 ${evaluation.decision_day_count || 0}/${formalReview.minimum_decision_days || 20} 日。`],
+    [evaluation.decision_day_count >= (formalReview.formal_review_decision_days || 60), `正式評估須達 60 日：目前 ${evaluation.decision_day_count || 0}/${formalReview.formal_review_decision_days || 60} 日。`],
+    [(evaluation.unsettled_count || 0) === 0, `待結算／待補證據：${evaluation.unsettled_count || 0} 筆；正式評估前須為 0。`],
+    [Boolean(overall.settled_count), `已結算交易：${overall.settled_count || 0} 筆；須一併閱讀平均、中位數、勝率、停損率與最大回撤。`],
+  ];
+  dashboard.strategyReviewChecklist.innerHTML = `<p><strong>人工評估清單</strong>（${escapeHtml(reviewState)}）：僅在所有條件完成後，由人工決定保留、研究或淘汰；系統不會自動升級或下單。</p>${checklist.map(([done, label]) => `<p>${done ? "✓" : "○"} ${escapeHtml(label)}</p>`).join("")}`;
 };
 const renderIntradayCoverage = () => {
   if (!dashboard.intradayCoverageSummary) return;
