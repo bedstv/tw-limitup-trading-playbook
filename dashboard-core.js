@@ -36,6 +36,14 @@ export const paperProgress = (documents, minimumDays = 20) => {
   };
 };
 
+export const paperRecords = (documents, ruleVersion = "p2.11_v2") => documents
+  .flatMap((document) => (document.paper_trading_records || []).map((row) => ({
+    ...row,
+    decision_date: row.decision_date || document.paper_trading?.decision_date || document.as_of_date || "",
+  })))
+  .filter((row) => row.rule_version === ruleVersion)
+  .sort((a, b) => `${b.decision_date}-${b.stock_id || ""}`.localeCompare(`${a.decision_date}-${a.stock_id || ""}`));
+
 export const rowsForExport = (data) => [
   ...(data.d0_candidates || []).map((row) => ({ ...row, stage: "D0" })),
   ...(data.d1_watch || []).map((row) => ({ ...row, stage: "D1" })),

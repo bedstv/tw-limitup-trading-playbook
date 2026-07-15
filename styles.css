@@ -777,6 +777,19 @@ nav a:focus-visible::after {
 
 .backtest-card .backtest-note { grid-column: 1 / -1; margin: 0; }
 
+.paper-evidence-card {
+  overflow: hidden;
+  margin-top: 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: white;
+  box-shadow: var(--shadow);
+}
+
+.paper-evidence-card h3 { margin: 8px 0; font-size: 1.15rem; }
+.paper-evidence-card p { margin: 0; color: var(--muted); font-size: 0.84rem; line-height: 1.65; }
+.paper-evidence-table { min-width: 860px; }
+
 .backtest-metrics {
   display: grid;
   margin: 0;

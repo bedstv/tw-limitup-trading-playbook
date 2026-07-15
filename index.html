@@ -9,7 +9,7 @@
     />
     <title>漲停後交易作戰手冊｜D0 → D1 → D2+</title>
     <link rel="stylesheet" href="styles.css" />
-    <script type="module" src="script.js?v=5080337"></script>
+    <script type="module" src="script.js?v=20260715-p213"></script>
   </head>
   <body>
     <header class="site-header">
@@ -120,6 +120,20 @@
               <div><dt>樣本外中位數</dt><dd id="backtest-oos-median">--</dd></div>
             </dl>
             <p class="backtest-note" id="backtest-note">回測摘要載入後顯示目前適用限制。</p>
+          </article>
+
+          <article class="paper-evidence-card">
+            <div class="dashboard-panel-head">
+              <p class="panel-kicker">P2.13 · 09:15 紙上交易驗證</p>
+              <h3>固定規則的每日驗證紀錄</h3>
+              <p id="paper-evidence-summary">正在載入紙上交易驗證紀錄。</p>
+            </div>
+            <div class="dashboard-table-wrap">
+              <table class="dashboard-table paper-evidence-table">
+                <thead><tr><th>判斷日</th><th>股票</th><th>D1 判斷</th><th>模擬結果</th><th>進場／停損</th><th>分鐘資料</th><th>淨報酬</th></tr></thead>
+                <tbody id="paper-evidence-table"></tbody>
+              </table>
+            </div>
           </article>
         </div>
 

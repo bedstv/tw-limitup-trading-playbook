@@ -4,6 +4,7 @@ import {
   decisionStatus,
   filterAndSortRows,
   markdownForRows,
+  paperRecords,
   paperProgress,
   text,
 } from "./dashboard-core.js";
@@ -30,6 +31,7 @@ const dashboard = {
   exportMarkdown: document.querySelector("#export-markdown"), historyStock: document.querySelector("#history-stock"),
   historyTimeline: document.querySelector("#history-timeline"),
   paperProgress: document.querySelector("#paper-progress"),
+  paperEvidenceSummary: document.querySelector("#paper-evidence-summary"), paperEvidenceTable: document.querySelector("#paper-evidence-table"),
   backtestPeriod: document.querySelector("#backtest-period"), backtestConclusion: document.querySelector("#backtest-conclusion"),
   backtestMethod: document.querySelector("#backtest-method"), backtestSignals: document.querySelector("#backtest-signals"),
   backtestAverage: document.querySelector("#backtest-average"), backtestMedian: document.querySelector("#backtest-median"),
@@ -83,6 +85,22 @@ const bindDashboardTabs = () => {
 };
 const unique = (items) => [...new Set(items.filter(Boolean))];
 const percent = (value) => value === null || value === undefined || value === "" ? "—" : `${Number(value * 100).toFixed(2)}%`;
+const paperDecisionLabel = (value) => ({ WATCH: "可觀察", PULLBACK_ONLY: "等拉回", REJECT: "不介入", DOWNRANK: "降權觀察" }[value] || text(value));
+const paperOutcomeLabel = (value) => ({
+  executed: "已完成當日模擬", hold_overnight_review: "留倉覆核", no_entry_after_0915: "未觸發進場",
+  invalidated_before_entry: "進場前失效", ambiguous_entry_and_stop_same_minute: "同分鐘順序不明，保守不交易",
+  data_incomplete: "分鐘資料不足", not_traded: "條件不符合，未模擬",
+}[value] || text(value));
+const paperSourceLabel = (value) => ({ "Fugle:historical/candles:1m": "Fugle 1 分鐘線", not_captured: "尚未封存" }[value] || text(value));
+const paperPrice = (value) => value === null || value === undefined || value === "" ? "—" : Number(value).toFixed(2);
+const renderPaperEvidence = () => {
+  const records = paperRecords([...state.documents.values()]);
+  const progress = paperProgress([...state.documents.values()]);
+  dashboard.paperEvidenceSummary.textContent = progress.recorded_count
+    ? `固定規則 ${progress.rule_version}：已封存 ${progress.recorded_count} 筆紀錄；以下顯示最近 20 筆。這是模擬驗證，並非真實下單紀錄。`
+    : `固定規則 ${progress.rule_version} 正在收集樣本。目前尚無可顯示的個股模擬紀錄；D1 09:15 判斷後會自動加入。`;
+  renderRows(dashboard.paperEvidenceTable, records.slice(0, 20), 7, (row) => `<tr><td>${escapeHtml(text(row.decision_date))}</td><td>${escapeHtml(text(row.stock_id))} ${escapeHtml(text(row.name, ""))}</td><td>${escapeHtml(paperDecisionLabel(row.d1_decision_status))}</td><td>${escapeHtml(paperOutcomeLabel(row.status))}</td><td>進場 ${paperPrice(row.entry_price)}<br>停損 ${paperPrice(row.stop_loss_price)}</td><td>${escapeHtml(paperSourceLabel(row.minute_bar_source))}</td><td>${percent(row.net_return)}</td></tr>`, "目前尚無固定規則 V2 的紙上交易紀錄。");
+};
 const renderBacktestSummary = (summary) => {
   if (!summary) {
     dashboard.backtestConclusion.textContent = "目前尚未載入回測摘要";
@@ -179,6 +197,7 @@ const initDashboard = async () => {
     dashboard.dateSelect.addEventListener("change", async (event) => renderDashboard(documents[dates.indexOf(event.target.value)]));
     bindControls();
     renderBacktestSummary(state.backtestSummary);
+    renderPaperEvidence();
     renderDashboard(documents[dates.indexOf(dashboard.dateSelect.value)]);
     renderHistory();
   } catch (error) { showDashboardError(error); }

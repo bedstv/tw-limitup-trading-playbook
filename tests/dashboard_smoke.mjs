@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
-import { buildHistoryByStock, csvForRows, filterAndSortRows, markdownForRows, paperProgress } from "../dashboard-core.js";
+import { buildHistoryByStock, csvForRows, filterAndSortRows, markdownForRows, paperProgress, paperRecords } from "../dashboard-core.js";
 
 const index = JSON.parse(await readFile(new URL("../data/daily/index.json", import.meta.url)));
 const documents = await Promise.all(index.available_dates.map(async (date) => JSON.parse(await readFile(new URL(`../data/daily/${date}.json`, import.meta.url)))));
@@ -24,4 +24,8 @@ const progress = paperProgress([{ paper_trading: { rule_version: "p2.11_v2", can
 assert.equal(progress.remaining_days, 19, "paper progress must count D1 decision days");
 assert.equal(progress.settled_count, 1, "paper progress must count settled records");
 assert.equal(progress.net_return_sum, 0.012, "paper progress must aggregate net returns");
+const records = paperRecords([{ as_of_date: "2026-07-14", paper_trading_records: [{ rule_version: "p2.11_v1", stock_id: "1111" }, { rule_version: "p2.11_v2", stock_id: "2222", status: "not_traded" }] }]);
+assert.equal(records.length, 1, "paper evidence must only show the fixed V2 rule");
+assert.equal(records[0].decision_date, "2026-07-14", "paper evidence must retain a display date");
+assert.match(await readFile(new URL("../index.html", import.meta.url), "utf8"), /紙上交易驗證/, "dashboard must show paper-trading evidence");
 console.log(`dashboard_smoke=PASS dates=${documents.length} tracked_stocks=${history.size}`);
