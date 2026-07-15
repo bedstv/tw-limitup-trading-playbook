@@ -23,7 +23,7 @@ const dashboard = {
   dateSelect: document.querySelector("#dashboard-date"), source: document.querySelector("#dashboard-source"),
   tradeReady: document.querySelector("#trade-ready"), d0Count: document.querySelector("#d0-count"),
   d1Count: document.querySelector("#d1-count"), d2Count: document.querySelector("#d2-count"),
-  warning: document.querySelector("#dashboard-warning"), systemHealth: document.querySelector("#dashboard-system-health"), d0Table: document.querySelector("#d0-table"),
+  warning: document.querySelector("#dashboard-warning"), systemHealth: document.querySelector("#dashboard-system-health"), freshness: document.querySelector("#dashboard-freshness"), d0Table: document.querySelector("#d0-table"),
   updateLedger: document.querySelector("#update-ledger"), updateLedgerItems: document.querySelector("#update-ledger-items"),
   industryConsensusSummary: document.querySelector("#industry-consensus-summary"), industryConsensusItems: document.querySelector("#industry-consensus-items"),
   provenance: document.querySelector("#dashboard-provenance"),
@@ -242,6 +242,17 @@ const renderDashboard = (data) => {
   const healthChecks = Object.values(checks);
   dashboard.systemHealth.classList.toggle("is-ok", healthChecks.length > 0 && healthChecks.every((check) => check.status === "ok"));
   dashboard.systemHealth.innerHTML = `<strong>自動更新：</strong><span>${escapeHtml(healthText)}</span>`;
+  const freshness = state.marketFreshness;
+  if (dashboard.freshness) {
+    if (!freshness) {
+      dashboard.freshness.innerHTML = "<strong>交易日與資料新鮮度：</strong><span>尚無檢查紀錄。</span>";
+    } else {
+      const market = freshness.market_day || {};
+      const expectation = freshness.is_stale ? "資料已過期，系統會告警。" : market.status === "closed" ? `今日休市（${market.reason || "市場公告"}），不要求產生當日盤後資料。` : "資料日期符合目前交易時段的預期。";
+      dashboard.freshness.classList.toggle("is-ok", !freshness.is_stale && market.status === "trading");
+      dashboard.freshness.innerHTML = `<strong>交易日與資料新鮮度：</strong><span>${escapeHtml(`最新資料日 ${freshness.latest_data_date || "尚無"}；預期資料日 ${freshness.expected_latest_data_date || "尚無"}。${expectation}`)}</span>`;
+    }
+  }
   renderUpdateLedger(data);
   renderIndustryConsensus(data);
   renderProvenance(data);
@@ -286,6 +297,7 @@ const initDashboard = async () => {
     dashboard.dateSelect.innerHTML = dates.map((date) => `<option value="${date}">${date}</option>`).join("");
     const documents = await Promise.all(dates.map((date) => fetchJson(`data/daily/${date}.json`)));
     state.systemHealth = await fetchJson("data/system-health.json", { checks: {} });
+    state.marketFreshness = await fetchJson("data/market-freshness.json", null);
     state.paperEvaluation = await fetchJson("data/paper-evaluation.json", null);
     state.backtestSummary = await fetchJson("data/backtest-summary.json", null);
     state.documents = new Map(documents.map((document) => [document.as_of_date, document]));
