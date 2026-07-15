@@ -77,6 +77,7 @@ const nextStepChinese = (value) => {
   "D1 opening gap exceeded 5%; direct chase prohibited.": "D1 開盤跳空超過 5%，不可直接追價；等待拉回後再確認。",
   "D1 opening gap exceeded 7%.": "D1 開盤跳空超過 7%，不介入。",
   "Stock was under disposition on D1.": "D1 已列處置股，不介入。",
+  "Exclude: corporate action changed the price basis": "公司行動已改變價格基準，不使用一般跳空、警示價或停損判斷；排除觀察。",
   "No D2 reclaim setup; monitor only if relative strength confirmed": "尚未形成 D2 重返警示價條件；僅在相對強勢確認後持續追蹤。",
   "Add to D2 reclaim watch": "納入 D2+ 重返警示價觀察。",
   "Weak market B setup failed a required strength check.": "弱勢大盤下，B 型未通過強勢條件，不介入。",

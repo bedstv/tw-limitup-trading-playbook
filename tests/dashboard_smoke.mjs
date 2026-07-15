@@ -45,6 +45,7 @@ assert.match(marketPage, /異常原因/, "daily market must explain abnormal con
 assert.match(await readFile(new URL("../script.js", import.meta.url), "utf8"), /renderTodaySummary/, "daily market must render a concise trading summary");
 assert.match(await readFile(new URL("../script.js", import.meta.url), "utf8"), /個股資料未齊，整批不可標示為可交易/, "daily summary must distinguish partial 09:15 coverage from a tradable batch");
 assert.match(await readFile(new URL("../script.js", import.meta.url), "utf8"), /缺資料個股已排除，因此整批尚不可標示為可交易/, "daily status must explain why partial coverage is not trade-ready");
+assert.match(await readFile(new URL("../script.js", import.meta.url), "utf8"), /公司行動已改變價格基準/, "daily market must translate corporate-action exclusions");
 const setupAResearch = JSON.parse(await readFile(new URL("../data/setup-a-research.json", import.meta.url)));
 assert.equal(setupAResearch.production_impact, "none", "A setup research must not affect production selection");
 assert.equal(setupAResearch.walk_forward.minimum_validation_trades, 10, "A setup research must keep the ten-trade promotion gate");
