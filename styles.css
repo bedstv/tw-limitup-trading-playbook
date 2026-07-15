@@ -695,6 +695,113 @@ nav a:focus-visible::after {
   font-size: 0.78rem;
 }
 
+.dashboard-tabs {
+  display: flex;
+  gap: 8px;
+  margin: 22px 0;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.dashboard-tabs button {
+  min-height: 40px;
+  padding: 0 16px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  color: var(--muted);
+  background: white;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.dashboard-tabs button[aria-selected="true"] {
+  border-color: var(--ink);
+  color: var(--ink);
+  background: var(--lime);
+}
+
+.strategy-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.strategy-card,
+.backtest-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: white;
+  box-shadow: var(--shadow);
+}
+
+.strategy-card {
+  padding: 22px;
+}
+
+.strategy-card h3,
+.backtest-card h3 {
+  margin: 8px 0;
+  font-size: 1.15rem;
+}
+
+.strategy-card p,
+.backtest-card p {
+  color: var(--muted);
+  font-size: 0.84rem;
+  line-height: 1.65;
+}
+
+.strategy-state {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 5px 8px;
+  border-radius: 999px;
+  color: #334017;
+  background: rgba(199, 245, 66, 0.34);
+  font-size: 0.72rem;
+  font-weight: 900;
+}
+
+.strategy-state-cyan { color: #174c4f; background: rgba(92, 225, 230, 0.22); }
+.strategy-state-amber { color: #6c4d13; background: rgba(255, 202, 94, 0.28); }
+
+.backtest-card {
+  display: grid;
+  margin-top: 16px;
+  padding: 24px;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 22px;
+}
+
+.backtest-card .backtest-note { grid-column: 1 / -1; margin: 0; }
+
+.backtest-metrics {
+  display: grid;
+  margin: 0;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.backtest-metrics div {
+  padding: 12px;
+  border-radius: 12px;
+  background: rgba(16, 20, 23, 0.04);
+}
+
+.backtest-metrics dt {
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 900;
+}
+
+.backtest-metrics dd {
+  margin: 5px 0 0;
+  font-size: 1.1rem;
+  font-weight: 900;
+}
+
 .dashboard-status {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -1357,7 +1464,12 @@ footer {
   .regime-grid,
   .dashboard-status,
   .dashboard-grid,
+  .strategy-grid,
   .decision-board {
+    grid-template-columns: 1fr;
+  }
+
+  .backtest-card {
     grid-template-columns: 1fr;
   }
 

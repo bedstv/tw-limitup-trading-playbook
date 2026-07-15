@@ -76,10 +76,54 @@
           <p class="eyebrow">DAILY DASHBOARD · P2.10</p>
           <h2>每日候選股看板</h2>
           <p>
-            讀取 P2.1 盤後 pipeline 產出的靜態資料，顯示 D0 候選、D1 觀察、
-            D2+ 重返觀察與資料健康狀態。這裡是候選/觀察中心，不是自動下單介面。
+            將策略研究與每日看盤分開呈現。這裡是候選／觀察中心，不是自動下單介面。
           </p>
         </div>
+
+        <div class="dashboard-tabs" role="tablist" aria-label="看板內容">
+          <button type="button" role="tab" aria-selected="true" aria-controls="dashboard-basics" id="tab-basics" data-dashboard-tab="basics">策略與回測</button>
+          <button type="button" role="tab" aria-selected="false" aria-controls="dashboard-market" id="tab-market" data-dashboard-tab="market">每日看盤</button>
+        </div>
+
+        <div class="dashboard-tab-panel" id="dashboard-basics" role="tabpanel" aria-labelledby="tab-basics">
+          <div class="strategy-grid">
+            <article class="strategy-card">
+              <p class="panel-kicker">01 · D0 盤後候選</p>
+              <h3>找出漲停候選</h3>
+              <p><strong>A 型</strong>是盤整量縮後漲停；<strong>B 型</strong>是突破近期前高且帶量漲停。共同檢查日／週 MACD、流動性、EPS、處置與板塊共識。</p>
+              <span class="strategy-state">每天盤後產生</span>
+            </article>
+            <article class="strategy-card">
+              <p class="panel-kicker">02 · D1 09:15</p>
+              <h3>當沖觀察與風險控制</h3>
+              <p>依大盤強弱、跳空與個股相對強度分為可觀察、等拉回或不介入。跳空超過 5% 不直接追，超過 7% 不介入。</p>
+              <span class="strategy-state strategy-state-cyan">紙上交易累積中</span>
+            </article>
+            <article class="strategy-card">
+              <p class="panel-kicker">03 · D2+ 重返</p>
+              <h3>換手後等重返警示價</h3>
+              <p>D1 開高走弱、爆量換手後，最多等 5 天；價格重返警示價才進場，跌破失效價停損，最多持有 5 天。</p>
+              <span class="strategy-state strategy-state-amber">已完成日線回測</span>
+            </article>
+          </div>
+
+          <article class="backtest-card">
+            <div>
+              <p class="panel-kicker">2016–2026 · 保守日線回測（更新至 2026-07-14）</p>
+              <h3>目前結論：有少數大賺交易，但尚未證實穩定優勢</h3>
+              <p>模擬 D2+ 重返警示價，採 5 日等待、5 日持有、單邊成本 0.15%；同日進場與停損無法排序時，保守不交易。</p>
+            </div>
+            <dl class="backtest-metrics">
+              <div><dt>訊號／可執行</dt><dd>971／223</dd></div>
+              <div><dt>平均淨報酬</dt><dd>+1.22%</dd></div>
+              <div><dt>中位數淨報酬</dt><dd>-2.39%</dd></div>
+              <div><dt>樣本外中位數</dt><dd>-2.75%</dd></div>
+            </dl>
+            <p class="backtest-note">5,000 張以上相對較好，但樣本外中位數仍為負；目前只作優先觀察，不升級為正式交易規則。完整當沖績效仍須靠 09:15 後的分鐘線紙上交易驗證。</p>
+          </article>
+        </div>
+
+        <div class="dashboard-tab-panel" id="dashboard-market" role="tabpanel" aria-labelledby="tab-market" hidden>
 
         <div class="dashboard-toolbar">
           <label for="dashboard-date">資料日</label>
@@ -263,6 +307,7 @@
             </div>
             <div id="history-timeline" class="history-timeline" aria-live="polite"></div>
           </article>
+        </div>
         </div>
       </section>
 

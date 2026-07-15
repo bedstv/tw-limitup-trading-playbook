@@ -30,6 +30,8 @@ const dashboard = {
   exportMarkdown: document.querySelector("#export-markdown"), historyStock: document.querySelector("#history-stock"),
   historyTimeline: document.querySelector("#history-timeline"),
   paperProgress: document.querySelector("#paper-progress"),
+  tabs: [...document.querySelectorAll("[data-dashboard-tab]")],
+  tabPanels: [...document.querySelectorAll(".dashboard-tab-panel")],
 };
 const state = { current: null, histories: new Map() };
 const escapeHtml = (value) => text(value, "").replace(/[&<>"]/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[char]);
@@ -65,6 +67,13 @@ const emptyRow = (columns, message) => `<tr><td class="dashboard-empty" colspan=
 const renderRows = (target, rows, columns, renderer, emptyMessage) => { target.innerHTML = rows.length ? rows.map(renderer).join("") : emptyRow(columns, emptyMessage); };
 const filters = () => ({ setup: dashboard.setup.value, liquidity: dashboard.liquidity.value, risk: dashboard.risk.value, decision: dashboard.decision.value, sort: dashboard.sort.value });
 const rows = (source) => filterAndSortRows(source || [], filters());
+const bindDashboardTabs = () => {
+  dashboard.tabs.forEach((tab) => tab.addEventListener("click", () => {
+    const active = tab.dataset.dashboardTab;
+    dashboard.tabs.forEach((item) => item.setAttribute("aria-selected", String(item === tab)));
+    dashboard.tabPanels.forEach((panel) => { panel.hidden = panel.id !== `dashboard-${active}`; });
+  }));
+};
 const unique = (items) => [...new Set(items.filter(Boolean))];
 const sourceName = (source) => ({
   "Fugle 1m completed 09:15 bar": "Fugle 1 分鐘線（已完成 09:15 K）",
@@ -128,6 +137,7 @@ const bindControls = () => {
 };
 const showDashboardError = (error) => { dashboard.source.textContent = "載入失敗"; dashboard.warning.innerHTML = `<strong>資料狀態：</strong><span>${escapeHtml(error.message)}</span>`; dashboard.provenance.innerHTML = "<strong>資料來源與可用性：</strong><span>無法載入。</span>"; [dashboard.d0Table, dashboard.d1Table, dashboard.d2Table].forEach((table, index) => renderRows(table, [], [6, 8, 7][index], () => "", "Dashboard data 載入失敗。")); };
 const initDashboard = async () => {
+  bindDashboardTabs();
   try {
     const index = await (await fetch("data/daily/index.json", { cache: "no-store" })).json();
     const dates = index.available_dates || [];

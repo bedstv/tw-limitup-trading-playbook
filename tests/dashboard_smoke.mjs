@@ -18,6 +18,8 @@ assert.match(csvForRows(filtered), /stock_id/, "CSV export must have headers");
 assert.match(markdownForRows(filtered, index.latest), /台股候選匯出/, "Markdown export must have a title");
 assert.match(await readFile(new URL("../index.html", import.meta.url), "utf8"), /看板欄位怎麼看/, "dashboard must include a glossary");
 assert.match(await readFile(new URL("../index.html", import.meta.url), "utf8"), /資料來源與可用性/, "dashboard must explain data provenance");
+assert.match(await readFile(new URL("../index.html", import.meta.url), "utf8"), /策略與回測/, "dashboard must separate strategy basics");
+assert.match(await readFile(new URL("../index.html", import.meta.url), "utf8"), /每日看盤/, "dashboard must separate daily market view");
 const progress = paperProgress([{ paper_trading: { rule_version: "p2.11_v2", candidate_count: 1, watch_count: 1, executed_count: 0 }, paper_trading_records: [{ rule_version: "p2.11_v2", net_return: "0.012" }] }]);
 assert.equal(progress.remaining_days, 19, "paper progress must count D1 decision days");
 assert.equal(progress.settled_count, 1, "paper progress must count settled records");
