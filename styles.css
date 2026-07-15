@@ -625,6 +625,37 @@ nav a:focus-visible::after {
 .market-back-link { margin-top: 22px; }
 .market-dashboard { padding-bottom: 86px; }
 
+.decision-summary {
+  margin: 0 0 18px;
+  padding: 22px;
+  border: 1px solid rgba(199, 245, 66, 0.72);
+  border-radius: var(--radius);
+  background: rgba(199, 245, 66, 0.13);
+}
+
+.decision-summary-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.decision-summary h2 { margin: 0; font-size: clamp(1.25rem, 2.5vw, 1.8rem); line-height: 1.2; }
+.decision-summary-head > p { max-width: 470px; margin: 0; color: #46512d; font-size: 0.8rem; }
+.decision-focus-grid { display: grid; margin-top: 16px; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.decision-focus-card { padding: 16px; border: 1px solid rgba(16, 20, 23, 0.13); border-radius: 14px; background: rgba(255, 255, 255, 0.86); }
+.decision-focus-card > div:first-child { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+.decision-focus-card > div:first-child > .badge { margin: 0; }
+.decision-focus-card > div:first-child strong { font-size: 1rem; }
+.decision-focus-status { display: inline-block; margin-top: 9px; padding: 3px 7px; border-radius: 999px; color: #334017; background: rgba(199, 245, 66, 0.36); font-size: 0.7rem; font-weight: 900; }
+.decision-focus-card p { margin: 10px 0; font-size: 0.78rem; line-height: 1.55; }
+.decision-focus-meta { display: grid; margin: 0; grid-template-columns: 1fr 1fr; gap: 7px; }
+.decision-focus-meta div:last-child { grid-column: 1 / -1; }
+.decision-focus-meta div { padding: 7px; border-radius: 8px; background: rgba(16, 20, 23, 0.045); }
+.decision-focus-meta dt { color: var(--muted); font-size: 0.65rem; font-weight: 900; letter-spacing: 0.04em; }
+.decision-focus-meta dd { margin: 2px 0 0; font-size: 0.74rem; font-weight: 800; line-height: 1.4; }
+.decision-summary-empty { grid-column: 1 / -1; margin: 0; color: var(--muted); font-size: 0.86rem; }
+
 .dashboard-toolbar {
   display: flex;
   margin-bottom: 18px;
@@ -1568,6 +1599,7 @@ footer {
   .dashboard-status,
   .update-ledger,
   .industry-consensus,
+  .decision-focus-grid,
   .dashboard-grid,
   .strategy-grid,
   .decision-board {
@@ -1581,6 +1613,8 @@ footer {
   .dashboard-controls {
     grid-template-columns: repeat(3, 1fr);
   }
+
+  .decision-summary-head { align-items: start; flex-direction: column; gap: 8px; }
 
   .dashboard-panel-wide {
     grid-column: auto;
@@ -1651,6 +1685,9 @@ footer {
   .dashboard-controls {
     grid-template-columns: 1fr 1fr;
   }
+
+  .decision-summary { padding: 18px; }
+  .decision-focus-grid { grid-template-columns: 1fr; }
 
   .dashboard-export {
     grid-column: 1 / -1;

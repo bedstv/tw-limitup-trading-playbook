@@ -34,6 +34,7 @@ const dashboard = {
   exportMarkdown: document.querySelector("#export-markdown"), copyViewLink: document.querySelector("#copy-view-link"), historyStock: document.querySelector("#history-stock"),
   historyTimeline: document.querySelector("#history-timeline"),
   paperProgress: document.querySelector("#paper-progress"),
+  todaySummaryTitle: document.querySelector("#today-summary-title"), todaySummaryNote: document.querySelector("#today-summary-note"), todayFocusCards: document.querySelector("#today-focus-cards"),
   strategyEvaluationSummary: document.querySelector("#strategy-evaluation-summary"), strategyEvaluationSplits: document.querySelector("#strategy-evaluation-splits"),
   intradayCoverageSummary: document.querySelector("#intraday-coverage-summary"),
   setupAResearchSummary: document.querySelector("#setup-a-research-summary"), setupAResearchDetails: document.querySelector("#setup-a-research-details"),
@@ -88,6 +89,12 @@ const regimeLabel = (row) => {
   const name = ({ STRONG: "強勢盤", NEUTRAL: "中性盤", WEAK: "弱勢盤" }[regime] || regime);
   return `${name}${returnText ? ` ${returnText}` : ""}`;
 };
+const sourceLabel = (row, stage) => {
+  if (row.d1_quote_source) return sourceName(row.d1_quote_source);
+  if (stage === "D0") return row.market === "TPEx" ? "TPEx 官方盤後日行情" : "TWSE 官方盤後日行情";
+  if (stage === "D1" || stage === "D2+") return row.market === "TPEx" ? "TPEx 官方日行情" : "TWSE 官方日行情";
+  return "資料來源未記錄";
+};
 const industryBadges = (row) => [badge(text(row.industry, "未分類"), "industry"), row.industry_consensus ? badge(`板塊共識 ×${row.industry_candidate_count}`, "consensus") : ""].join("");
 const riskBadges = (row) => {
   const labels = [];
@@ -97,6 +104,12 @@ const riskBadges = (row) => {
   return labels.length ? labels.join("") : badge("未標示", "ok");
 };
 const decisionBadge = (row) => row.d1_decision_ready ? `<br>${badge(decisionLabel(decisionStatus(row)), decisionStatus(row) === "WATCH" ? "ok" : decisionStatus(row) === "PULLBACK_ONLY" ? "warn" : "risk")}` : "";
+const exceptionDetails = (row) => {
+  if (row.corporate_action) return `${badge("公司行動", "risk")}<br>${escapeHtml(text(row.corporate_action_detail || row.corporate_action_type, "價格基準可能改變，不進行一般跳空判讀。"))}`;
+  if (row.abnormal_gap_check) return `${badge("異常跳空", "warn")}<br>跳空幅度需先核對公司行動與價格基準。`;
+  if (row.d1_stop_touched_daily) return `${badge("已觸及停損", "risk")}<br>日線顯示曾跌破停損，停止一般觀察。`;
+  return `${badge("無", "ok")}<br>目前未發現公司行動或異常跳空。`;
+};
 const emptyRow = (columns, message) => `<tr><td class="dashboard-empty" colspan="${columns}">${message}</td></tr>`;
 const renderRows = (target, rows, columns, renderer, emptyMessage) => { target.innerHTML = rows.length ? rows.map(renderer).join("") : emptyRow(columns, emptyMessage); };
 const cell = (label, content) => `<td data-label="${escapeHtml(label)}">${content}</td>`;
@@ -229,7 +242,11 @@ const renderUpdateLedger = (data) => {
     const reason = check?.reasons?.length ? `：${check.reasons.join("、")}` : "";
     return `<article class="update-ledger-item"><span>${escapeHtml(label)}</span><strong class="update-${escapeHtml(status)}">${escapeHtml(updateStatusLabel(status))}</strong><small>${escapeHtml(check ? `${check.date || "日期未知"} · ${timestampLabel(check.checked_at)}${reason}` : "尚未取得健康檢查紀錄")}</small></article>`;
   }).join("");
-  const d0State = data.trade_ready ? "已完成下一交易日 09:15 判定" : "尚待下一交易日 09:15 判定";
+  const d0CandidateCount = (data.d0_candidates || []).length;
+  const d0QuoteReadyCount = (data.d0_candidates || []).filter((row) => row.d1_decision_ready).length;
+  const d0State = data.trade_ready
+    ? "已完成下一交易日 09:15 判定"
+    : (d0QuoteReadyCount ? `已有 ${d0QuoteReadyCount}/${d0CandidateCount} 檔完成 09:15 判定，但個股資料未齊` : "尚待下一交易日 09:15 判定");
   dashboard.updateLedger.querySelector("p:not(.panel-kicker)").textContent = `最新資料日為 ${data.effective_date}；${d0State}。休市或開盤前未更新不代表系統故障，請以上方兩項健康檢查為準。`;
 };
 const renderIndustryConsensus = (data) => {
@@ -254,6 +271,34 @@ const renderProvenance = (data) => {
   dashboard.provenance.innerHTML = `<strong>資料來源與可用性：</strong><span>盤後候選：TWSE／TPEx 官方日行情（${escapeHtml(afterhours)}）。09:15 判斷：${escapeHtml(d1)}。${escapeHtml(coverageText)} 紙上交易分鐘線：${escapeHtml(paper)}。</span>`;
 };
 
+const renderTodaySummary = (data) => {
+  if (!dashboard.todaySummaryTitle || !dashboard.todaySummaryNote || !dashboard.todayFocusCards) return;
+  const candidates = rows(data.d0_candidates);
+  const watchCount = candidates.filter((row) => decisionStatus(row) === "WATCH").length;
+  const readyCount = candidates.filter((row) => row.d1_decision_ready).length;
+  dashboard.todaySummaryTitle.textContent = data.trade_ready
+    ? (watchCount ? `今天可優先觀察 ${watchCount} 檔，仍須等待個股觸發。` : "09:15 判斷已完成，目前沒有可直接追價的候選。")
+    : (readyCount ? `已有 ${readyCount}/${candidates.length} 檔完成 09:15 判斷；個股資料未齊，整批不可標示為可交易。` : `盤後已選出 ${candidates.length} 檔候選；等待下一交易日 09:15 判定。`);
+  dashboard.todaySummaryNote.textContent = data.trade_ready
+    ? `已取得 ${readyCount}/${candidates.length} 檔的 09:15 判斷。請先讀每檔的交易限制與停損，再決定是否觀察。`
+    : (readyCount ? "已完成的個股可查看限制與停損；缺資料的個股維持排除，不可以其他資料推估。" : "先確認盤後候選與風險；下一交易日的 09:15 大盤與個股資料完成後，系統才會更新交易限制。");
+  if (!candidates.length) {
+    dashboard.todayFocusCards.innerHTML = "<p class=\"decision-summary-empty\">目前篩選條件下沒有盤後候選；不需要勉強找標的。</p>";
+    return;
+  }
+  dashboard.todayFocusCards.innerHTML = candidates.slice(0, 3).map((row) => {
+    const status = row.d1_decision_ready ? decisionLabel(decisionStatus(row)) : "等待 D1 09:15 判定";
+    const reason = row.d1_decision_reason || row.next_step;
+    const price = row.paper_entry_trigger_price || row.alert_reclaim_price || "盤中確認後才會出現";
+    return `<article class="decision-focus-card">
+      <div><strong>${stockLabel(row)}</strong>${industryBadges(row)}</div>
+      <span class="decision-focus-status">${escapeHtml(status)}</span>
+      <p><b>為什麼：</b>${escapeHtml(nextStepChinese(reason))}</p>
+      <dl class="decision-focus-meta"><div><dt>警示／進場</dt><dd>${escapeHtml(text(price))}</dd></div><div><dt>停損</dt><dd>${escapeHtml(text(row.stop_loss_price, "尚未產生"))}</dd></div><div><dt>資料</dt><dd>${escapeHtml(sourceLabel(row, "D0"))}</dd></div></dl>
+    </article>`;
+  }).join("");
+};
+
 const renderHistory = () => {
   const history = state.histories.get(dashboard.historyStock.value);
   if (!history) { dashboard.historyTimeline.innerHTML = "<p>目前篩選資料沒有可追蹤的個股。</p>"; return; }
@@ -273,7 +318,10 @@ const renderDashboard = (data) => {
   const evaluationText = evaluation ? ` 評估狀態：${evaluation.status === "ready_for_review" ? "樣本已達門檻，可人工檢視" : "固定規則樣本收集中"}（${evaluation.decision_day_count}/${evaluation.minimum_decision_days} 日）。` : "";
   dashboard.paperProgress.innerHTML = `<strong>P2.11 紙上交易進度</strong><span>${escapeHtml(progress.rule_version)}：已累積 ${progress.decision_days}／20 個 D1 判斷日；尚差 ${progress.remaining_days} 日。候選 ${progress.candidate_count}、可交易 ${progress.watch_count}、實際觸發 ${progress.executed_count}、留倉覆核 ${progress.hold_review_count}、資料不足 ${progress.data_incomplete_count}。${escapeHtml(measured + evaluationText)}</span>`;
   const partialDates = Object.entries(data.health?.partial_market_dates || {}).map(([date, markets]) => `${date}: ${markets.join("/")}`).join("；");
-  const d0Text = data.d0_decision_ready ? `D0 已完成 ${data.d0_decision_date} 09:15 判定，可觀察 ${data.health?.d0_eligible_count ?? 0} 檔。` : (data.health?.limitations || []).join(" ");
+  const d0QuoteReadyCount = (data.d0_candidates || []).filter((row) => row.d1_decision_ready).length;
+  const d0Text = data.trade_ready
+    ? `D0 已完成 ${data.d0_decision_date} 09:15 判定，可觀察 ${data.health?.d0_eligible_count ?? 0} 檔。`
+    : (d0QuoteReadyCount ? `D0 已取得 ${d0QuoteReadyCount}/${data.d0_candidates.length} 檔的 ${data.d0_decision_date} 09:15 個股資料；缺資料個股已排除，因此整批尚不可標示為可交易。` : (data.health?.limitations || []).join(" "));
   const d1Text = data.d1_watch_ready ? `本頁 ${data.health?.regime_0915_date || data.effective_date} 的 09:15 大盤僅套用 D1 觀察名單。` : "D1 觀察名單尚未取得同日 09:15 大盤。";
   dashboard.warning.classList.toggle("is-ok", Boolean(data.trade_ready));
   dashboard.warning.innerHTML = `<strong>資料狀態：</strong><span>${escapeHtml(`${d0Text} ${d1Text}${partialDates ? ` 部分市場資料：${partialDates}。` : ""}`)}</span>`;
@@ -304,10 +352,11 @@ const renderDashboard = (data) => {
   renderUpdateLedger(data);
   renderIndustryConsensus(data);
   renderProvenance(data);
+  renderTodaySummary(data);
   const nextStep = (value) => `<span class="next-step">${escapeHtml(nextStepChinese(value))}</span>`;
-  renderRows(dashboard.d0Table, rows(data.d0_candidates), 6, (row) => `<tr>${cell("股票", `${stockLabel(row)}<br>${industryBadges(row)}`)}${cell("型態", `${escapeHtml(setupLabel(row.setup_type))}${decisionBadge(row)}`)}${cell("收盤", escapeHtml(text(row.close)))}${cell("成交量", escapeHtml(text(row.volume_lots)))}${cell("風險", riskBadges(row))}${cell("下一步", nextStep(row.next_step))}</tr>`, "沒有符合目前篩選條件的 D0 候選。");
-  renderRows(dashboard.d1Table, rows(data.d1_watch), 8, (row) => `<tr>${cell("股票", `${stockLabel(row)}<br>${industryBadges(row)}`)}${cell("D0", escapeHtml(text(row.d0_date)))}${cell("開盤跳空 GAP", escapeHtml(text(row.d1_open_gap_pct)))}${cell("09:15 大盤", badge(regimeLabel(row), row.market_regime_0915 === "STRONG" ? "ok" : row.market_regime_0915 === "WEAK" ? "risk" : "warn"))}${cell("異常", row.corporate_action ? badge("公司行動", "risk") : row.abnormal_gap_check ? badge("需檢查", "warn") : badge("否", "ok"))}${cell("警示價", escapeHtml(text(row.alert_reclaim_price)))}${cell("停損", escapeHtml(text(row.stop_loss_price)))}${cell("下一步", nextStep(row.next_step))}</tr>`, "沒有符合目前篩選條件的 D1 觀察名單。");
-  renderRows(dashboard.d2Table, rows(data.d2_watch), 7, (row) => `<tr>${cell("股票", `${stockLabel(row)}<br>${industryBadges(row)}`)}${cell("D0", escapeHtml(text(row.d0_date)))}${cell("D1", escapeHtml(text(row.d1_date)))}${cell("警示價", escapeHtml(text(row.alert_reclaim_price)))}${cell("失效價", escapeHtml(text(row.invalidation_price)))}${cell("狀態", badge(text(row.status), row.status === "reclaimed" ? "ok" : "warn"))}${cell("下一步", nextStep(row.next_step))}</tr>`, "沒有符合目前篩選條件的 D2+ 重返觀察。");
+  renderRows(dashboard.d0Table, rows(data.d0_candidates), 7, (row) => `<tr>${cell("股票", `${stockLabel(row)}<br>${industryBadges(row)}`)}${cell("型態", `${escapeHtml(setupLabel(row.setup_type))}${decisionBadge(row)}`)}${cell("收盤", escapeHtml(text(row.close)))}${cell("成交量", escapeHtml(text(row.volume_lots)))}${cell("風險", riskBadges(row))}${cell("資料來源", escapeHtml(sourceLabel(row, "D0")))}${cell("下一步", nextStep(row.next_step))}</tr>`, "沒有符合目前篩選條件的 D0 候選。");
+  renderRows(dashboard.d1Table, rows(data.d1_watch), 9, (row) => `<tr>${cell("股票", `${stockLabel(row)}<br>${industryBadges(row)}`)}${cell("D0", escapeHtml(text(row.d0_date)))}${cell("開盤跳空 GAP", escapeHtml(text(row.d1_open_gap_pct)))}${cell("09:15 大盤", badge(regimeLabel(row), row.market_regime_0915 === "STRONG" ? "ok" : row.market_regime_0915 === "WEAK" ? "risk" : "warn"))}${cell("異常原因", exceptionDetails(row))}${cell("警示價", escapeHtml(text(row.alert_reclaim_price)))}${cell("停損", escapeHtml(text(row.stop_loss_price)))}${cell("資料來源", escapeHtml(sourceLabel(row, "D1")))}${cell("下一步", nextStep(row.next_step))}</tr>`, "沒有符合目前篩選條件的 D1 觀察名單。");
+  renderRows(dashboard.d2Table, rows(data.d2_watch), 8, (row) => `<tr>${cell("股票", `${stockLabel(row)}<br>${industryBadges(row)}`)}${cell("D0", escapeHtml(text(row.d0_date)))}${cell("D1", escapeHtml(text(row.d1_date)))}${cell("警示價", escapeHtml(text(row.alert_reclaim_price)))}${cell("失效價", escapeHtml(text(row.invalidation_price)))}${cell("狀態", badge(text(row.status), row.status === "reclaimed" ? "ok" : "warn"))}${cell("資料來源", escapeHtml(sourceLabel(row, "D2+")))}${cell("下一步", nextStep(row.next_step))}</tr>`, "沒有符合目前篩選條件的 D2+ 重返觀察。");
   saveMarketView();
 };
 

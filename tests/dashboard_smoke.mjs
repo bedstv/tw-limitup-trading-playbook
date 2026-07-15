@@ -39,6 +39,12 @@ assert.equal(records[0].decision_date, "2026-07-14", "paper evidence must retain
 const industries = industrySummary([{ stock_id: "1111", industry: "半導體業" }, { stock_id: "2222", industry: "半導體業" }, { stock_id: "3333", industry: "電子零組件業" }]);
 assert.equal(industries[0].count, 2, "industry consensus must group candidates by industry");
 assert.match(await readFile(new URL("../index.html", import.meta.url), "utf8"), /紙上交易驗證/, "dashboard must show paper-trading evidence");
+assert.match(marketPage, /今日重點/, "daily market must include a concise today summary");
+assert.match(marketPage, /資料來源/, "daily market must show per-stock data sources");
+assert.match(marketPage, /異常原因/, "daily market must explain abnormal conditions");
+assert.match(await readFile(new URL("../script.js", import.meta.url), "utf8"), /renderTodaySummary/, "daily market must render a concise trading summary");
+assert.match(await readFile(new URL("../script.js", import.meta.url), "utf8"), /個股資料未齊，整批不可標示為可交易/, "daily summary must distinguish partial 09:15 coverage from a tradable batch");
+assert.match(await readFile(new URL("../script.js", import.meta.url), "utf8"), /缺資料個股已排除，因此整批尚不可標示為可交易/, "daily status must explain why partial coverage is not trade-ready");
 const setupAResearch = JSON.parse(await readFile(new URL("../data/setup-a-research.json", import.meta.url)));
 assert.equal(setupAResearch.production_impact, "none", "A setup research must not affect production selection");
 assert.equal(setupAResearch.walk_forward.minimum_validation_trades, 10, "A setup research must keep the ten-trade promotion gate");
