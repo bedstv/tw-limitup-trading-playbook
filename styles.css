@@ -604,6 +604,27 @@ nav a:focus-visible::after {
   padding-top: 92px;
 }
 
+.market-page-header {
+  padding: 78px 0 34px;
+}
+
+.market-page-header h1 {
+  margin: 0;
+  font-size: clamp(2.25rem, 5vw, 4.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.055em;
+}
+
+.market-page-header > p:not(.eyebrow) {
+  max-width: 720px;
+  margin: 20px 0 0;
+  color: var(--muted);
+  font-size: 1rem;
+}
+
+.market-back-link { margin-top: 22px; }
+.market-dashboard { padding-bottom: 86px; }
+
 .dashboard-toolbar {
   display: flex;
   margin-bottom: 18px;
@@ -1583,6 +1604,74 @@ footer {
 
   .dashboard-source {
     margin-left: 0;
+  }
+
+  .market-page-header {
+    padding-top: 52px;
+  }
+
+  .market-page-header h1 {
+    font-size: clamp(2.1rem, 11vw, 3rem);
+  }
+
+  .market-dashboard {
+    padding-bottom: 54px;
+  }
+
+  .dashboard-table-wrap {
+    overflow: visible;
+  }
+
+  .dashboard-table,
+  .dashboard-table tbody,
+  .dashboard-table tr,
+  .dashboard-table td {
+    display: block;
+    min-width: 0;
+  }
+
+  .dashboard-table thead {
+    display: none;
+  }
+
+  .dashboard-table tr {
+    margin: 10px;
+    border: 1px solid var(--line);
+    border-radius: 13px;
+    background: rgba(16, 20, 23, 0.025);
+  }
+
+  .dashboard-table td {
+    display: grid;
+    min-height: 38px;
+    padding: 10px 12px;
+    grid-template-columns: minmax(76px, 0.42fr) 1fr;
+    gap: 10px;
+    border-top: 1px solid var(--line);
+    font-size: 0.82rem;
+  }
+
+  .dashboard-table td:first-child {
+    border-top: 0;
+    white-space: normal;
+  }
+
+  .dashboard-table td::before {
+    content: attr(data-label);
+    color: var(--muted);
+    font-size: 0.68rem;
+    font-weight: 900;
+    letter-spacing: 0.06em;
+  }
+
+  .dashboard-table .dashboard-empty {
+    display: block;
+    min-height: auto;
+    text-align: center !important;
+  }
+
+  .dashboard-table .dashboard-empty::before {
+    content: none;
   }
 
   .content-section {

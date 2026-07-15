@@ -74,6 +74,7 @@ const riskBadges = (row) => {
 const decisionBadge = (row) => row.d1_decision_ready ? `<br>${badge(decisionLabel(decisionStatus(row)), decisionStatus(row) === "WATCH" ? "ok" : decisionStatus(row) === "PULLBACK_ONLY" ? "warn" : "risk")}` : "";
 const emptyRow = (columns, message) => `<tr><td class="dashboard-empty" colspan="${columns}">${message}</td></tr>`;
 const renderRows = (target, rows, columns, renderer, emptyMessage) => { target.innerHTML = rows.length ? rows.map(renderer).join("") : emptyRow(columns, emptyMessage); };
+const cell = (label, content) => `<td data-label="${escapeHtml(label)}">${content}</td>`;
 const filters = () => ({ setup: dashboard.setup.value, liquidity: dashboard.liquidity.value, risk: dashboard.risk.value, decision: dashboard.decision.value, sort: dashboard.sort.value });
 const rows = (source) => filterAndSortRows(source || [], filters());
 const bindDashboardTabs = () => {
@@ -94,6 +95,7 @@ const paperOutcomeLabel = (value) => ({
 const paperSourceLabel = (value) => ({ "Fugle:historical/candles:1m": "Fugle 1 分鐘線", not_captured: "尚未封存" }[value] || text(value));
 const paperPrice = (value) => value === null || value === undefined || value === "" ? "—" : Number(value).toFixed(2);
 const renderPaperEvidence = () => {
+  if (!dashboard.paperEvidenceSummary || !dashboard.paperEvidenceTable) return;
   const records = paperRecords([...state.documents.values()]);
   const progress = paperProgress([...state.documents.values()]);
   dashboard.paperEvidenceSummary.textContent = progress.recorded_count
@@ -102,6 +104,7 @@ const renderPaperEvidence = () => {
   renderRows(dashboard.paperEvidenceTable, records.slice(0, 20), 7, (row) => `<tr><td>${escapeHtml(text(row.decision_date))}</td><td>${escapeHtml(text(row.stock_id))} ${escapeHtml(text(row.name, ""))}</td><td>${escapeHtml(paperDecisionLabel(row.d1_decision_status))}</td><td>${escapeHtml(paperOutcomeLabel(row.status))}</td><td>進場 ${paperPrice(row.entry_price)}<br>停損 ${paperPrice(row.stop_loss_price)}</td><td>${escapeHtml(paperSourceLabel(row.minute_bar_source))}</td><td>${percent(row.net_return)}</td></tr>`, "目前尚無固定規則 V2 的紙上交易紀錄。");
 };
 const renderBacktestSummary = (summary) => {
+  if (!dashboard.backtestConclusion) return;
   if (!summary) {
     dashboard.backtestConclusion.textContent = "目前尚未載入回測摘要";
     return;
@@ -166,9 +169,9 @@ const renderDashboard = (data) => {
   dashboard.systemHealth.innerHTML = `<strong>自動更新：</strong><span>${escapeHtml(healthText)}</span>`;
   renderProvenance(data);
   const nextStep = (value) => `<span class="next-step">${escapeHtml(nextStepChinese(value))}</span>`;
-  renderRows(dashboard.d0Table, rows(data.d0_candidates), 6, (row) => `<tr><td>${stockLabel(row)}<br>${industryBadges(row)}</td><td title="${escapeHtml(setupLabel(row.setup_type))}">${escapeHtml(setupLabel(row.setup_type))}${decisionBadge(row)}</td><td>${escapeHtml(text(row.close))}</td><td>${escapeHtml(text(row.volume_lots))}</td><td>${riskBadges(row)}</td><td>${nextStep(row.next_step)}</td></tr>`, "沒有符合目前篩選條件的 D0 候選。");
-  renderRows(dashboard.d1Table, rows(data.d1_watch), 8, (row) => `<tr><td>${stockLabel(row)}<br>${industryBadges(row)}</td><td>${escapeHtml(text(row.d0_date))}</td><td title="D1 開盤價相對 D0 收盤價的變動百分比。正值為跳空開高，負值為跳空開低。">${escapeHtml(text(row.d1_open_gap_pct))}</td><td title="09:15 加權指數相對前一日收盤的變動；-0.00% 是極小負值四捨五入後的顯示。">${badge(regimeLabel(row), row.market_regime_0915 === "STRONG" ? "ok" : row.market_regime_0915 === "WEAK" ? "risk" : "warn")}</td><td>${row.corporate_action ? badge("公司行動", "risk") : row.abnormal_gap_check ? badge("需檢查", "warn") : badge("否", "ok")}</td><td>${escapeHtml(text(row.alert_reclaim_price))}</td><td>${escapeHtml(text(row.stop_loss_price))}</td><td>${nextStep(row.next_step)}</td></tr>`, "沒有符合目前篩選條件的 D1 觀察名單。");
-  renderRows(dashboard.d2Table, rows(data.d2_watch), 7, (row) => `<tr><td>${stockLabel(row)}<br>${industryBadges(row)}</td><td>${escapeHtml(text(row.d0_date))}</td><td>${escapeHtml(text(row.d1_date))}</td><td>${escapeHtml(text(row.alert_reclaim_price))}</td><td>${escapeHtml(text(row.invalidation_price))}</td><td>${badge(text(row.status), row.status === "reclaimed" ? "ok" : "warn")}</td><td>${nextStep(row.next_step)}</td></tr>`, "沒有符合目前篩選條件的 D2+ 重返觀察。");
+  renderRows(dashboard.d0Table, rows(data.d0_candidates), 6, (row) => `<tr>${cell("股票", `${stockLabel(row)}<br>${industryBadges(row)}`)}${cell("型態", `${escapeHtml(setupLabel(row.setup_type))}${decisionBadge(row)}`)}${cell("收盤", escapeHtml(text(row.close)))}${cell("成交量", escapeHtml(text(row.volume_lots)))}${cell("風險", riskBadges(row))}${cell("下一步", nextStep(row.next_step))}</tr>`, "沒有符合目前篩選條件的 D0 候選。");
+  renderRows(dashboard.d1Table, rows(data.d1_watch), 8, (row) => `<tr>${cell("股票", `${stockLabel(row)}<br>${industryBadges(row)}`)}${cell("D0", escapeHtml(text(row.d0_date)))}${cell("開盤跳空 GAP", escapeHtml(text(row.d1_open_gap_pct)))}${cell("09:15 大盤", badge(regimeLabel(row), row.market_regime_0915 === "STRONG" ? "ok" : row.market_regime_0915 === "WEAK" ? "risk" : "warn"))}${cell("異常", row.corporate_action ? badge("公司行動", "risk") : row.abnormal_gap_check ? badge("需檢查", "warn") : badge("否", "ok"))}${cell("警示價", escapeHtml(text(row.alert_reclaim_price)))}${cell("停損", escapeHtml(text(row.stop_loss_price)))}${cell("下一步", nextStep(row.next_step))}</tr>`, "沒有符合目前篩選條件的 D1 觀察名單。");
+  renderRows(dashboard.d2Table, rows(data.d2_watch), 7, (row) => `<tr>${cell("股票", `${stockLabel(row)}<br>${industryBadges(row)}`)}${cell("D0", escapeHtml(text(row.d0_date)))}${cell("D1", escapeHtml(text(row.d1_date)))}${cell("警示價", escapeHtml(text(row.alert_reclaim_price)))}${cell("失效價", escapeHtml(text(row.invalidation_price)))}${cell("狀態", badge(text(row.status), row.status === "reclaimed" ? "ok" : "warn"))}${cell("下一步", nextStep(row.next_step))}</tr>`, "沒有符合目前篩選條件的 D2+ 重返觀察。");
 };
 
 const download = (content, name, type) => { const link = document.createElement("a"); link.href = URL.createObjectURL(new Blob([content], { type })); link.download = name; link.click(); URL.revokeObjectURL(link.href); };
@@ -202,4 +205,18 @@ const initDashboard = async () => {
     renderHistory();
   } catch (error) { showDashboardError(error); }
 };
-initDashboard();
+const initStrategy = async () => {
+  try {
+    state.backtestSummary = await (await fetch("data/backtest-summary.json", { cache: "no-store" })).json();
+    const index = await (await fetch("data/daily/index.json", { cache: "no-store" })).json();
+    const documents = await Promise.all((index.available_dates || []).map(async (date) => (await fetch(`data/daily/${date}.json`, { cache: "no-store" })).json()));
+    state.documents = new Map(documents.map((document) => [document.as_of_date, document]));
+    renderBacktestSummary(state.backtestSummary);
+    renderPaperEvidence();
+  } catch (error) {
+    if (dashboard.backtestConclusion) dashboard.backtestConclusion.textContent = "目前無法載入最新驗證資料";
+  }
+};
+
+if (document.body.dataset.page === "market") initDashboard();
+else initStrategy();

@@ -9,16 +9,16 @@
     />
     <title>漲停後交易作戰手冊｜D0 → D1 → D2+</title>
     <link rel="stylesheet" href="styles.css" />
-    <script type="module" src="script.js?v=20260715-p213"></script>
+    <script type="module" src="script.js?v=20260715-p214"></script>
   </head>
-  <body>
+  <body data-page="strategy">
     <header class="site-header">
       <a class="brand" href="#top" aria-label="回到頁首">
         <span class="brand-mark">LT</span>
         <span>Limit-up Playbook</span>
       </a>
       <nav aria-label="主要導覽">
-        <a href="#dashboard">每日看板</a>
+        <a href="market.html">每日看盤</a>
         <a href="#screening">盤後選股</a>
         <a href="#routing">開盤路由</a>
         <a href="#entry">進場風控</a>
@@ -36,8 +36,8 @@
             再把爆量開高走低的股票轉入 D2+ 重返跳空價觀察。
           </p>
           <div class="hero-actions">
-            <a class="button button-primary" href="#workflow">查看完整流程</a>
-            <a class="button button-ghost" href="#rules">快速看規則</a>
+            <a class="button button-primary" href="market.html">開啟每日看盤</a>
+            <a class="button button-ghost" href="#workflow">查看完整流程</a>
           </div>
         </div>
         <aside class="signal-card" aria-label="策略核心摘要">
@@ -73,19 +73,14 @@
 
       <section id="dashboard" class="section-shell content-section dashboard-section">
         <div class="section-heading">
-          <p class="eyebrow">每日看盤 · P2.10</p>
-          <h2>每日候選股看板</h2>
+          <p class="eyebrow">策略與回測 · P2.13</p>
+          <h2>策略說明與驗證</h2>
           <p>
-            將策略研究與每日看盤分開呈現。這裡是候選／觀察中心，不是自動下單介面。
+            這裡整理選股規則、回測結論與紙上交易驗證。每日候選與開盤觀察已移至獨立的每日看盤頁。
           </p>
         </div>
 
-        <div class="dashboard-tabs" role="tablist" aria-label="看板內容">
-          <button type="button" role="tab" aria-selected="true" aria-controls="dashboard-basics" id="tab-basics" data-dashboard-tab="basics">策略與回測</button>
-          <button type="button" role="tab" aria-selected="false" aria-controls="dashboard-market" id="tab-market" data-dashboard-tab="market">每日看盤</button>
-        </div>
-
-        <div class="dashboard-tab-panel" id="dashboard-basics" role="tabpanel" aria-labelledby="tab-basics">
+        <div class="dashboard-tab-panel" id="dashboard-basics">
           <div class="strategy-grid">
             <article class="strategy-card">
               <p class="panel-kicker">01 · D0 盤後候選</p>
@@ -137,7 +132,7 @@
           </article>
         </div>
 
-        <div class="dashboard-tab-panel" id="dashboard-market" role="tabpanel" aria-labelledby="tab-market" hidden>
+        <div class="dashboard-tab-panel" id="dashboard-market" hidden>
 
         <div class="dashboard-toolbar">
           <label for="dashboard-date">資料日</label>
