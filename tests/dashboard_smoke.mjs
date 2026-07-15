@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
-import { buildHistoryByStock, csvForRows, filterAndSortRows, markdownForRows, paperProgress, paperRecords } from "../dashboard-core.js";
+import { buildHistoryByStock, csvForRows, filterAndSortRows, industrySummary, markdownForRows, paperProgress, paperRecords } from "../dashboard-core.js";
 
 const index = JSON.parse(await readFile(new URL("../data/daily/index.json", import.meta.url)));
 const documents = await Promise.all(index.available_dates.map(async (date) => JSON.parse(await readFile(new URL(`../data/daily/${date}.json`, import.meta.url)))));
@@ -25,6 +25,7 @@ assert.match(marketPage, /data-page="market"/, "daily market must have an indepe
 assert.match(marketPage, /id="d0-table"/, "daily market must include D0 candidates");
 assert.match(marketPage, /id="d1-table"/, "daily market must include D1 watch rows");
 assert.match(marketPage, /資料更新履歷/, "daily market must show update history");
+assert.match(marketPage, /板塊共識/, "daily market must show industry consensus");
 assert.match(await readFile(new URL("../styles.css", import.meta.url), "utf8"), /td::before/, "daily market must have mobile card labels");
 const progress = paperProgress([{ paper_trading: { rule_version: "p2.11_v2", candidate_count: 1, watch_count: 1, executed_count: 0 }, paper_trading_records: [{ rule_version: "p2.11_v2", net_return: "0.012" }] }]);
 assert.equal(progress.remaining_days, 19, "paper progress must count D1 decision days");
@@ -33,5 +34,7 @@ assert.equal(progress.net_return_sum, 0.012, "paper progress must aggregate net 
 const records = paperRecords([{ as_of_date: "2026-07-14", paper_trading_records: [{ rule_version: "p2.11_v1", stock_id: "1111" }, { rule_version: "p2.11_v2", stock_id: "2222", status: "not_traded" }] }]);
 assert.equal(records.length, 1, "paper evidence must only show the fixed V2 rule");
 assert.equal(records[0].decision_date, "2026-07-14", "paper evidence must retain a display date");
+const industries = industrySummary([{ stock_id: "1111", industry: "半導體業" }, { stock_id: "2222", industry: "半導體業" }, { stock_id: "3333", industry: "電子零組件業" }]);
+assert.equal(industries[0].count, 2, "industry consensus must group candidates by industry");
 assert.match(await readFile(new URL("../index.html", import.meta.url), "utf8"), /紙上交易驗證/, "dashboard must show paper-trading evidence");
 console.log(`dashboard_smoke=PASS dates=${documents.length} tracked_stocks=${history.size}`);

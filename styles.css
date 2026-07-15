@@ -866,6 +866,29 @@ nav a:focus-visible::after {
 .update-failed { color: #8a332c; }
 .update-unknown { color: var(--muted); }
 
+.industry-consensus {
+  display: grid;
+  margin-top: 16px;
+  padding: 20px;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 18px;
+  border: 1px solid rgba(199, 245, 66, 0.48);
+  border-radius: 18px;
+  background: rgba(199, 245, 66, 0.12);
+}
+
+.industry-consensus h2 { margin: 5px 0; font-size: 1rem; }
+.industry-consensus p:not(.panel-kicker) { margin: 0; color: #46512d; font-size: 0.8rem; line-height: 1.55; }
+.industry-consensus-items { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.industry-consensus-item { padding: 12px; border: 1px solid rgba(16, 20, 23, 0.08); border-radius: 12px; background: rgba(255, 255, 255, 0.64); }
+.industry-consensus-item strong, .industry-consensus-item span, .industry-consensus-item small { display: block; }
+.industry-consensus-item strong { font-size: 0.88rem; }
+.industry-consensus-item span { margin-top: 2px; color: var(--muted); font-size: 0.7rem; font-weight: 900; }
+.industry-consensus-item small { margin-top: 5px; color: #46512d; font-size: 0.72rem; line-height: 1.45; }
+.industry-consensus-item.has-consensus { border-color: rgba(78, 116, 20, 0.35); background: white; }
+.industry-consensus-item.has-consensus span { color: #365018; }
+.industry-consensus-empty { grid-column: 1 / -1; }
+
 .status-tile {
   padding: 20px;
   border: 1px solid var(--line);
@@ -1530,6 +1553,7 @@ footer {
   .regime-grid,
   .dashboard-status,
   .update-ledger,
+  .industry-consensus,
   .dashboard-grid,
   .strategy-grid,
   .decision-board {
@@ -1645,6 +1669,11 @@ footer {
 
   .update-ledger,
   .update-ledger-items {
+    grid-template-columns: 1fr;
+  }
+
+  .industry-consensus,
+  .industry-consensus-items {
     grid-template-columns: 1fr;
   }
 

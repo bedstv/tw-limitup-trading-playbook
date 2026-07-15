@@ -44,6 +44,19 @@ export const paperRecords = (documents, ruleVersion = "p2.11_v2") => documents
   .filter((row) => row.rule_version === ruleVersion)
   .sort((a, b) => `${b.decision_date}-${b.stock_id || ""}`.localeCompare(`${a.decision_date}-${a.stock_id || ""}`));
 
+export const industrySummary = (rows) => {
+  const groups = new Map();
+  rows.forEach((row) => {
+    const industry = text(row.industry, "未分類");
+    const group = groups.get(industry) || { industry, rows: [] };
+    group.rows.push(row);
+    groups.set(industry, group);
+  });
+  return [...groups.values()]
+    .map((group) => ({ ...group, count: group.rows.length }))
+    .sort((a, b) => b.count - a.count || a.industry.localeCompare(b.industry));
+};
+
 export const rowsForExport = (data) => [
   ...(data.d0_candidates || []).map((row) => ({ ...row, stage: "D0" })),
   ...(data.d1_watch || []).map((row) => ({ ...row, stage: "D1" })),

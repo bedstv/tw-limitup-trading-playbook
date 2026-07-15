@@ -3,6 +3,7 @@ import {
   csvForRows,
   decisionStatus,
   filterAndSortRows,
+  industrySummary,
   markdownForRows,
   paperRecords,
   paperProgress,
@@ -24,6 +25,7 @@ const dashboard = {
   d1Count: document.querySelector("#d1-count"), d2Count: document.querySelector("#d2-count"),
   warning: document.querySelector("#dashboard-warning"), systemHealth: document.querySelector("#dashboard-system-health"), d0Table: document.querySelector("#d0-table"),
   updateLedger: document.querySelector("#update-ledger"), updateLedgerItems: document.querySelector("#update-ledger-items"),
+  industryConsensusSummary: document.querySelector("#industry-consensus-summary"), industryConsensusItems: document.querySelector("#industry-consensus-items"),
   provenance: document.querySelector("#dashboard-provenance"),
   d1Table: document.querySelector("#d1-table"), d2Table: document.querySelector("#d2-table"),
   setup: document.querySelector("#filter-setup"), liquidity: document.querySelector("#filter-liquidity"),
@@ -149,6 +151,17 @@ const renderUpdateLedger = (data) => {
   const d0State = data.trade_ready ? "已完成下一交易日 09:15 判定" : "尚待下一交易日 09:15 判定";
   dashboard.updateLedger.querySelector("p:not(.panel-kicker)").textContent = `最新資料日為 ${data.effective_date}；${d0State}。休市或開盤前未更新不代表系統故障，請以上方兩項健康檢查為準。`;
 };
+const renderIndustryConsensus = (data) => {
+  if (!dashboard.industryConsensusSummary || !dashboard.industryConsensusItems) return;
+  const groups = industrySummary(rows(data.d0_candidates));
+  const consensusCount = groups.filter((group) => group.count >= 2).length;
+  dashboard.industryConsensusSummary.textContent = groups.length
+    ? `目前篩選結果有 ${groups.length} 個板塊，其中 ${consensusCount} 個板塊同時出現兩檔以上候選。板塊群聚只代表市場關注較集中，不會取代個股的風險與進場條件。`
+    : "目前篩選結果沒有候選股，因此無板塊共識可判讀。";
+  dashboard.industryConsensusItems.innerHTML = groups.length
+    ? groups.map((group) => `<article class="industry-consensus-item ${group.count >= 2 ? "has-consensus" : ""}"><strong>${escapeHtml(group.industry)}</strong><span>${group.count >= 2 ? `板塊共識 ×${group.count}` : "單一候選"}</span><small>${group.rows.map((row) => `${escapeHtml(text(row.stock_id))} ${escapeHtml(text(row.name, ""))}`).join("、")}</small></article>`).join("")
+    : "<p class=\"industry-consensus-empty\">沒有符合目前篩選條件的板塊資料。</p>";
+};
 const renderProvenance = (data) => {
   const d1Sources = unique((data.d0_candidates || []).filter((row) => row.d1_decision_ready).map((row) => row.d1_quote_source));
   const minuteSources = unique((data.paper_trading_records || []).map((row) => row.minute_bar_source));
@@ -191,6 +204,7 @@ const renderDashboard = (data) => {
   dashboard.systemHealth.classList.toggle("is-ok", Object.values(checks).every((check) => check.status === "ok"));
   dashboard.systemHealth.innerHTML = `<strong>自動更新：</strong><span>${escapeHtml(healthText)}</span>`;
   renderUpdateLedger(data);
+  renderIndustryConsensus(data);
   renderProvenance(data);
   const nextStep = (value) => `<span class="next-step">${escapeHtml(nextStepChinese(value))}</span>`;
   renderRows(dashboard.d0Table, rows(data.d0_candidates), 6, (row) => `<tr>${cell("股票", `${stockLabel(row)}<br>${industryBadges(row)}`)}${cell("型態", `${escapeHtml(setupLabel(row.setup_type))}${decisionBadge(row)}`)}${cell("收盤", escapeHtml(text(row.close)))}${cell("成交量", escapeHtml(text(row.volume_lots)))}${cell("風險", riskBadges(row))}${cell("下一步", nextStep(row.next_step))}</tr>`, "沒有符合目前篩選條件的 D0 候選。");
