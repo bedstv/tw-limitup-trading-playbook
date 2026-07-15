@@ -23,6 +23,7 @@ const dashboard = {
   tradeReady: document.querySelector("#trade-ready"), d0Count: document.querySelector("#d0-count"),
   d1Count: document.querySelector("#d1-count"), d2Count: document.querySelector("#d2-count"),
   warning: document.querySelector("#dashboard-warning"), systemHealth: document.querySelector("#dashboard-system-health"), d0Table: document.querySelector("#d0-table"),
+  updateLedger: document.querySelector("#update-ledger"), updateLedgerItems: document.querySelector("#update-ledger-items"),
   provenance: document.querySelector("#dashboard-provenance"),
   d1Table: document.querySelector("#d1-table"), d2Table: document.querySelector("#d2-table"),
   setup: document.querySelector("#filter-setup"), liquidity: document.querySelector("#filter-liquidity"),
@@ -126,6 +127,28 @@ const sourceName = (source) => ({
   "TWSE MIS live quote": "TWSE 即時行情（09:15）",
   "Fugle:historical/candles:1m": "Fugle 1 分鐘線",
 }[source] || source);
+const timestampLabel = (value) => {
+  if (!value) return "尚無紀錄";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return value;
+  return new Intl.DateTimeFormat("zh-TW", { timeZone: "Asia/Taipei", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hour12: false }).format(date);
+};
+const updateStatusLabel = (status) => ({ ok: "已確認", skipped: "依休市／條件跳過", failed: "更新異常" }[status] || "尚無紀錄");
+const renderUpdateLedger = (data) => {
+  if (!dashboard.updateLedger || !dashboard.updateLedgerItems) return;
+  const checks = state.systemHealth?.checks || {};
+  const rows = [
+    ["09:15 開盤判斷", checks.d1],
+    ["盤後候選與通知", checks.afterhours],
+  ];
+  dashboard.updateLedgerItems.innerHTML = rows.map(([label, check]) => {
+    const status = check?.status || "unknown";
+    const reason = check?.reasons?.length ? `：${check.reasons.join("、")}` : "";
+    return `<article class="update-ledger-item"><span>${escapeHtml(label)}</span><strong class="update-${escapeHtml(status)}">${escapeHtml(updateStatusLabel(status))}</strong><small>${escapeHtml(check ? `${check.date || "日期未知"} · ${timestampLabel(check.checked_at)}${reason}` : "尚未取得健康檢查紀錄")}</small></article>`;
+  }).join("");
+  const d0State = data.trade_ready ? "已完成下一交易日 09:15 判定" : "尚待下一交易日 09:15 判定";
+  dashboard.updateLedger.querySelector("p:not(.panel-kicker)").textContent = `最新資料日為 ${data.effective_date}；${d0State}。休市或開盤前未更新不代表系統故障，請以上方兩項健康檢查為準。`;
+};
 const renderProvenance = (data) => {
   const d1Sources = unique((data.d0_candidates || []).filter((row) => row.d1_decision_ready).map((row) => row.d1_quote_source));
   const minuteSources = unique((data.paper_trading_records || []).map((row) => row.minute_bar_source));
@@ -167,6 +190,7 @@ const renderDashboard = (data) => {
   }).join("；");
   dashboard.systemHealth.classList.toggle("is-ok", Object.values(checks).every((check) => check.status === "ok"));
   dashboard.systemHealth.innerHTML = `<strong>自動更新：</strong><span>${escapeHtml(healthText)}</span>`;
+  renderUpdateLedger(data);
   renderProvenance(data);
   const nextStep = (value) => `<span class="next-step">${escapeHtml(nextStepChinese(value))}</span>`;
   renderRows(dashboard.d0Table, rows(data.d0_candidates), 6, (row) => `<tr>${cell("股票", `${stockLabel(row)}<br>${industryBadges(row)}`)}${cell("型態", `${escapeHtml(setupLabel(row.setup_type))}${decisionBadge(row)}`)}${cell("收盤", escapeHtml(text(row.close)))}${cell("成交量", escapeHtml(text(row.volume_lots)))}${cell("風險", riskBadges(row))}${cell("下一步", nextStep(row.next_step))}</tr>`, "沒有符合目前篩選條件的 D0 候選。");
