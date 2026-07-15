@@ -30,6 +30,10 @@ const dashboard = {
   exportMarkdown: document.querySelector("#export-markdown"), historyStock: document.querySelector("#history-stock"),
   historyTimeline: document.querySelector("#history-timeline"),
   paperProgress: document.querySelector("#paper-progress"),
+  backtestPeriod: document.querySelector("#backtest-period"), backtestConclusion: document.querySelector("#backtest-conclusion"),
+  backtestMethod: document.querySelector("#backtest-method"), backtestSignals: document.querySelector("#backtest-signals"),
+  backtestAverage: document.querySelector("#backtest-average"), backtestMedian: document.querySelector("#backtest-median"),
+  backtestOosMedian: document.querySelector("#backtest-oos-median"), backtestNote: document.querySelector("#backtest-note"),
   tabs: [...document.querySelectorAll("[data-dashboard-tab]")],
   tabPanels: [...document.querySelectorAll(".dashboard-tab-panel")],
 };
@@ -78,6 +82,24 @@ const bindDashboardTabs = () => {
   }));
 };
 const unique = (items) => [...new Set(items.filter(Boolean))];
+const percent = (value) => value === null || value === undefined || value === "" ? "—" : `${Number(value * 100).toFixed(2)}%`;
+const renderBacktestSummary = (summary) => {
+  if (!summary) {
+    dashboard.backtestConclusion.textContent = "目前尚未載入回測摘要";
+    return;
+  }
+  const baseline = summary.baseline || {};
+  const validation = summary.walk_forward?.baseline || {};
+  const primary = summary.walk_forward?.primary_liquidity || {};
+  dashboard.backtestPeriod.textContent = `2016–2026 · 保守日線回測（資料截止 ${summary.data_through}）`;
+  dashboard.backtestConclusion.textContent = "目前結論：平均為正，但尚未證實穩定優勢";
+  dashboard.backtestMethod.textContent = `模擬 ${summary.methodology?.signal || "策略訊號"}；等待 ${summary.methodology?.watch_days ?? "—"} 日、最多持有 ${summary.methodology?.hold_days ?? "—"} 日，單邊成本 ${summary.methodology?.cost_bps_one_way ?? "—"} bps。`;
+  dashboard.backtestSignals.textContent = `${baseline.signal_count ?? "—"}／${baseline.executed_count ?? "—"}`;
+  dashboard.backtestAverage.textContent = percent(baseline.avg_net_return);
+  dashboard.backtestMedian.textContent = percent(baseline.median_net_return);
+  dashboard.backtestOosMedian.textContent = percent(validation.median_net_return);
+  dashboard.backtestNote.textContent = `5,000 張以上在樣本外平均為 ${percent(primary.validate_avg)}，但中位數仍為 ${percent(primary.validate_median)}；目前只作優先觀察，不升級為正式交易規則。完整當沖績效仍須靠 09:15 後的分鐘線紙上交易驗證。`;
+};
 const sourceName = (source) => ({
   "Fugle 1m completed 09:15 bar": "Fugle 1 分鐘線（已完成 09:15 K）",
   "TWSE MIS live quote": "TWSE 即時行情（09:15）",
@@ -149,12 +171,14 @@ const initDashboard = async () => {
     const documents = await Promise.all(dates.map(async (date) => (await fetch(`data/daily/${date}.json`, { cache: "no-store" })).json()));
     state.systemHealth = await (await fetch("data/system-health.json", { cache: "no-store" })).json().catch(() => ({ checks: {} }));
     state.paperEvaluation = await (await fetch("data/paper-evaluation.json", { cache: "no-store" })).json().catch(() => null);
+    state.backtestSummary = await (await fetch("data/backtest-summary.json", { cache: "no-store" })).json().catch(() => null);
     state.documents = new Map(documents.map((document) => [document.as_of_date, document]));
     state.histories = buildHistoryByStock(documents);
     dashboard.historyStock.innerHTML = [...state.histories.values()].sort((a, b) => a.stock_id.localeCompare(b.stock_id)).map((item) => `<option value="${item.stock_id}">${item.stock_id} ${escapeHtml(item.name)}</option>`).join("");
     dashboard.dateSelect.value = index.latest || dates.at(-1);
     dashboard.dateSelect.addEventListener("change", async (event) => renderDashboard(documents[dates.indexOf(event.target.value)]));
     bindControls();
+    renderBacktestSummary(state.backtestSummary);
     renderDashboard(documents[dates.indexOf(dashboard.dateSelect.value)]);
     renderHistory();
   } catch (error) { showDashboardError(error); }

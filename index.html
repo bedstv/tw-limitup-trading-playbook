@@ -109,17 +109,17 @@
 
           <article class="backtest-card">
             <div>
-              <p class="panel-kicker">2016–2026 · 保守日線回測（更新至 2026-07-14）</p>
-              <h3>目前結論：有少數大賺交易，但尚未證實穩定優勢</h3>
-              <p>模擬 D2+ 重返警示價，採 5 日等待、5 日持有、單邊成本 0.15%；同日進場與停損無法排序時，保守不交易。</p>
+              <p class="panel-kicker" id="backtest-period">保守日線回測</p>
+              <h3 id="backtest-conclusion">目前結論：載入回測摘要中</h3>
+              <p id="backtest-method">讀取最新回測資料與限制。</p>
             </div>
             <dl class="backtest-metrics">
-              <div><dt>訊號／可執行</dt><dd>971／223</dd></div>
-              <div><dt>平均淨報酬</dt><dd>+1.22%</dd></div>
-              <div><dt>中位數淨報酬</dt><dd>-2.39%</dd></div>
-              <div><dt>樣本外中位數</dt><dd>-2.75%</dd></div>
+              <div><dt>訊號／可執行</dt><dd id="backtest-signals">--</dd></div>
+              <div><dt>平均淨報酬</dt><dd id="backtest-average">--</dd></div>
+              <div><dt>中位數淨報酬</dt><dd id="backtest-median">--</dd></div>
+              <div><dt>樣本外中位數</dt><dd id="backtest-oos-median">--</dd></div>
             </dl>
-            <p class="backtest-note">5,000 張以上相對較好，但樣本外中位數仍為負；目前只作優先觀察，不升級為正式交易規則。完整當沖績效仍須靠 09:15 後的分鐘線紙上交易驗證。</p>
+            <p class="backtest-note" id="backtest-note">回測摘要載入後顯示目前適用限制。</p>
           </article>
         </div>
 

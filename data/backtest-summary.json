@@ -1,0 +1,70 @@
+{
+  "schema_version": "2.12.0",
+  "generated_at": "2026-07-15T08:38:19.679632+08:00",
+  "data_through": "2026-07-14",
+  "methodology": {
+    "signal": "D1 換手後，D2+ 重返警示價",
+    "watch_days": 5,
+    "hold_days": 5,
+    "cost_bps_one_way": 15.0,
+    "execution_note": "同日進場與停損無法排序時，保守不交易。"
+  },
+  "baseline": {
+    "group_name": "all",
+    "group_value": "all",
+    "signal_count": 971,
+    "executed_count": 223,
+    "execution_rate": "0.2296601442",
+    "win_rate_net": "0.4035874439",
+    "avg_net_return": "0.0122057126",
+    "median_net_return": "-0.0239102091",
+    "sum_net_return_equal_weight": "2.7218739182",
+    "stop_loss_count": 86,
+    "stop_loss_rate_executed": "0.3856502242",
+    "no_entry_count": 6,
+    "invalidated_before_entry_count": 652,
+    "ambiguous_count": 90
+  },
+  "walk_forward": {
+    "explore_period": "2016-2021",
+    "validate_period": "2022-2026",
+    "baseline": {
+      "rule_name": "baseline_all",
+      "period": "validate",
+      "signal_count": 598,
+      "executed_count": 128,
+      "execution_rate": "0.2140468227",
+      "win_rate_net": "0.3828125",
+      "avg_net_return": "0.01060485",
+      "median_net_return": "-0.0275428805",
+      "sum_net_return_equal_weight": "1.3574207936",
+      "stop_loss_count": 51,
+      "stop_loss_rate_executed": "0.3984375",
+      "invalidated_before_entry_count": 409,
+      "ambiguous_count": 59,
+      "rule_expr": "all D1 blowoff signals"
+    },
+    "primary_liquidity": {
+      "rule_name": "primary_liquidity",
+      "rule_expr": "liquidity_bucket == PRIMARY_5000_PLUS",
+      "decision": "pass",
+      "reason": "validate median improves and stop-loss rate is not worse",
+      "explore_executed": 76,
+      "explore_median": "-0.013918374",
+      "validate_executed": 109,
+      "validate_median": "-0.0239102091",
+      "validate_avg": "0.0141065287",
+      "validate_win_rate": "0.3944954128",
+      "validate_stop_loss_rate": "0.3944954128"
+    }
+  },
+  "limitations": [
+    "Daily bars cannot prove intraday sequence; same-day entry and stop is conservatively not traded.",
+    "Entry assumes a limit/stop order at the D1 open reclaim price after D1 close.",
+    "This is an event-level equal-weight study, not portfolio capital allocation.",
+    "No market regime, disposition, EPS, or intraday liquidity filters are applied.",
+    "This validates fixed P1.6 candidates only; it does not optimize continuous thresholds.",
+    "Validation period is still daily-bar conservative simulation, not intraday execution.",
+    "Market regime, EPS, and disposition filters are not yet applied."
+  ]
+}
