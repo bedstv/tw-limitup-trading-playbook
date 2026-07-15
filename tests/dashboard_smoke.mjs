@@ -49,6 +49,7 @@ assert.match(await readFile(new URL("../script.js", import.meta.url), "utf8"), /
 const setupAResearch = JSON.parse(await readFile(new URL("../data/setup-a-research.json", import.meta.url)));
 assert.equal(setupAResearch.production_impact, "none", "A setup research must not affect production selection");
 assert.equal(setupAResearch.walk_forward.minimum_validation_trades, 10, "A setup research must keep the ten-trade promotion gate");
+assert.match(await readFile(new URL("../script.js", import.meta.url), "utf8"), /formalReview/, "dashboard must display the formal review gate when new evaluation data arrives");
 assert.match(await readFile(new URL("../index.html", import.meta.url), "utf8"), /A 型策略研究/, "dashboard must show A setup research status");
 assert.match(await readFile(new URL("../script.js", import.meta.url), "utf8"), /setup-a-research\.json/, "dashboard must load A setup research data");
 console.log(`dashboard_smoke=PASS dates=${documents.length} tracked_stocks=${history.size}`);

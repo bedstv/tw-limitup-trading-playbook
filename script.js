@@ -163,10 +163,11 @@ const renderStrategyEvaluation = () => {
   const evaluation = state.strategyEvaluation;
   if (!evaluation) { dashboard.strategyEvaluationSummary.textContent = "目前尚未載入固定規則評估。"; return; }
   const overall = evaluation.overall || {};
+  const formalReview = evaluation.formal_review || {};
   const collecting = evaluation.status !== "ready_for_review";
   dashboard.strategyEvaluationSummary.textContent = collecting
-    ? `樣本收集中：${evaluation.decision_day_count}/${evaluation.minimum_decision_days} 個 D1 判斷日；已結算 ${overall.settled_count || 0} 筆，待補證據／留倉覆核 ${evaluation.unsettled_count || 0} 筆。尚不可判定策略成效。${evaluation.p1_daily_backtest_reference?.note ? ` ${evaluation.p1_daily_backtest_reference.note}` : ""}`
-    : `樣本已達門檻：平均淨報酬 ${percent(overall.avg_net_return)}、中位數 ${percent(overall.median_net_return)}、勝率 ${percent(overall.win_rate)}。`;
+    ? `樣本收集中：${evaluation.decision_day_count}/${evaluation.minimum_decision_days} 個 D1 判斷日；已結算 ${overall.settled_count || 0} 筆，待補證據／留倉覆核 ${evaluation.unsettled_count || 0} 筆。${formalReview.message || "尚不可判定策略成效。"}${evaluation.p1_daily_backtest_reference?.note ? ` ${evaluation.p1_daily_backtest_reference.note}` : ""}`
+    : `樣本已達中期門檻：平均淨報酬 ${percent(overall.avg_net_return)}、中位數 ${percent(overall.median_net_return)}、勝率 ${percent(overall.win_rate)}。${formalReview.message || "請持續累積並人工檢查。"}`;
   const labels = { setup_type: "A／B 型", market_regime_0915: "09:15 大盤", liquidity_tier: "流動性", industry_consensus: "板塊共識", d1_decision_status: "D1 決策" };
   dashboard.strategyEvaluationSplits.innerHTML = Object.entries(evaluation.splits || {}).map(([key, groups]) => {
     const textGroups = Object.entries(groups).map(([name, value]) => `${name}：${value.candidate_count} 筆／已結算 ${value.settled_count} 筆`).join("；");
