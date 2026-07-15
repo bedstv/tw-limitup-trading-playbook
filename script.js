@@ -63,7 +63,9 @@ const badge = (label, type = "") => `<span class="badge ${type ? `badge-${type}`
 const stockLabel = (row) => `${escapeHtml(text(row.stock_id))} ${escapeHtml(text(row.name, ""))}`.trim();
 const setupLabel = (value) => ({ A: "A 型：盤整量縮漲停", B: "B 型：突破前高、帶量漲停" }[value] || text(value));
 const decisionLabel = (value) => ({ WATCH: "可觀察（WATCH）", PULLBACK_ONLY: "等拉回（PULLBACK_ONLY）", DOWNRANK: "降權觀察（DOWNRANK）", REJECT: "不介入（REJECT）", PENDING: "等待 D1 判定" }[value] || value);
-const nextStepChinese = (value) => ({
+const nextStepChinese = (value) => {
+  if (text(value, "").startsWith("09:15 個股報價不足")) return "09:15 個股報價資料不足，已排除此檔；不以缺失資料產生交易判斷。";
+  return ({
   "Wait for next trading day 09:15 market regime; D1 open watch; avoid direct chase if D1 open gap >5%": "等待下一交易日 09:15 的大盤強弱判斷；開盤後再觀察。若跳空開高超過 5%，不可直接追價。",
   "D1 open watch; avoid direct chase if D1 open gap >5%": "D1 開盤後觀察；若開盤跳空超過 5%，不可直接追價。",
   "Consider only after intraday confirmation; daily sequence still ambiguous": "待盤中條件確認後才考慮；日線無法判定先進場或先停損。",
@@ -74,7 +76,9 @@ const nextStepChinese = (value) => ({
   "No D2 reclaim setup; monitor only if relative strength confirmed": "尚未形成 D2 重返警示價條件；僅在相對強勢確認後持續追蹤。",
   "Add to D2 reclaim watch": "納入 D2+ 重返警示價觀察。",
   "Weak market B setup failed a required strength check.": "弱勢大盤下，B 型未通過強勢條件，不介入。",
-}[text(value, "")] || text(value));
+  "Strong market downranks volume-breakout B setups in V1.": "強勢大盤下，B 型帶量突破容易出現追價風險；依固定 V1 規則降權觀察，不主動追價。",
+  }[text(value, "")] || text(value));
+};
 const regimeLabel = (row) => {
   const regime = text(row.market_regime_0915);
   const returnText = text(row.taiex_return_0915, "");
