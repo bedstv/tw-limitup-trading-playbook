@@ -103,7 +103,8 @@ const riskBadges = (row) => {
   if (row.eps_ytd_negative) labels.push(badge("EPS虧損", "risk"));
   if (row.currently_disposed_snapshot) labels.push(badge("處置中", "risk"));
   if (row.possible_disposition_next_day) labels.push(badge("可能處置", "risk"));
-  return labels.length ? labels.join("") : badge("未標示", "ok");
+  if (labels.length) return labels.join("");
+  return row.risk_flags_trade_ready === false ? badge("風險資料未完整", "warn") : badge("無 EPS／處置風險", "ok");
 };
 const decisionBadge = (row) => row.d1_decision_ready ? `<br>${badge(decisionLabel(decisionStatus(row)), decisionStatus(row) === "WATCH" ? "ok" : decisionStatus(row) === "PULLBACK_ONLY" ? "warn" : "risk")}` : "";
 const exceptionDetails = (row) => {
