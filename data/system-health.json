@@ -1,15 +1,79 @@
 {
   "checks": {
     "d1": {
-      "schema_version": "p0.1",
+      "schema_version": "p2.20.3",
       "phase": "d1",
-      "date": "2026-07-15",
-      "checked_at": "2026-07-15T09:38:01.051881+08:00",
-      "status": "ok",
-      "reasons": [],
-      "local_commit": "159c7021261e5f33209fc36563926c4b90fff427",
-      "remote_commit": "159c7021261e5f33209fc36563926c4b90fff427",
-      "telegram_delivery_status": "sent"
+      "date": "2026-07-16",
+      "scheduled_at": "2026-07-16T09:16:00+08:00",
+      "checked_at": "2026-07-16T09:20:05.555834+08:00",
+      "actual_finished_at": "2026-07-16T09:17:40.652048+08:00",
+      "status": "skipped",
+      "failed_step": null,
+      "reasons": [
+        "沒有前一日候選資料，無須產生 D1 判斷"
+      ],
+      "steps": {
+        "dashboard_data": {
+          "status": "skipped",
+          "detail": "沒有前一日候選資料，無須產生 D1 判斷"
+        },
+        "freshness": {
+          "status": "ok",
+          "detail": "交易日曆與資料新鮮度已更新"
+        }
+      },
+      "versions": {
+        "preflight_data_commit": "4bdb899b4fb69bb3c9584e67d8d65e32574663e2",
+        "preflight_pages_commit": "8e603513642e2c08036f8be198fef7284b25bd2c"
+      },
+      "retry": {
+        "schema_version": "p2.20.2",
+        "phase": "d1",
+        "date": "2026-07-16",
+        "status": "failed",
+        "retry_delay_seconds": 90,
+        "attempts": [
+          {
+            "attempt": 1,
+            "started_at": "2026-07-16T09:16:06.402537+08:00",
+            "finished_at": "2026-07-16T09:16:08.405825+08:00",
+            "exit_code": 128
+          },
+          {
+            "attempt": 2,
+            "started_at": "2026-07-16T09:17:38.404547+08:00",
+            "finished_at": "2026-07-16T09:17:40.652048+08:00",
+            "exit_code": 128
+          }
+        ],
+        "recorded_at": "2026-07-16T09:17:40.652090+08:00"
+      },
+      "freshness": {
+        "schema_version": "p2.21",
+        "checked_at": "2026-07-16T09:20:05.605563+08:00",
+        "as_of_date": "2026-07-16",
+        "calendar_source": "official_live",
+        "market_day": {
+          "date": "2026-07-16",
+          "status": "trading",
+          "source": "weekday",
+          "reason": "一般交易日"
+        },
+        "previous_trading_date": "2026-07-15",
+        "latest_data_date": "2026-07-15",
+        "expected_latest_data_date": "2026-07-15",
+        "is_stale": false,
+        "expectations": {
+          "d1_0915": {
+            "due": true,
+            "ready": false
+          },
+          "afterhours": {
+            "due": false,
+            "ready": null
+          }
+        }
+      }
     },
     "afterhours": {
       "schema_version": "p2.20.3",
