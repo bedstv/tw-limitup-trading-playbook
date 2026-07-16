@@ -47,7 +47,7 @@ const dashboard = {
   tabs: [...document.querySelectorAll("[data-dashboard-tab]")],
   tabPanels: [...document.querySelectorAll(".dashboard-tab-panel")],
 };
-const state = { current: null, histories: new Map() };
+const state = { current: null, histories: new Map(), runtimeReadiness: null };
 const fetchJson = async (path, fallback) => {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), 12000);
@@ -337,6 +337,10 @@ const renderDashboard = (data) => {
   dashboard.warning.classList.toggle("is-ok", Boolean(data.trade_ready));
   dashboard.warning.innerHTML = `<strong>資料狀態：</strong><span>${escapeHtml(`${d0Text} ${d1Text}${partialDates ? ` 部分市場資料：${partialDates}。` : ""}`)}</span>`;
   const checks = state.systemHealth?.checks || {};
+  const readiness = state.runtimeReadiness;
+  const readinessText = readiness
+    ? `目前執行環境：${readiness.status === "ok" ? "已通過預檢，可等待下一次排程" : "預檢異常"}（${readiness.checked_at || "時間未知"}）`
+    : "目前執行環境：尚無預檢紀錄";
   const healthText = ["d1", "afterhours"].map((phase) => {
     const check = checks[phase];
     if (!check) return `${phase === "d1" ? "09:15" : "盤後"}：尚無健康紀錄`;
@@ -344,11 +348,11 @@ const renderDashboard = (data) => {
     const completed = check.actual_finished_at ? `，完成 ${check.actual_finished_at}` : "";
     const version = check.versions?.data_runtime_commit ? `，版本 ${check.versions.data_runtime_commit.slice(0, 7)}` : "";
     const failure = check.status === "failed" ? `，失敗步驟：${check.failed_step || "未分類"}${check.reasons?.length ? `（${check.reasons[0]}）` : ""}` : "";
-    return `${phase === "d1" ? "09:15" : "盤後"}：${check.status === "ok" ? "已確認" : check.status === "skipped" ? "休市／跳過" : "異常"}${telegram}${completed}${version}${failure}（檢查 ${check.checked_at || "時間未知"}）`;
+    const status = check.status === "ok" ? "已確認" : check.status === "skipped" ? "無須產生判斷" : "異常";
+    return `${phase === "d1" ? "09:15" : "盤後"}最後一次結果：${status}${telegram}${completed}${version}${failure}（檢查 ${check.checked_at || "時間未知"}）`;
   }).join("；");
-  const healthChecks = Object.values(checks);
-  dashboard.systemHealth.classList.toggle("is-ok", healthChecks.length > 0 && healthChecks.every((check) => check.status === "ok"));
-  dashboard.systemHealth.innerHTML = `<strong>自動更新：</strong><span>${escapeHtml(healthText)}</span>`;
+  dashboard.systemHealth.classList.toggle("is-ok", readiness?.status === "ok");
+  dashboard.systemHealth.innerHTML = `<strong>自動更新：</strong><span>${escapeHtml(`${readinessText}。${healthText}`)}</span>`;
   const freshness = state.marketFreshness;
   if (dashboard.freshness) {
     if (!freshness) {
@@ -405,6 +409,7 @@ const initDashboard = async () => {
     dashboard.dateSelect.innerHTML = dates.map((date) => `<option value="${date}">${date}</option>`).join("");
     const documents = await Promise.all(dates.map((date) => fetchJson(`data/daily/${date}.json`)));
     state.systemHealth = await fetchJson("data/system-health.json", { checks: {} });
+    state.runtimeReadiness = await fetchJson("data/runtime-readiness.json", null);
     state.marketFreshness = await fetchJson("data/market-freshness.json", null);
     state.paperEvaluation = await fetchJson("data/paper-evaluation.json", null);
     state.strategyEvaluation = await fetchJson("data/strategy-evaluation.json", null);

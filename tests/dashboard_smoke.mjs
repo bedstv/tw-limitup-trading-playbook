@@ -28,6 +28,7 @@ assert.match(marketPage, /資料更新履歷/, "daily market must show update hi
 assert.match(marketPage, /複製目前連結/, "daily market must offer a shareable filtered view");
 assert.match(marketPage, /板塊共識/, "daily market must show industry consensus");
 assert.match(await readFile(new URL("../script.js", import.meta.url), "utf8"), /重新整理資料/, "dashboard must offer recovery when loading fails");
+assert.match(await readFile(new URL("../script.js", import.meta.url), "utf8"), /runtime-readiness\.json/, "dashboard must show current runtime readiness separately from past runs");
 assert.match(await readFile(new URL("../styles.css", import.meta.url), "utf8"), /td::before/, "daily market must have mobile card labels");
 const progress = paperProgress([{ paper_trading: { rule_version: "p2.11_v2", candidate_count: 1, watch_count: 1, executed_count: 0 }, paper_trading_records: [{ rule_version: "p2.11_v2", net_return: "0.012" }] }]);
 assert.equal(progress.remaining_days, 19, "paper progress must count D1 decision days");
