@@ -282,23 +282,32 @@ const renderProvenance = (data) => {
   dashboard.provenance.innerHTML = `<strong>資料來源與可用性：</strong><span>盤後候選：TWSE／TPEx 官方日行情（${escapeHtml(afterhours)}）。09:15 判斷：${escapeHtml(d1)}。${escapeHtml(coverageText)} 紙上交易分鐘線：${escapeHtml(paper)}。</span>`;
 };
 
+const missedD1Check = (data) => {
+  const check = state.systemHealth?.checks?.d1;
+  const retryFailed = check?.retry?.status && !["ok", "recovered"].includes(check.retry.status);
+  return !data.trade_ready && !(data.d0_candidates || []).some((row) => row.d1_decision_ready)
+    && check?.date > data.effective_date && (check.status === "failed" || retryFailed)
+    ? check : null;
+};
+
 const renderTodaySummary = (data) => {
   if (!dashboard.todaySummaryTitle || !dashboard.todaySummaryNote || !dashboard.todayFocusCards) return;
   const candidates = rows(data.d0_candidates);
   const watchCount = candidates.filter((row) => decisionStatus(row) === "WATCH").length;
   const readyCount = candidates.filter((row) => row.d1_decision_ready).length;
+  const missedD1 = missedD1Check(data);
   dashboard.todaySummaryTitle.textContent = data.trade_ready
     ? (watchCount ? `今天可優先觀察 ${watchCount} 檔，仍須等待個股觸發。` : "09:15 判斷已完成，目前沒有可直接追價的候選。")
-    : (readyCount ? `已有 ${readyCount}/${candidates.length} 檔完成 09:15 判斷；個股資料未齊，整批不可標示為可交易。` : `盤後已選出 ${candidates.length} 檔候選；等待下一交易日 09:15 判定。`);
+    : (readyCount ? `已有 ${readyCount}/${candidates.length} 檔完成 09:15 判斷；個股資料未齊，整批不可標示為可交易。` : (missedD1 ? `${data.effective_date} 的 D1 09:15 判斷失敗；此名單今天不可交易。` : `盤後已選出 ${candidates.length} 檔候選；等待下一交易日 09:15 判定。`));
   dashboard.todaySummaryNote.textContent = data.trade_ready
     ? `已取得 ${readyCount}/${candidates.length} 檔的 09:15 判斷。請先讀每檔的交易限制與停損，再決定是否觀察。`
-    : (readyCount ? "已完成的個股可查看限制與停損；缺資料的個股維持排除，不可以其他資料推估。" : "先確認盤後候選與風險；下一交易日的 09:15 大盤與個股資料完成後，系統才會更新交易限制。");
+    : (readyCount ? "已完成的個股可查看限制與停損；缺資料的個股維持排除，不可以其他資料推估。" : (missedD1 ? "09:15 資料未取得，不得以日線或下一交易日資料補判；此名單不會延後使用。" : "先確認盤後候選與風險；下一交易日的 09:15 大盤與個股資料完成後，系統才會更新交易限制。"));
   if (!candidates.length) {
     dashboard.todayFocusCards.innerHTML = "<p class=\"decision-summary-empty\">目前篩選條件下沒有盤後候選；不需要勉強找標的。</p>";
     return;
   }
   dashboard.todayFocusCards.innerHTML = candidates.slice(0, 3).map((row) => {
-    const status = row.d1_decision_ready ? decisionLabel(decisionStatus(row)) : "等待 D1 09:15 判定";
+    const status = row.d1_decision_ready ? decisionLabel(decisionStatus(row)) : (missedD1 ? "D1 09:15 資料未取得，不可交易" : "等待 D1 09:15 判定");
     const reason = row.d1_decision_reason || row.next_step;
     const price = row.paper_entry_trigger_price || row.alert_reclaim_price || "盤中確認後才會出現";
     return `<article class="decision-focus-card">
@@ -330,9 +339,10 @@ const renderDashboard = (data) => {
   dashboard.paperProgress.innerHTML = `<strong>P2.11 紙上交易進度</strong><span>${escapeHtml(progress.rule_version)}：已累積 ${progress.decision_days}／20 個 D1 判斷日；尚差 ${progress.remaining_days} 日。候選 ${progress.candidate_count}、可交易 ${progress.watch_count}、實際觸發 ${progress.executed_count}、留倉覆核 ${progress.hold_review_count}、資料不足 ${progress.data_incomplete_count}。${escapeHtml(measured + evaluationText)}</span>`;
   const partialDates = Object.entries(data.health?.partial_market_dates || {}).map(([date, markets]) => `${date}: ${markets.join("/")}`).join("；");
   const d0QuoteReadyCount = (data.d0_candidates || []).filter((row) => row.d1_decision_ready).length;
+  const missedD1 = missedD1Check(data);
   const d0Text = data.trade_ready
     ? `D0 已完成 ${data.d0_decision_date} 09:15 判定，可觀察 ${data.health?.d0_eligible_count ?? 0} 檔。`
-    : (d0QuoteReadyCount ? `D0 已取得 ${d0QuoteReadyCount}/${data.d0_candidates.length} 檔的 ${data.d0_decision_date} 09:15 個股資料；缺資料個股已排除，因此整批尚不可標示為可交易。` : (data.health?.limitations || []).join(" "));
+    : (d0QuoteReadyCount ? `D0 已取得 ${d0QuoteReadyCount}/${data.d0_candidates.length} 檔的 ${data.d0_decision_date} 09:15 個股資料；缺資料個股已排除，因此整批尚不可標示為可交易。` : (missedD1 ? `${data.effective_date} 盤後 D0 候選原定於 ${missedD1.date} 09:15 判定，但排程失敗；今天不得交易，也不可延後套用到下一交易日。` : (data.health?.limitations || []).join(" ")));
   const d1Text = data.d1_watch_ready ? `本頁 ${data.health?.regime_0915_date || data.effective_date} 的 09:15 大盤僅套用 D1 觀察名單。` : "D1 觀察名單尚未取得同日 09:15 大盤。";
   dashboard.warning.classList.toggle("is-ok", Boolean(data.trade_ready));
   dashboard.warning.innerHTML = `<strong>資料狀態：</strong><span>${escapeHtml(`${d0Text} ${d1Text}${partialDates ? ` 部分市場資料：${partialDates}。` : ""}`)}</span>`;
