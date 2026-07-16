@@ -1,6 +1,6 @@
 {
   "schema_version": "p2.21",
-  "checked_at": "2026-07-16T09:20:05.605563+08:00",
+  "checked_at": "2026-07-16T15:45:05.541398+08:00",
   "as_of_date": "2026-07-16",
   "calendar_source": "official_live",
   "market_day": {
@@ -10,17 +10,17 @@
     "reason": "一般交易日"
   },
   "previous_trading_date": "2026-07-15",
-  "latest_data_date": "2026-07-15",
-  "expected_latest_data_date": "2026-07-15",
+  "latest_data_date": "2026-07-16",
+  "expected_latest_data_date": "2026-07-16",
   "is_stale": false,
   "expectations": {
     "d1_0915": {
       "due": true,
-      "ready": false
+      "ready": true
     },
     "afterhours": {
-      "due": false,
-      "ready": null
+      "due": true,
+      "ready": true
     }
   }
 }

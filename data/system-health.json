@@ -78,15 +78,13 @@
     "afterhours": {
       "schema_version": "p2.20.3",
       "phase": "afterhours",
-      "date": "2026-07-15",
-      "scheduled_at": "2026-07-15T15:30:00+08:00",
-      "checked_at": "2026-07-15T15:45:05.652213+08:00",
-      "actual_finished_at": "2026-07-15T15:32:20.600475+08:00",
-      "status": "failed",
-      "failed_step": "pages_git",
-      "reasons": [
-        "Dashboard commit 尚未推送至 GitHub"
-      ],
+      "date": "2026-07-16",
+      "scheduled_at": "2026-07-16T15:30:00+08:00",
+      "checked_at": "2026-07-16T15:45:05.496015+08:00",
+      "actual_finished_at": "2026-07-16T15:32:30.570031+08:00",
+      "status": "ok",
+      "failed_step": null,
+      "reasons": [],
       "steps": {
         "dashboard_data": {
           "status": "ok",
@@ -101,47 +99,55 @@
           "detail": "交易日曆與資料新鮮度已更新"
         },
         "pages_git": {
-          "status": "failed",
-          "detail": "Dashboard commit 尚未推送至 GitHub"
+          "status": "ok",
+          "detail": "GitHub main 已同步"
+        },
+        "public_dashboard": {
+          "status": "ok",
+          "detail": "看盤頁與每日資料均可公開讀取"
+        },
+        "telegram": {
+          "status": "ok",
+          "detail": "交易摘要已送達"
         }
       },
       "versions": {
-        "preflight_data_commit": "de31105facf13a8d26927c3079b10cc772884d2d",
-        "preflight_pages_commit": "ed0caa5cbd7dd15367aaa3d47dd78a0005bb2880",
-        "pages_local_commit": "f443deeabb02cc6b071c2601bb48bf20e4df210c",
-        "pages_remote_commit": "677d753fd9f7cfde56c887ef505f30325513fdc8",
-        "data_runtime_commit": "de31105facf13a8d26927c3079b10cc772884d2d"
+        "preflight_data_commit": "9df2f95f5cdcbd2f539d583553f27a99bb6f5f72",
+        "preflight_pages_commit": "049ea528ff1db1c01f9e3ed64dc93f076f8165be",
+        "pages_local_commit": "9352d23e2c2fe4427ef0467106891050f3e1b40b",
+        "pages_remote_commit": "9352d23e2c2fe4427ef0467106891050f3e1b40b",
+        "data_runtime_commit": "9df2f95f5cdcbd2f539d583553f27a99bb6f5f72"
       },
       "retry": {
         "schema_version": "p2.20.2",
         "phase": "afterhours",
-        "date": "2026-07-15",
+        "date": "2026-07-16",
         "status": "ok",
         "retry_delay_seconds": 0,
         "attempts": [
           {
             "attempt": 1,
-            "started_at": "2026-07-15T15:30:06.153583+08:00",
-            "finished_at": "2026-07-15T15:32:20.600475+08:00",
+            "started_at": "2026-07-16T15:30:05.492707+08:00",
+            "finished_at": "2026-07-16T15:32:30.570031+08:00",
             "exit_code": 0
           }
         ],
-        "recorded_at": "2026-07-15T15:32:20.600678+08:00"
+        "recorded_at": "2026-07-16T15:32:30.570166+08:00"
       },
       "freshness": {
         "schema_version": "p2.21",
-        "checked_at": "2026-07-15T15:45:05.694059+08:00",
-        "as_of_date": "2026-07-15",
+        "checked_at": "2026-07-16T15:45:05.541398+08:00",
+        "as_of_date": "2026-07-16",
         "calendar_source": "official_live",
         "market_day": {
-          "date": "2026-07-15",
+          "date": "2026-07-16",
           "status": "trading",
           "source": "weekday",
           "reason": "一般交易日"
         },
-        "previous_trading_date": "2026-07-14",
-        "latest_data_date": "2026-07-15",
-        "expected_latest_data_date": "2026-07-15",
+        "previous_trading_date": "2026-07-15",
+        "latest_data_date": "2026-07-16",
+        "expected_latest_data_date": "2026-07-16",
         "is_stale": false,
         "expectations": {
           "d1_0915": {
