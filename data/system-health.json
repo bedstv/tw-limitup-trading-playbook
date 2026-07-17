@@ -90,10 +90,10 @@
     "afterhours": {
       "schema_version": "p2.20.3",
       "phase": "afterhours",
-      "date": "2026-07-16",
-      "scheduled_at": "2026-07-16T15:30:00+08:00",
-      "checked_at": "2026-07-16T15:45:05.496015+08:00",
-      "actual_finished_at": "2026-07-16T15:32:30.570031+08:00",
+      "date": "2026-07-17",
+      "scheduled_at": "2026-07-17T15:30:00+08:00",
+      "checked_at": "2026-07-17T15:45:05.465118+08:00",
+      "actual_finished_at": "2026-07-17T15:32:26.888024+08:00",
       "status": "ok",
       "failed_step": null,
       "reasons": [],
@@ -125,41 +125,41 @@
       },
       "versions": {
         "preflight_data_commit": "9df2f95f5cdcbd2f539d583553f27a99bb6f5f72",
-        "preflight_pages_commit": "049ea528ff1db1c01f9e3ed64dc93f076f8165be",
-        "pages_local_commit": "9352d23e2c2fe4427ef0467106891050f3e1b40b",
-        "pages_remote_commit": "9352d23e2c2fe4427ef0467106891050f3e1b40b",
+        "preflight_pages_commit": "d789671db8afc03cec17f713f205b10d0c626fbe",
+        "pages_local_commit": "3af3de52ed16d66c7f75e87e3427c1509d005ca9",
+        "pages_remote_commit": "3af3de52ed16d66c7f75e87e3427c1509d005ca9",
         "data_runtime_commit": "9df2f95f5cdcbd2f539d583553f27a99bb6f5f72"
       },
       "retry": {
         "schema_version": "p2.20.2",
         "phase": "afterhours",
-        "date": "2026-07-16",
+        "date": "2026-07-17",
         "status": "ok",
         "retry_delay_seconds": 0,
         "attempts": [
           {
             "attempt": 1,
-            "started_at": "2026-07-16T15:30:05.492707+08:00",
-            "finished_at": "2026-07-16T15:32:30.570031+08:00",
+            "started_at": "2026-07-17T15:30:05.538892+08:00",
+            "finished_at": "2026-07-17T15:32:26.888024+08:00",
             "exit_code": 0
           }
         ],
-        "recorded_at": "2026-07-16T15:32:30.570166+08:00"
+        "recorded_at": "2026-07-17T15:32:26.888269+08:00"
       },
       "freshness": {
         "schema_version": "p2.21",
-        "checked_at": "2026-07-16T15:45:05.541398+08:00",
-        "as_of_date": "2026-07-16",
+        "checked_at": "2026-07-17T15:45:05.512469+08:00",
+        "as_of_date": "2026-07-17",
         "calendar_source": "official_live",
         "market_day": {
-          "date": "2026-07-16",
+          "date": "2026-07-17",
           "status": "trading",
           "source": "weekday",
           "reason": "一般交易日"
         },
-        "previous_trading_date": "2026-07-15",
-        "latest_data_date": "2026-07-16",
-        "expected_latest_data_date": "2026-07-16",
+        "previous_trading_date": "2026-07-16",
+        "latest_data_date": "2026-07-17",
+        "expected_latest_data_date": "2026-07-17",
         "is_stale": false,
         "expectations": {
           "d1_0915": {
