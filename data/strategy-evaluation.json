@@ -1,17 +1,17 @@
 {
   "schema_version": "p2.24",
   "rule_version": "p2.11_v2",
-  "decision_day_count": 3,
+  "decision_day_count": 4,
   "minimum_decision_days": 20,
   "status": "collecting_fixed_rule_sample",
   "overall": {
-    "candidate_count": 11,
-    "settled_count": 2,
-    "avg_net_return": 0.02331578947368418,
-    "median_net_return": 0.02331578947368418,
-    "win_rate": 0.5,
+    "candidate_count": 15,
+    "settled_count": 6,
+    "avg_net_return": -0.008674967421017974,
+    "median_net_return": -0.0106765609007165,
+    "win_rate": 0.3333333333333333,
     "stop_loss_rate": 0.0,
-    "max_drawdown_equal_weight": -0.003
+    "max_drawdown_equal_weight": -0.0986813834734762
   },
   "unsettled_count": 1,
   "formal_review": {
@@ -60,13 +60,13 @@
   "splits": {
     "setup_type": {
       "B": {
-        "candidate_count": 11,
-        "settled_count": 2,
-        "avg_net_return": 0.02331578947368418,
-        "median_net_return": 0.02331578947368418,
-        "win_rate": 0.5,
+        "candidate_count": 15,
+        "settled_count": 6,
+        "avg_net_return": -0.008674967421017974,
+        "median_net_return": -0.0106765609007165,
+        "win_rate": 0.3333333333333333,
         "stop_loss_rate": 0.0,
-        "max_drawdown_equal_weight": -0.003
+        "max_drawdown_equal_weight": -0.0986813834734762
       }
     },
     "market_regime_0915": {
@@ -78,6 +78,15 @@
         "win_rate": null,
         "stop_loss_rate": 0.0,
         "max_drawdown_equal_weight": null
+      },
+      "NEUTRAL": {
+        "candidate_count": 4,
+        "settled_count": 4,
+        "avg_net_return": -0.02467034586836905,
+        "median_net_return": -0.024565449789605395,
+        "win_rate": 0.25,
+        "stop_loss_rate": 0.0,
+        "max_drawdown_equal_weight": -0.09868138347347621
       },
       "STRONG": {
         "candidate_count": 4,
@@ -100,13 +109,13 @@
     },
     "liquidity_tier": {
       "": {
-        "candidate_count": 11,
-        "settled_count": 2,
-        "avg_net_return": 0.02331578947368418,
-        "median_net_return": 0.02331578947368418,
-        "win_rate": 0.5,
+        "candidate_count": 15,
+        "settled_count": 6,
+        "avg_net_return": -0.008674967421017974,
+        "median_net_return": -0.0106765609007165,
+        "win_rate": 0.3333333333333333,
         "stop_loss_rate": 0.0,
-        "max_drawdown_equal_weight": -0.003
+        "max_drawdown_equal_weight": -0.0986813834734762
       }
     },
     "industry_consensus": {
@@ -120,22 +129,22 @@
         "max_drawdown_equal_weight": null
       },
       "False": {
-        "candidate_count": 5,
-        "settled_count": 2,
-        "avg_net_return": 0.02331578947368418,
-        "median_net_return": 0.02331578947368418,
+        "candidate_count": 7,
+        "settled_count": 4,
+        "avg_net_return": 0.008804086336173274,
+        "median_net_return": 0.001968944099378869,
         "win_rate": 0.5,
         "stop_loss_rate": 0.0,
-        "max_drawdown_equal_weight": -0.003
+        "max_drawdown_equal_weight": -0.018353121801433
       },
       "True": {
-        "candidate_count": 3,
-        "settled_count": 0,
-        "avg_net_return": null,
-        "median_net_return": null,
-        "win_rate": null,
+        "candidate_count": 5,
+        "settled_count": 2,
+        "avg_net_return": -0.04363307493540047,
+        "median_net_return": -0.04363307493540047,
+        "win_rate": 0.0,
         "stop_loss_rate": 0.0,
-        "max_drawdown_equal_weight": null
+        "max_drawdown_equal_weight": -0.08726614987080095
       }
     },
     "d1_decision_status": {
@@ -167,13 +176,13 @@
         "max_drawdown_equal_weight": null
       },
       "WATCH": {
-        "candidate_count": 2,
-        "settled_count": 2,
-        "avg_net_return": 0.02331578947368418,
-        "median_net_return": 0.02331578947368418,
-        "win_rate": 0.5,
+        "candidate_count": 6,
+        "settled_count": 6,
+        "avg_net_return": -0.008674967421017974,
+        "median_net_return": -0.0106765609007165,
+        "win_rate": 0.3333333333333333,
         "stop_loss_rate": 0.0,
-        "max_drawdown_equal_weight": -0.003
+        "max_drawdown_equal_weight": -0.0986813834734762
       }
     }
   },
