@@ -3,89 +3,82 @@
     "d1": {
       "schema_version": "p2.20.3",
       "phase": "d1",
-      "date": "2026-07-17",
-      "scheduled_at": "2026-07-17T09:16:00+08:00",
-      "checked_at": "2026-07-17T09:20:05.852967+08:00",
-      "actual_finished_at": "2026-07-17T09:16:20.400590+08:00",
-      "status": "ok",
-      "failed_step": null,
-      "reasons": [],
+      "date": "2026-07-18",
+      "scheduled_at": "2026-07-18T09:16:00+08:00",
+      "checked_at": "2026-07-18T09:20:01.753565+08:00",
+      "actual_finished_at": "2026-07-18T09:17:39.656935+08:00",
+      "status": "failed",
+      "failed_step": "retry",
+      "reasons": [
+        "沒有前一日候選資料，無須產生 D1 判斷",
+        "主排程重試後仍失敗"
+      ],
       "steps": {
         "dashboard_data": {
-          "status": "ok",
-          "detail": "D1 09:15 判斷已完成"
+          "status": "skipped",
+          "detail": "沒有前一日候選資料，無須產生 D1 判斷"
         },
         "retry": {
-          "status": "ok",
-          "detail": "第一次完成"
+          "status": "failed",
+          "detail": "主排程重試後仍失敗"
         },
         "freshness": {
           "status": "ok",
           "detail": "交易日曆與資料新鮮度已更新"
-        },
-        "pages_git": {
-          "status": "ok",
-          "detail": "GitHub main 已同步"
-        },
-        "public_dashboard": {
-          "status": "ok",
-          "detail": "看盤頁與每日資料均可公開讀取"
-        },
-        "telegram": {
-          "status": "ok",
-          "detail": "交易摘要已送達"
         }
       },
       "versions": {
         "preflight_data_commit": "9df2f95f5cdcbd2f539d583553f27a99bb6f5f72",
-        "preflight_pages_commit": "149870c50381b363c0dc726a718e414859917d71",
-        "pages_local_commit": "04d3335bac7424039895abe50a3b7c6fec1142bb",
-        "pages_remote_commit": "04d3335bac7424039895abe50a3b7c6fec1142bb",
-        "data_runtime_commit": "9df2f95f5cdcbd2f539d583553f27a99bb6f5f72"
+        "preflight_pages_commit": "8ad82b8ec56907299753b48e497e554ef8572501"
       },
       "retry": {
         "schema_version": "p2.20.2",
         "phase": "d1",
-        "date": "2026-07-17",
-        "status": "ok",
-        "retry_delay_seconds": 0,
+        "date": "2026-07-18",
+        "status": "failed",
+        "retry_delay_seconds": 90,
         "attempts": [
           {
             "attempt": 1,
-            "started_at": "2026-07-17T09:16:00.824613+08:00",
-            "finished_at": "2026-07-17T09:16:20.400590+08:00",
-            "exit_code": 0
+            "started_at": "2026-07-18T09:16:05.495140+08:00",
+            "finished_at": "2026-07-18T09:16:07.582712+08:00",
+            "exit_code": 1
+          },
+          {
+            "attempt": 2,
+            "started_at": "2026-07-18T09:17:37.628090+08:00",
+            "finished_at": "2026-07-18T09:17:39.656935+08:00",
+            "exit_code": 1
           }
         ],
-        "recorded_at": "2026-07-17T09:16:20.400787+08:00"
+        "recorded_at": "2026-07-18T09:17:39.656966+08:00"
       },
       "freshness": {
         "schema_version": "p2.21",
-        "checked_at": "2026-07-17T09:20:05.899430+08:00",
-        "as_of_date": "2026-07-17",
+        "checked_at": "2026-07-18T09:20:01.820843+08:00",
+        "as_of_date": "2026-07-18",
         "calendar_source": "official_live",
         "market_day": {
-          "date": "2026-07-17",
-          "status": "trading",
-          "source": "weekday",
-          "reason": "一般交易日"
+          "date": "2026-07-18",
+          "status": "closed",
+          "source": "weekend",
+          "reason": "週末不交易"
         },
-        "previous_trading_date": "2026-07-16",
-        "latest_data_date": "2026-07-16",
-        "expected_latest_data_date": "2026-07-16",
+        "previous_trading_date": "2026-07-17",
+        "latest_data_date": "2026-07-17",
+        "expected_latest_data_date": "2026-07-17",
         "is_stale": false,
         "expectations": {
           "d1_0915": {
-            "due": true,
-            "ready": true
+            "due": false,
+            "ready": null
           },
           "afterhours": {
             "due": false,
             "ready": null
           }
         }
-      },
-      "telegram_delivery_status": "sent"
+      }
     },
     "afterhours": {
       "schema_version": "p2.20.3",
