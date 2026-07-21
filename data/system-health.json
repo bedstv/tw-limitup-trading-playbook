@@ -3,10 +3,10 @@
     "d1": {
       "schema_version": "p2.20.3",
       "phase": "d1",
-      "date": "2026-07-18",
-      "scheduled_at": "2026-07-18T09:16:00+08:00",
-      "checked_at": "2026-07-18T09:20:01.753565+08:00",
-      "actual_finished_at": "2026-07-18T09:17:39.656935+08:00",
+      "date": "2026-07-21",
+      "scheduled_at": "2026-07-21T09:16:00+08:00",
+      "checked_at": "2026-07-21T09:21:24.944510+08:00",
+      "actual_finished_at": "2026-07-21T09:21:24.884927+08:00",
       "status": "failed",
       "failed_step": "retry",
       "reasons": [
@@ -27,51 +27,35 @@
           "detail": "交易日曆與資料新鮮度已更新"
         }
       },
-      "versions": {
-        "preflight_data_commit": "9df2f95f5cdcbd2f539d583553f27a99bb6f5f72",
-        "preflight_pages_commit": "8ad82b8ec56907299753b48e497e554ef8572501"
-      },
+      "versions": {},
       "retry": {
         "schema_version": "p2.20.2",
         "phase": "d1",
-        "date": "2026-07-18",
-        "status": "failed",
-        "retry_delay_seconds": 90,
-        "attempts": [
-          {
-            "attempt": 1,
-            "started_at": "2026-07-18T09:16:05.495140+08:00",
-            "finished_at": "2026-07-18T09:16:07.582712+08:00",
-            "exit_code": 1
-          },
-          {
-            "attempt": 2,
-            "started_at": "2026-07-18T09:17:37.628090+08:00",
-            "finished_at": "2026-07-18T09:17:39.656935+08:00",
-            "exit_code": 1
-          }
-        ],
-        "recorded_at": "2026-07-18T09:17:39.656966+08:00"
+        "date": "2026-07-21",
+        "status": "blocked_preflight",
+        "reason": "找不到本階段預檢紀錄",
+        "attempts": [],
+        "recorded_at": "2026-07-21T09:21:24.884927+08:00"
       },
       "freshness": {
         "schema_version": "p2.21",
-        "checked_at": "2026-07-18T09:20:01.820843+08:00",
-        "as_of_date": "2026-07-18",
+        "checked_at": "2026-07-21T09:21:24.993643+08:00",
+        "as_of_date": "2026-07-21",
         "calendar_source": "official_live",
         "market_day": {
-          "date": "2026-07-18",
-          "status": "closed",
-          "source": "weekend",
-          "reason": "週末不交易"
+          "date": "2026-07-21",
+          "status": "trading",
+          "source": "weekday",
+          "reason": "一般交易日"
         },
-        "previous_trading_date": "2026-07-17",
+        "previous_trading_date": "2026-07-20",
         "latest_data_date": "2026-07-17",
-        "expected_latest_data_date": "2026-07-17",
+        "expected_latest_data_date": "2026-07-20",
         "is_stale": false,
         "expectations": {
           "d1_0915": {
-            "due": false,
-            "ready": null
+            "due": true,
+            "ready": false
           },
           "afterhours": {
             "due": false,
