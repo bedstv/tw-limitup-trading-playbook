@@ -1,9 +1,13 @@
 {
   "schema_version": "p2.20.1",
-  "checked_at": "2026-07-18T15:30:01.553769+08:00",
-  "phase": "afterhours",
-  "status": "ok",
-  "errors": [],
+  "checked_at": "2026-07-21T09:21:29.238422+08:00",
+  "phase": "d1",
+  "status": "failed",
+  "errors": [
+    "tw-market-data 無法同步至主分支：fatal: unable to access 'https://github.com/bedstv/tw-market-data.git/': Resolving timed out after 359921 milliseconds",
+    "tw-limitup-trading-playbook 無法同步至主分支：From https://github.com/bedstv/tw-limitup-trading-playbook\n * branch            main       -> FETCH_HEAD\nwarning: fetch updated the current branch head.\nfast-forwarding your working tree from\ncommit d6362038ef5131646aa6ab3afe3b1c06a03956a5.\nerror: Your local changes to the following files would be overwritten by merge:\n\tdata/market-freshness.json\n\tdata/system-health.json\nPlease commit your changes or stash them before you merge.\nAborting\nfatal: Cannot fast-forward your working tree.\nAfter making sure that you saved anything precious from\n$ git diff d6362038ef5131646aa6ab3afe3b1c06a03956a5\noutput, run\n$ git reset --hard\nto recover.",
+    "tw-limitup-trading-playbook 執行版本與 origin/main 不一致"
+  ],
   "versions": {
     "data": {
       "path": "/Users/suh/.local/share/tw-stock-runtime/tw-market-data",
@@ -13,8 +17,8 @@
       "ignored_generated_changes_before_sync": [
         "data/reference/twse_holiday_calendar_2026.json"
       ],
-      "sync_exit_code": 0,
-      "sync_message": "Already up to date.",
+      "sync_exit_code": 1,
+      "sync_message": "fatal: unable to access 'https://github.com/bedstv/tw-market-data.git/': Resolving timed out after 359921 milliseconds",
       "commit": "9df2f95f5cdcbd2f539d583553f27a99bb6f5f72",
       "origin_main": "9df2f95f5cdcbd2f539d583553f27a99bb6f5f72",
       "dirty_after_sync": false,
@@ -25,13 +29,13 @@
     "pages": {
       "path": "/Users/suh/.local/share/tw-stock-runtime/tw-limitup-trading-playbook",
       "exists": true,
-      "before_commit": "87b17698d292558a73098447a60299becc2c21ec",
+      "before_commit": "d6362038ef5131646aa6ab3afe3b1c06a03956a5",
       "dirty_before_sync": false,
       "ignored_generated_changes_before_sync": [],
-      "sync_exit_code": 0,
-      "sync_message": "Already up to date.",
-      "commit": "87b17698d292558a73098447a60299becc2c21ec",
-      "origin_main": "87b17698d292558a73098447a60299becc2c21ec",
+      "sync_exit_code": 128,
+      "sync_message": "From https://github.com/bedstv/tw-limitup-trading-playbook\n * branch            main       -> FETCH_HEAD\nwarning: fetch updated the current branch head.\nfast-forwarding your working tree from\ncommit d6362038ef5131646aa6ab3afe3b1c06a03956a5.\nerror: Your local changes to the following files would be overwritten by merge:\n\tdata/market-freshness.json\n\tdata/system-health.json\nPlease commit your changes or stash them before you merge.\nAborting\nfatal: Cannot fast-forward your working tree.\nAfter making sure that you saved anything precious from\n$ git diff d6362038ef5131646aa6ab3afe3b1c06a03956a5\noutput, run\n$ git reset --hard\nto recover.",
+      "commit": "f4d4adc4912d5ec9b65bea611da5fca07054c45c",
+      "origin_main": "d6362038ef5131646aa6ab3afe3b1c06a03956a5",
       "dirty_after_sync": false,
       "ignored_generated_changes_after_sync": []
     }
