@@ -67,10 +67,10 @@
     "afterhours": {
       "schema_version": "p2.20.3",
       "phase": "afterhours",
-      "date": "2026-07-21",
-      "scheduled_at": "2026-07-21T15:30:00+08:00",
-      "checked_at": "2026-07-21T15:53:37.993249+08:00",
-      "actual_finished_at": "2026-07-21T15:37:34.872865+08:00",
+      "date": "2026-07-22",
+      "scheduled_at": "2026-07-22T15:30:00+08:00",
+      "checked_at": "2026-07-22T16:01:04.099091+08:00",
+      "actual_finished_at": "2026-07-22T15:42:44.029367+08:00",
       "status": "failed",
       "failed_step": "freshness",
       "reasons": [
@@ -94,31 +94,31 @@
       },
       "versions": {
         "preflight_data_commit": "9df2f95f5cdcbd2f539d583553f27a99bb6f5f72",
-        "preflight_pages_commit": "626d98f1ae8d9ae3c22b24a500abbe1ffc7465ec"
+        "preflight_pages_commit": "a64f4d566dedc299ed510b03cf607195897c2ad7"
       },
       "retry": {
         "schema_version": "p2.20.2",
         "phase": "afterhours",
-        "date": "2026-07-21",
+        "date": "2026-07-22",
         "status": "blocked_preflight",
         "reason": "找不到本階段預檢紀錄",
         "attempts": [],
-        "recorded_at": "2026-07-21T15:37:34.872865+08:00"
+        "recorded_at": "2026-07-22T15:42:44.029367+08:00"
       },
       "freshness": {
         "schema_version": "p2.21",
-        "checked_at": "2026-07-21T15:53:38.035292+08:00",
-        "as_of_date": "2026-07-21",
-        "calendar_source": "official_cache",
+        "checked_at": "2026-07-22T16:01:04.158873+08:00",
+        "as_of_date": "2026-07-22",
+        "calendar_source": "official_live",
         "market_day": {
-          "date": "2026-07-21",
+          "date": "2026-07-22",
           "status": "trading",
           "source": "weekday",
           "reason": "一般交易日"
         },
-        "previous_trading_date": "2026-07-20",
+        "previous_trading_date": "2026-07-21",
         "latest_data_date": "2026-07-17",
-        "expected_latest_data_date": "2026-07-21",
+        "expected_latest_data_date": "2026-07-22",
         "is_stale": true,
         "expectations": {
           "d1_0915": {
