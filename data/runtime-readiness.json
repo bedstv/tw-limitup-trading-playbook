@@ -1,10 +1,12 @@
 {
   "schema_version": "p2.20.1",
-  "checked_at": "2026-07-21T15:37:38.707565+08:00",
-  "phase": "afterhours",
+  "checked_at": "2026-07-22T10:04:11.533513+08:00",
+  "phase": "d1",
   "status": "failed",
   "errors": [
-    "tw-market-data 無法同步至主分支：fatal: unable to access 'https://github.com/bedstv/tw-market-data.git/': Resolving timed out after 987726 milliseconds"
+    "tw-market-data 無法同步至主分支：fatal: unable to access 'https://github.com/bedstv/tw-market-data.git/': Resolving timed out after 904810 milliseconds",
+    "tw-limitup-trading-playbook 無法同步至主分支：error: RPC failed; curl 28 Recv failure: Connection reset by peer\nfatal: expected flush after ref listing",
+    "tw-limitup-trading-playbook 執行版本與 origin/main 不一致"
   ],
   "versions": {
     "data": {
@@ -16,7 +18,7 @@
         "data/reference/twse_holiday_calendar_2026.json"
       ],
       "sync_exit_code": 1,
-      "sync_message": "fatal: unable to access 'https://github.com/bedstv/tw-market-data.git/': Resolving timed out after 987726 milliseconds",
+      "sync_message": "fatal: unable to access 'https://github.com/bedstv/tw-market-data.git/': Resolving timed out after 904810 milliseconds",
       "commit": "9df2f95f5cdcbd2f539d583553f27a99bb6f5f72",
       "origin_main": "9df2f95f5cdcbd2f539d583553f27a99bb6f5f72",
       "dirty_after_sync": false,
@@ -27,13 +29,13 @@
     "pages": {
       "path": "/Users/suh/.local/share/tw-stock-runtime/tw-limitup-trading-playbook",
       "exists": true,
-      "before_commit": "626d98f1ae8d9ae3c22b24a500abbe1ffc7465ec",
+      "before_commit": "18c8ce0ada8736a3d0b06977bceac8b829b690ae",
       "dirty_before_sync": false,
       "ignored_generated_changes_before_sync": [],
-      "sync_exit_code": 0,
-      "sync_message": "Already up to date.",
-      "commit": "626d98f1ae8d9ae3c22b24a500abbe1ffc7465ec",
-      "origin_main": "626d98f1ae8d9ae3c22b24a500abbe1ffc7465ec",
+      "sync_exit_code": 1,
+      "sync_message": "error: RPC failed; curl 28 Recv failure: Connection reset by peer\nfatal: expected flush after ref listing",
+      "commit": "e35eb410c3494fb309fb5565fb6e2b6ca46c7743",
+      "origin_main": "18c8ce0ada8736a3d0b06977bceac8b829b690ae",
       "dirty_after_sync": false,
       "ignored_generated_changes_after_sync": []
     }
