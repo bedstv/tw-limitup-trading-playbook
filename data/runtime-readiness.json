@@ -1,11 +1,9 @@
 {
   "schema_version": "p2.20.1",
-  "checked_at": "2026-07-22T15:42:47.935856+08:00",
-  "phase": "afterhours",
-  "status": "failed",
-  "errors": [
-    "tw-market-data 無法同步至主分支：fatal: unable to access 'https://github.com/bedstv/tw-market-data.git/': Resolving timed out after 908796 milliseconds"
-  ],
+  "checked_at": "2026-07-23T09:11:22.636815+08:00",
+  "phase": "d1",
+  "status": "ok",
+  "errors": [],
   "versions": {
     "data": {
       "path": "/Users/suh/.local/share/tw-stock-runtime/tw-market-data",
@@ -15,8 +13,8 @@
       "ignored_generated_changes_before_sync": [
         "data/reference/twse_holiday_calendar_2026.json"
       ],
-      "sync_exit_code": 1,
-      "sync_message": "fatal: unable to access 'https://github.com/bedstv/tw-market-data.git/': Resolving timed out after 908796 milliseconds",
+      "sync_exit_code": 0,
+      "sync_message": "Already up to date.",
       "commit": "9df2f95f5cdcbd2f539d583553f27a99bb6f5f72",
       "origin_main": "9df2f95f5cdcbd2f539d583553f27a99bb6f5f72",
       "dirty_after_sync": false,
@@ -27,13 +25,13 @@
     "pages": {
       "path": "/Users/suh/.local/share/tw-stock-runtime/tw-limitup-trading-playbook",
       "exists": true,
-      "before_commit": "a64f4d566dedc299ed510b03cf607195897c2ad7",
+      "before_commit": "a386257540b94507b20f1853ccdbb100e0190637",
       "dirty_before_sync": false,
       "ignored_generated_changes_before_sync": [],
       "sync_exit_code": 0,
       "sync_message": "Already up to date.",
-      "commit": "a64f4d566dedc299ed510b03cf607195897c2ad7",
-      "origin_main": "a64f4d566dedc299ed510b03cf607195897c2ad7",
+      "commit": "a386257540b94507b20f1853ccdbb100e0190637",
+      "origin_main": "a386257540b94507b20f1853ccdbb100e0190637",
       "dirty_after_sync": false,
       "ignored_generated_changes_after_sync": []
     }
