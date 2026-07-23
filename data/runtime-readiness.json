@@ -1,9 +1,13 @@
 {
   "schema_version": "p2.20.1",
-  "checked_at": "2026-07-23T09:11:22.636815+08:00",
-  "phase": "d1",
-  "status": "ok",
-  "errors": [],
+  "checked_at": "2026-07-23T15:49:09.438063+08:00",
+  "phase": "afterhours",
+  "status": "failed",
+  "errors": [
+    "tw-market-data 無法同步至主分支：fatal: unable to access 'https://github.com/bedstv/tw-market-data.git/': Resolving timed out after 959853 milliseconds",
+    "tw-limitup-trading-playbook 執行版本與 origin/main 不一致",
+    "tw-limitup-trading-playbook 執行環境仍有未提交變更：data/market-freshness.json, data/system-health.json"
+  ],
   "versions": {
     "data": {
       "path": "/Users/suh/.local/share/tw-stock-runtime/tw-market-data",
@@ -13,8 +17,8 @@
       "ignored_generated_changes_before_sync": [
         "data/reference/twse_holiday_calendar_2026.json"
       ],
-      "sync_exit_code": 0,
-      "sync_message": "Already up to date.",
+      "sync_exit_code": 1,
+      "sync_message": "fatal: unable to access 'https://github.com/bedstv/tw-market-data.git/': Resolving timed out after 959853 milliseconds",
       "commit": "9df2f95f5cdcbd2f539d583553f27a99bb6f5f72",
       "origin_main": "9df2f95f5cdcbd2f539d583553f27a99bb6f5f72",
       "dirty_after_sync": false,
@@ -25,14 +29,14 @@
     "pages": {
       "path": "/Users/suh/.local/share/tw-stock-runtime/tw-limitup-trading-playbook",
       "exists": true,
-      "before_commit": "a386257540b94507b20f1853ccdbb100e0190637",
+      "before_commit": "02e8821524d5f5d6a7958dd1ff0b2403739a868a",
       "dirty_before_sync": false,
       "ignored_generated_changes_before_sync": [],
       "sync_exit_code": 0,
       "sync_message": "Already up to date.",
-      "commit": "a386257540b94507b20f1853ccdbb100e0190637",
-      "origin_main": "a386257540b94507b20f1853ccdbb100e0190637",
-      "dirty_after_sync": false,
+      "commit": "02e8821524d5f5d6a7958dd1ff0b2403739a868a",
+      "origin_main": "4cac93ee6f55d16c47888b81d23dc9a6cd9d1f5b",
+      "dirty_after_sync": true,
       "ignored_generated_changes_after_sync": []
     }
   }
