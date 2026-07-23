@@ -3,54 +3,43 @@
     "d1": {
       "schema_version": "p2.20.3",
       "phase": "d1",
-      "date": "2026-07-22",
-      "scheduled_at": "2026-07-22T09:16:00+08:00",
-      "checked_at": "2026-07-22T09:34:53.955397+08:00",
-      "actual_finished_at": "2026-07-22T09:19:49.042988+08:00",
-      "status": "failed",
-      "failed_step": "retry",
+      "date": "2026-07-23",
+      "scheduled_at": "2026-07-23T09:16:00+08:00",
+      "checked_at": "2026-07-23T09:27:27.203235+08:00",
+      "actual_finished_at": null,
+      "status": "skipped",
+      "failed_step": null,
       "reasons": [
-        "沒有前一日候選資料，無須產生 D1 判斷",
-        "主排程重試後仍失敗"
+        "沒有前一日候選資料，無須產生 D1 判斷"
       ],
       "steps": {
         "dashboard_data": {
           "status": "skipped",
           "detail": "沒有前一日候選資料，無須產生 D1 判斷"
         },
-        "retry": {
-          "status": "failed",
-          "detail": "主排程重試後仍失敗"
-        },
         "freshness": {
           "status": "ok",
           "detail": "交易日曆與資料新鮮度已更新"
         }
       },
-      "versions": {},
-      "retry": {
-        "schema_version": "p2.20.2",
-        "phase": "d1",
-        "date": "2026-07-22",
-        "status": "blocked_preflight",
-        "reason": "找不到本階段預檢紀錄",
-        "attempts": [],
-        "recorded_at": "2026-07-22T09:19:49.042988+08:00"
+      "versions": {
+        "preflight_data_commit": "9df2f95f5cdcbd2f539d583553f27a99bb6f5f72",
+        "preflight_pages_commit": "a386257540b94507b20f1853ccdbb100e0190637"
       },
       "freshness": {
         "schema_version": "p2.21",
-        "checked_at": "2026-07-22T09:34:54.003611+08:00",
-        "as_of_date": "2026-07-22",
-        "calendar_source": "official_live",
+        "checked_at": "2026-07-23T09:27:27.268592+08:00",
+        "as_of_date": "2026-07-23",
+        "calendar_source": "official_cache",
         "market_day": {
-          "date": "2026-07-22",
+          "date": "2026-07-23",
           "status": "trading",
           "source": "weekday",
           "reason": "一般交易日"
         },
-        "previous_trading_date": "2026-07-21",
+        "previous_trading_date": "2026-07-22",
         "latest_data_date": "2026-07-17",
-        "expected_latest_data_date": "2026-07-21",
+        "expected_latest_data_date": "2026-07-22",
         "is_stale": false,
         "expectations": {
           "d1_0915": {
