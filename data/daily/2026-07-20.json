@@ -1,0 +1,37 @@
+{
+  "schema_version": "2.3.0",
+  "source": "tw-market-data P2.1 afterhours pipeline",
+  "as_of_date": "2026-07-20",
+  "effective_date": "2026-07-20",
+  "previous_trade_date": "2026-07-17",
+  "trade_ready": false,
+  "afterhours_ready": false,
+  "d1_watch_ready": false,
+  "health": {
+    "step_count": 9,
+    "failed_step_count": 0,
+    "d0_candidate_count": 0,
+    "d1_watch_count": 0,
+    "d1_abnormal_gap_check_count": 0,
+    "d1_blowoff_count": 0,
+    "d2_watch_count": 0,
+    "d2_reclaimed_count": 0,
+    "partial_market_dates": {},
+    "risk_snapshot_ready": false,
+    "regime_0915_ready": false,
+    "regime_0915_date": "",
+    "regime_0915_applies_to": "d1_watch",
+    "market_regime_0915": "",
+    "taiex_return_0915": null,
+    "eps_snapshot_stock_count": 0,
+    "warning_snapshot_row_count": 0,
+    "limitations": [
+      "2026-07-20 盤後 D0 候選須等待下一交易日 09:15 大盤資料，尚不可標示可交易。",
+      "本資料日 D1 觀察尚無 09:15 大盤快照。",
+      "EPS / 處置尚無本資料日的完整 as-of 快照。"
+    ]
+  },
+  "d0_candidates": [],
+  "d1_watch": [],
+  "d2_watch": []
+}
