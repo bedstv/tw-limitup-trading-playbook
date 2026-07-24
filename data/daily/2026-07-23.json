@@ -205,5 +205,55 @@
       "Fugle 1m fallback after TWSE MIS gap": 1
     },
     "missing_stock_ids": []
-  }
+  },
+  "paper_trading": {
+    "rule_version": "p2.11_v2",
+    "decision_date": "2026-07-24",
+    "candidate_count": 1,
+    "watch_count": 1,
+    "executed_count": 1,
+    "data_incomplete_count": 0,
+    "hold_review_count": 0,
+    "settled_count": 1,
+    "evidence_pending_count": 0,
+    "market_close_verified": false,
+    "output": "data/processed/p211_paper_trade_log.csv"
+  },
+  "paper_trading_records": [
+    {
+      "rule_version": "p2.11_v2",
+      "candidate_date": "2026-07-23",
+      "decision_date": "2026-07-24",
+      "stock_id": "8039",
+      "market": "TWSE",
+      "name": "台虹",
+      "setup_type": "B",
+      "market_regime_0915": "WEAK",
+      "liquidity_tier": "",
+      "industry": "電子零組件業",
+      "industry_consensus": false,
+      "d1_decision_status": "WATCH",
+      "d1_decision_ready": true,
+      "d1_quote_source": "Fugle 1m fallback after TWSE MIS gap",
+      "d1_quote_valid_bar_count": 16,
+      "entry_watch_price": 252.5,
+      "stop_price": 242.0,
+      "minute_bar_source": "Fugle:historical/candles:1m",
+      "relative_strength_at_close": null,
+      "relative_strength_status": "missing_market_close",
+      "d1_date": "2026-07-24",
+      "execution_model": "minute_ohlc_after_0915_conservative_v1",
+      "trade_status": "executed",
+      "reason": "stop_loss",
+      "entry_price": 252.5,
+      "entry_timestamp": "2026-07-24T09:16:00.000+08:00",
+      "exit_price": 242.0,
+      "exit_timestamp": "2026-07-24T10:37:00.000+08:00",
+      "gross_return": -0.04158415841584162,
+      "net_return": -0.044584158415841624,
+      "paper_status": "executed",
+      "hold_policy_status": "missing_market_close",
+      "settlement_status": "settled"
+    }
+  ]
 }
