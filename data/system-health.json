@@ -3,19 +3,23 @@
     "d1": {
       "schema_version": "p2.20.3",
       "phase": "d1",
-      "date": "2026-07-23",
-      "scheduled_at": "2026-07-23T09:16:00+08:00",
-      "checked_at": "2026-07-23T09:27:27.203235+08:00",
-      "actual_finished_at": null,
-      "status": "skipped",
-      "failed_step": null,
+      "date": "2026-07-24",
+      "scheduled_at": "2026-07-24T09:16:00+08:00",
+      "checked_at": "2026-07-24T09:20:05.462128+08:00",
+      "actual_finished_at": "2026-07-24T09:18:02.717130+08:00",
+      "status": "failed",
+      "failed_step": "retry",
       "reasons": [
-        "沒有前一日候選資料，無須產生 D1 判斷"
+        "主排程重試後仍失敗"
       ],
       "steps": {
         "dashboard_data": {
-          "status": "skipped",
-          "detail": "沒有前一日候選資料，無須產生 D1 判斷"
+          "status": "ok",
+          "detail": "D1 09:15 判斷已完成"
+        },
+        "retry": {
+          "status": "failed",
+          "detail": "主排程重試後仍失敗"
         },
         "freshness": {
           "status": "ok",
@@ -24,34 +28,57 @@
       },
       "versions": {
         "preflight_data_commit": "9df2f95f5cdcbd2f539d583553f27a99bb6f5f72",
-        "preflight_pages_commit": "a386257540b94507b20f1853ccdbb100e0190637"
+        "preflight_pages_commit": "609d0997f021bb097dff071bc52cad62d2c61fe4"
+      },
+      "retry": {
+        "schema_version": "p2.20.2",
+        "phase": "d1",
+        "date": "2026-07-24",
+        "status": "failed",
+        "retry_delay_seconds": 90,
+        "attempts": [
+          {
+            "attempt": 1,
+            "started_at": "2026-07-24T09:16:05.452687+08:00",
+            "finished_at": "2026-07-24T09:16:30.668887+08:00",
+            "exit_code": 2
+          },
+          {
+            "attempt": 2,
+            "started_at": "2026-07-24T09:18:00.705896+08:00",
+            "finished_at": "2026-07-24T09:18:02.717130+08:00",
+            "exit_code": 1
+          }
+        ],
+        "recorded_at": "2026-07-24T09:18:02.717161+08:00"
       },
       "freshness": {
         "schema_version": "p2.21",
-        "checked_at": "2026-07-23T09:27:27.268592+08:00",
-        "as_of_date": "2026-07-23",
-        "calendar_source": "official_cache",
+        "checked_at": "2026-07-24T09:20:05.506901+08:00",
+        "as_of_date": "2026-07-24",
+        "calendar_source": "official_live",
         "market_day": {
-          "date": "2026-07-23",
+          "date": "2026-07-24",
           "status": "trading",
           "source": "weekday",
           "reason": "一般交易日"
         },
-        "previous_trading_date": "2026-07-22",
-        "latest_data_date": "2026-07-17",
-        "expected_latest_data_date": "2026-07-22",
+        "previous_trading_date": "2026-07-23",
+        "latest_data_date": "2026-07-23",
+        "expected_latest_data_date": "2026-07-23",
         "is_stale": false,
         "expectations": {
           "d1_0915": {
             "due": true,
-            "ready": false
+            "ready": true
           },
           "afterhours": {
             "due": false,
             "ready": null
           }
         }
-      }
+      },
+      "telegram_delivery_status": "failed"
     },
     "afterhours": {
       "schema_version": "p2.20.3",
