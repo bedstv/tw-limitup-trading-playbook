@@ -1,22 +1,22 @@
 {
   "schema_version": "p2.20.1",
-  "checked_at": "2026-07-24T09:10:06.326902+08:00",
-  "phase": "d1",
+  "checked_at": "2026-07-24T15:20:06.862273+08:00",
+  "phase": "afterhours",
   "status": "ok",
   "errors": [],
   "versions": {
     "data": {
       "path": "/Users/suh/.local/share/tw-stock-runtime/tw-market-data",
       "exists": true,
-      "before_commit": "9df2f95f5cdcbd2f539d583553f27a99bb6f5f72",
+      "before_commit": "c89c1163bf6f4d6d0aa88ad3f4c4619d4c895406",
       "dirty_before_sync": false,
       "ignored_generated_changes_before_sync": [
         "data/reference/twse_holiday_calendar_2026.json"
       ],
       "sync_exit_code": 0,
       "sync_message": "Already up to date.",
-      "commit": "9df2f95f5cdcbd2f539d583553f27a99bb6f5f72",
-      "origin_main": "9df2f95f5cdcbd2f539d583553f27a99bb6f5f72",
+      "commit": "c89c1163bf6f4d6d0aa88ad3f4c4619d4c895406",
+      "origin_main": "c89c1163bf6f4d6d0aa88ad3f4c4619d4c895406",
       "dirty_after_sync": false,
       "ignored_generated_changes_after_sync": [
         "data/reference/twse_holiday_calendar_2026.json"
@@ -25,13 +25,13 @@
     "pages": {
       "path": "/Users/suh/.local/share/tw-stock-runtime/tw-limitup-trading-playbook",
       "exists": true,
-      "before_commit": "609d0997f021bb097dff071bc52cad62d2c61fe4",
+      "before_commit": "fdbd5fb336c140bb74c43f119c4d6a507121da0c",
       "dirty_before_sync": false,
       "ignored_generated_changes_before_sync": [],
       "sync_exit_code": 0,
       "sync_message": "Already up to date.",
-      "commit": "609d0997f021bb097dff071bc52cad62d2c61fe4",
-      "origin_main": "609d0997f021bb097dff071bc52cad62d2c61fe4",
+      "commit": "fdbd5fb336c140bb74c43f119c4d6a507121da0c",
+      "origin_main": "fdbd5fb336c140bb74c43f119c4d6a507121da0c",
       "dirty_after_sync": false,
       "ignored_generated_changes_after_sync": []
     }
