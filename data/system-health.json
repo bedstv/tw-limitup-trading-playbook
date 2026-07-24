@@ -5,13 +5,11 @@
       "phase": "d1",
       "date": "2026-07-24",
       "scheduled_at": "2026-07-24T09:16:00+08:00",
-      "checked_at": "2026-07-24T09:20:05.462128+08:00",
+      "checked_at": "2026-07-24T10:38:00.189221+08:00",
       "actual_finished_at": "2026-07-24T09:18:02.717130+08:00",
-      "status": "failed",
-      "failed_step": "retry",
-      "reasons": [
-        "主排程重試後仍失敗"
-      ],
+      "status": "ok_with_retry_failure",
+      "failed_step": null,
+      "reasons": [],
       "steps": {
         "dashboard_data": {
           "status": "ok",
@@ -19,16 +17,31 @@
         },
         "retry": {
           "status": "failed",
-          "detail": "主排程重試後仍失敗"
+          "detail": "主排程未完成，但 D1 資料已產生"
         },
         "freshness": {
           "status": "ok",
           "detail": "交易日曆與資料新鮮度已更新"
+        },
+        "pages_git": {
+          "status": "ok",
+          "detail": "GitHub main 已同步"
+        },
+        "public_dashboard": {
+          "status": "ok",
+          "detail": "看盤頁與每日資料均可公開讀取"
+        },
+        "telegram": {
+          "status": "ok",
+          "detail": "交易摘要已送達"
         }
       },
       "versions": {
         "preflight_data_commit": "9df2f95f5cdcbd2f539d583553f27a99bb6f5f72",
-        "preflight_pages_commit": "609d0997f021bb097dff071bc52cad62d2c61fe4"
+        "preflight_pages_commit": "609d0997f021bb097dff071bc52cad62d2c61fe4",
+        "pages_local_commit": "dad66c0a6e7291f878018be4d34c7fa3ef637ac2",
+        "pages_remote_commit": "dad66c0a6e7291f878018be4d34c7fa3ef637ac2",
+        "data_runtime_commit": "c89c1163bf6f4d6d0aa88ad3f4c4619d4c895406"
       },
       "retry": {
         "schema_version": "p2.20.2",
@@ -52,9 +65,12 @@
         ],
         "recorded_at": "2026-07-24T09:18:02.717161+08:00"
       },
+      "operational_reasons": [
+        "主排程未完成，但 D1 資料已產生"
+      ],
       "freshness": {
         "schema_version": "p2.21",
-        "checked_at": "2026-07-24T09:20:05.506901+08:00",
+        "checked_at": "2026-07-24T10:38:00.235863+08:00",
         "as_of_date": "2026-07-24",
         "calendar_source": "official_live",
         "market_day": {
@@ -78,7 +94,7 @@
           }
         }
       },
-      "telegram_delivery_status": "failed"
+      "telegram_delivery_status": "sent"
     },
     "afterhours": {
       "schema_version": "p2.20.3",
