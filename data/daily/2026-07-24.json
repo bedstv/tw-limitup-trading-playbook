@@ -106,5 +106,19 @@
     "coverage_pct": 0.0,
     "source_counts": {},
     "missing_stock_ids": []
-  }
+  },
+  "paper_trading": {
+    "rule_version": "p2.11_v2",
+    "decision_date": "2026-07-28",
+    "candidate_count": 0,
+    "watch_count": 0,
+    "executed_count": 0,
+    "data_incomplete_count": 0,
+    "hold_review_count": 0,
+    "settled_count": 0,
+    "evidence_pending_count": 0,
+    "market_close_verified": false,
+    "output": "data/processed/p211_paper_trade_log.csv"
+  },
+  "paper_trading_records": []
 }
