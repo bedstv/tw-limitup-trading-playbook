@@ -3,10 +3,10 @@
     "d1": {
       "schema_version": "p2.20.3",
       "phase": "d1",
-      "date": "2026-07-28",
-      "scheduled_at": "2026-07-28T09:16:00+08:00",
-      "checked_at": "2026-07-28T09:20:05.862398+08:00",
-      "actual_finished_at": "2026-07-28T09:16:16.179949+08:00",
+      "date": "2026-07-29",
+      "scheduled_at": "2026-07-29T09:16:00+08:00",
+      "checked_at": "2026-07-29T09:20:03.987710+08:00",
+      "actual_finished_at": "2026-07-29T09:16:10.518305+08:00",
       "status": "ok",
       "failed_step": null,
       "reasons": [],
@@ -37,44 +37,44 @@
         }
       },
       "versions": {
-        "preflight_data_commit": "c89c1163bf6f4d6d0aa88ad3f4c4619d4c895406",
-        "preflight_pages_commit": "1ca007f818374ff797138dad9f5d124440be690d",
-        "pages_local_commit": "54f9613ad5d8f0f9e67d1a6ea59c361b998cb203",
-        "pages_remote_commit": "54f9613ad5d8f0f9e67d1a6ea59c361b998cb203",
-        "data_runtime_commit": "c89c1163bf6f4d6d0aa88ad3f4c4619d4c895406"
+        "preflight_data_commit": "3775aa9a672d8ddb5aa9d4ea1bc14de5a5c12a9e",
+        "preflight_pages_commit": "227da65f8ebac993b375f9645625166e4d969991",
+        "pages_local_commit": "0337fa32e6742c9d0c044ed4a81870568d7307c7",
+        "pages_remote_commit": "0337fa32e6742c9d0c044ed4a81870568d7307c7",
+        "data_runtime_commit": "3775aa9a672d8ddb5aa9d4ea1bc14de5a5c12a9e"
       },
       "retry": {
         "schema_version": "p2.20.2",
         "phase": "d1",
-        "date": "2026-07-28",
+        "date": "2026-07-29",
         "status": "ok",
         "retry_delay_seconds": 0,
         "attempts": [
           {
             "attempt": 1,
-            "started_at": "2026-07-28T09:16:05.781838+08:00",
-            "finished_at": "2026-07-28T09:16:16.179949+08:00",
+            "started_at": "2026-07-29T09:16:00.985466+08:00",
+            "finished_at": "2026-07-29T09:16:10.518305+08:00",
             "exit_code": 0,
-            "stdout_tail": "Already up to date.\nAlready up to date.\n[main 54f9613] data: publish D1 09:15 decision\n 1 file changed, 20 insertions(+), 4 deletions(-)\n",
-            "stderr_tail": "From https://github.com/bedstv/tw-market-data\n * branch            main       -> FETCH_HEAD\nFrom https://github.com/bedstv/tw-limitup-trading-playbook\n * branch            main       -> FETCH_HEAD\nTo https://github.com/bedstv/tw-limitup-trading-playbook.git\n   3605bb5..54f9613  main -> main\n"
+            "stdout_tail": "Already up to date.\nAlready up to date.\n[main 0337fa3] data: publish D1 09:15 decision\n 1 file changed, 20 insertions(+), 4 deletions(-)\n",
+            "stderr_tail": "From https://github.com/bedstv/tw-market-data\n * branch            main       -> FETCH_HEAD\nFrom https://github.com/bedstv/tw-limitup-trading-playbook\n * branch            main       -> FETCH_HEAD\nTo https://github.com/bedstv/tw-limitup-trading-playbook.git\n   f1e3df4..0337fa3  main -> main\n"
           }
         ],
-        "recorded_at": "2026-07-28T09:16:16.180095+08:00"
+        "recorded_at": "2026-07-29T09:16:10.518437+08:00"
       },
       "freshness": {
         "schema_version": "p2.21",
-        "checked_at": "2026-07-28T09:20:05.912459+08:00",
-        "as_of_date": "2026-07-28",
+        "checked_at": "2026-07-29T09:20:04.038144+08:00",
+        "as_of_date": "2026-07-29",
         "calendar_source": "official_live",
         "market_day": {
-          "date": "2026-07-28",
+          "date": "2026-07-29",
           "status": "trading",
           "source": "weekday",
           "reason": "一般交易日"
         },
-        "previous_trading_date": "2026-07-27",
-        "latest_data_date": "2026-07-24",
-        "expected_latest_data_date": "2026-07-27",
+        "previous_trading_date": "2026-07-28",
+        "latest_data_date": "2026-07-28",
+        "expected_latest_data_date": "2026-07-28",
         "is_stale": false,
         "expectations": {
           "d1_0915": {
