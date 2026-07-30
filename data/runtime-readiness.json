@@ -1,9 +1,12 @@
 {
   "schema_version": "p2.20.1",
-  "checked_at": "2026-07-29T15:20:03.863141+08:00",
-  "phase": "afterhours",
-  "status": "ok",
-  "errors": [],
+  "checked_at": "2026-07-30T09:11:56.992791+08:00",
+  "phase": "d1",
+  "status": "failed",
+  "errors": [
+    "tw-market-data 無法同步至主分支：fatal: unable to access 'https://github.com/bedstv/tw-market-data.git/': Could not resolve host: github.com",
+    "tw-limitup-trading-playbook 無法同步至主分支：fatal: unable to access 'https://github.com/bedstv/tw-limitup-trading-playbook.git/': Could not resolve host: github.com"
+  ],
   "versions": {
     "data": {
       "path": "/Users/suh/.local/share/tw-stock-runtime/tw-market-data",
@@ -13,8 +16,8 @@
       "ignored_generated_changes_before_sync": [
         "data/reference/twse_holiday_calendar_2026.json"
       ],
-      "sync_exit_code": 0,
-      "sync_message": "Already up to date.",
+      "sync_exit_code": 1,
+      "sync_message": "fatal: unable to access 'https://github.com/bedstv/tw-market-data.git/': Could not resolve host: github.com",
       "commit": "3775aa9a672d8ddb5aa9d4ea1bc14de5a5c12a9e",
       "origin_main": "3775aa9a672d8ddb5aa9d4ea1bc14de5a5c12a9e",
       "dirty_after_sync": false,
@@ -25,13 +28,13 @@
     "pages": {
       "path": "/Users/suh/.local/share/tw-stock-runtime/tw-limitup-trading-playbook",
       "exists": true,
-      "before_commit": "5082eef2ecbbf424ac75435fda6229ff32af3ede",
+      "before_commit": "2c2b679211e620ad0de2e8071b3325e3d8f5b10f",
       "dirty_before_sync": false,
       "ignored_generated_changes_before_sync": [],
-      "sync_exit_code": 0,
-      "sync_message": "Already up to date.",
-      "commit": "5082eef2ecbbf424ac75435fda6229ff32af3ede",
-      "origin_main": "5082eef2ecbbf424ac75435fda6229ff32af3ede",
+      "sync_exit_code": 1,
+      "sync_message": "fatal: unable to access 'https://github.com/bedstv/tw-limitup-trading-playbook.git/': Could not resolve host: github.com",
+      "commit": "2c2b679211e620ad0de2e8071b3325e3d8f5b10f",
+      "origin_main": "2c2b679211e620ad0de2e8071b3325e3d8f5b10f",
       "dirty_after_sync": false,
       "ignored_generated_changes_after_sync": []
     }
