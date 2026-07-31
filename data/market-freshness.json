@@ -1,8 +1,8 @@
 {
   "schema_version": "p2.21",
-  "checked_at": "2026-07-31T09:35:01.102456+08:00",
+  "checked_at": "2026-07-31T15:45:01.872018+08:00",
   "as_of_date": "2026-07-31",
-  "calendar_source": "official_cache",
+  "calendar_source": "official_live",
   "market_day": {
     "date": "2026-07-31",
     "status": "trading",
@@ -11,16 +11,16 @@
   },
   "previous_trading_date": "2026-07-30",
   "latest_data_date": "2026-07-29",
-  "expected_latest_data_date": "2026-07-30",
-  "is_stale": false,
+  "expected_latest_data_date": "2026-07-31",
+  "is_stale": true,
   "expectations": {
     "d1_0915": {
       "due": true,
       "ready": false
     },
     "afterhours": {
-      "due": false,
-      "ready": null
+      "due": true,
+      "ready": false
     }
   }
 }
