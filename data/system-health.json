@@ -3,10 +3,10 @@
     "d1": {
       "schema_version": "p2.20.3",
       "phase": "d1",
-      "date": "2026-07-30",
-      "scheduled_at": "2026-07-30T09:16:00+08:00",
-      "checked_at": "2026-07-30T09:28:30.597106+08:00",
-      "actual_finished_at": "2026-07-30T09:28:30.339494+08:00",
+      "date": "2026-07-31",
+      "scheduled_at": "2026-07-31T09:16:00+08:00",
+      "checked_at": "2026-07-31T09:35:01.050686+08:00",
+      "actual_finished_at": "2026-07-31T09:19:35.042121+08:00",
       "status": "failed",
       "failed_step": "retry",
       "reasons": [
@@ -29,31 +29,31 @@
       },
       "versions": {
         "preflight_data_commit": "3775aa9a672d8ddb5aa9d4ea1bc14de5a5c12a9e",
-        "preflight_pages_commit": "2c2b679211e620ad0de2e8071b3325e3d8f5b10f"
+        "preflight_pages_commit": "6f475fc6ae776ae0d67987ea44e302e1c7e7ab64"
       },
       "retry": {
         "schema_version": "p2.20.2",
         "phase": "d1",
-        "date": "2026-07-30",
+        "date": "2026-07-31",
         "status": "blocked_preflight",
-        "reason": "預檢未通過：tw-market-data 無法同步至主分支：fatal: unable to access 'https://github.com/bedstv/tw-market-data.git/': Could not resolve host: github.com；tw-limitup-trading-playbook 無法同步至主分支：fatal: unable to access 'https://github.com/bedstv/tw-limitup-trading-playbook.git/': Could not resolve host: github.com；無法發布 runtime 預檢狀態：Command '['git', 'push', 'origin', 'main']' returned non-zero exit status 128.",
+        "reason": "找不到本階段預檢紀錄",
         "attempts": [],
-        "recorded_at": "2026-07-30T09:28:30.339494+08:00"
+        "recorded_at": "2026-07-31T09:19:35.042121+08:00"
       },
       "freshness": {
         "schema_version": "p2.21",
-        "checked_at": "2026-07-30T09:28:30.724896+08:00",
-        "as_of_date": "2026-07-30",
+        "checked_at": "2026-07-31T09:35:01.102456+08:00",
+        "as_of_date": "2026-07-31",
         "calendar_source": "official_cache",
         "market_day": {
-          "date": "2026-07-30",
+          "date": "2026-07-31",
           "status": "trading",
           "source": "weekday",
           "reason": "一般交易日"
         },
-        "previous_trading_date": "2026-07-29",
+        "previous_trading_date": "2026-07-30",
         "latest_data_date": "2026-07-29",
-        "expected_latest_data_date": "2026-07-29",
+        "expected_latest_data_date": "2026-07-30",
         "is_stale": false,
         "expectations": {
           "d1_0915": {
