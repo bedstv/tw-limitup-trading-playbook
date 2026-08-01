@@ -3,24 +3,19 @@
     "d1": {
       "schema_version": "p2.20.3",
       "phase": "d1",
-      "date": "2026-07-31",
-      "scheduled_at": "2026-07-31T09:16:00+08:00",
-      "checked_at": "2026-07-31T09:35:01.050686+08:00",
-      "actual_finished_at": "2026-07-31T09:19:35.042121+08:00",
-      "status": "failed",
-      "failed_step": "retry",
+      "date": "2026-08-01",
+      "scheduled_at": "2026-08-01T09:16:00+08:00",
+      "checked_at": "2026-08-01T09:20:00.133649+08:00",
+      "actual_finished_at": null,
+      "status": "skipped",
+      "failed_step": null,
       "reasons": [
-        "沒有前一日候選資料，無須產生 D1 判斷",
-        "主排程重試後仍失敗"
+        "沒有前一日候選資料，無須產生 D1 判斷"
       ],
       "steps": {
         "dashboard_data": {
           "status": "skipped",
           "detail": "沒有前一日候選資料，無須產生 D1 判斷"
-        },
-        "retry": {
-          "status": "failed",
-          "detail": "主排程重試後仍失敗"
         },
         "freshness": {
           "status": "ok",
@@ -29,36 +24,27 @@
       },
       "versions": {
         "preflight_data_commit": "3775aa9a672d8ddb5aa9d4ea1bc14de5a5c12a9e",
-        "preflight_pages_commit": "6f475fc6ae776ae0d67987ea44e302e1c7e7ab64"
-      },
-      "retry": {
-        "schema_version": "p2.20.2",
-        "phase": "d1",
-        "date": "2026-07-31",
-        "status": "blocked_preflight",
-        "reason": "找不到本階段預檢紀錄",
-        "attempts": [],
-        "recorded_at": "2026-07-31T09:19:35.042121+08:00"
+        "preflight_pages_commit": "2a53f78ef2f7db704743ac72b88f0337370f31ef"
       },
       "freshness": {
         "schema_version": "p2.21",
-        "checked_at": "2026-07-31T09:35:01.102456+08:00",
-        "as_of_date": "2026-07-31",
-        "calendar_source": "official_cache",
+        "checked_at": "2026-08-01T09:20:00.191308+08:00",
+        "as_of_date": "2026-08-01",
+        "calendar_source": "official_live",
         "market_day": {
-          "date": "2026-07-31",
-          "status": "trading",
-          "source": "weekday",
-          "reason": "一般交易日"
+          "date": "2026-08-01",
+          "status": "closed",
+          "source": "weekend",
+          "reason": "週末不交易"
         },
-        "previous_trading_date": "2026-07-30",
+        "previous_trading_date": "2026-07-31",
         "latest_data_date": "2026-07-29",
-        "expected_latest_data_date": "2026-07-30",
+        "expected_latest_data_date": "2026-07-31",
         "is_stale": false,
         "expectations": {
           "d1_0915": {
-            "due": true,
-            "ready": false
+            "due": false,
+            "ready": null
           },
           "afterhours": {
             "due": false,
