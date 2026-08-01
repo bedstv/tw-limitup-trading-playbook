@@ -1,11 +1,9 @@
 {
   "schema_version": "p2.20.1",
-  "checked_at": "2026-07-31T15:20:04.084245+08:00",
-  "phase": "afterhours",
-  "status": "failed",
-  "errors": [
-    "tw-limitup-trading-playbook 執行版本與 origin/main 不一致"
-  ],
+  "checked_at": "2026-08-01T09:12:55.334714+08:00",
+  "phase": "d1",
+  "status": "ok",
+  "errors": [],
   "versions": {
     "data": {
       "path": "/Users/suh/.local/share/tw-stock-runtime/tw-market-data",
@@ -27,13 +25,13 @@
     "pages": {
       "path": "/Users/suh/.local/share/tw-stock-runtime/tw-limitup-trading-playbook",
       "exists": true,
-      "before_commit": "f573a021b22b64a4b63663f3ba7c32cdcb2d16f2",
+      "before_commit": "2a53f78ef2f7db704743ac72b88f0337370f31ef",
       "dirty_before_sync": false,
       "ignored_generated_changes_before_sync": [],
       "sync_exit_code": 0,
       "sync_message": "Already up to date.",
-      "commit": "f573a021b22b64a4b63663f3ba7c32cdcb2d16f2",
-      "origin_main": "2c2b679211e620ad0de2e8071b3325e3d8f5b10f",
+      "commit": "2a53f78ef2f7db704743ac72b88f0337370f31ef",
+      "origin_main": "2a53f78ef2f7db704743ac72b88f0337370f31ef",
       "dirty_after_sync": false,
       "ignored_generated_changes_after_sync": []
     }
