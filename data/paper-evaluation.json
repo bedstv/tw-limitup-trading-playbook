@@ -1,10 +1,10 @@
 {
   "schema_version": "2.11.1",
   "rule_version": "p2.11_v2",
-  "decision_day_count": 5,
+  "decision_day_count": 6,
   "minimum_decision_days": 20,
   "status": "collecting_fixed_rule_sample",
-  "candidate_count": 16,
+  "candidate_count": 17,
   "executed_count": 7,
   "win_rate_net": 0.2857142857142857,
   "avg_net_return": -0.013804851848849924,
@@ -16,7 +16,7 @@
   "settled_count": 7,
   "unsettled_count": 1,
   "outcome_counts": {
-    "not_traded": 8,
+    "not_traded": 9,
     "data_incomplete": 1,
     "executed": 7
   },

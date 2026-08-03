@@ -1,16 +1,16 @@
 {
   "schema_version": "p2.24",
   "rule_version": "p2.11_v2",
-  "decision_day_count": 5,
+  "decision_day_count": 6,
   "minimum_decision_days": 20,
   "status": "collecting_fixed_rule_sample",
   "overall": {
-    "candidate_count": 16,
+    "candidate_count": 17,
     "settled_count": 7,
     "avg_net_return": -0.013804851848849924,
     "median_net_return": -0.018353121801433,
     "win_rate": 0.2857142857142857,
-    "stop_loss_rate": 0.0625,
+    "stop_loss_rate": 0.058823529411764705,
     "max_drawdown_equal_weight": -0.14326554188931784
   },
   "unsettled_count": 1,
@@ -60,12 +60,12 @@
   "splits": {
     "setup_type": {
       "B": {
-        "candidate_count": 16,
+        "candidate_count": 17,
         "settled_count": 7,
         "avg_net_return": -0.013804851848849924,
         "median_net_return": -0.018353121801433,
         "win_rate": 0.2857142857142857,
-        "stop_loss_rate": 0.0625,
+        "stop_loss_rate": 0.058823529411764705,
         "max_drawdown_equal_weight": -0.14326554188931784
       }
     },
@@ -89,7 +89,7 @@
         "max_drawdown_equal_weight": -0.09868138347347621
       },
       "STRONG": {
-        "candidate_count": 4,
+        "candidate_count": 5,
         "settled_count": 0,
         "avg_net_return": null,
         "median_net_return": null,
@@ -109,12 +109,12 @@
     },
     "liquidity_tier": {
       "": {
-        "candidate_count": 16,
+        "candidate_count": 17,
         "settled_count": 7,
         "avg_net_return": -0.013804851848849924,
         "median_net_return": -0.018353121801433,
         "win_rate": 0.2857142857142857,
-        "stop_loss_rate": 0.0625,
+        "stop_loss_rate": 0.058823529411764705,
         "max_drawdown_equal_weight": -0.14326554188931784
       }
     },
@@ -129,12 +129,12 @@
         "max_drawdown_equal_weight": null
       },
       "False": {
-        "candidate_count": 8,
+        "candidate_count": 9,
         "settled_count": 5,
         "avg_net_return": -0.0018735626142297051,
         "median_net_return": -0.003,
         "win_rate": 0.4,
-        "stop_loss_rate": 0.125,
+        "stop_loss_rate": 0.1111111111111111,
         "max_drawdown_equal_weight": -0.055999392018516884
       },
       "True": {
@@ -149,7 +149,7 @@
     },
     "d1_decision_status": {
       "DOWNRANK": {
-        "candidate_count": 3,
+        "candidate_count": 4,
         "settled_count": 0,
         "avg_net_return": null,
         "median_net_return": null,
