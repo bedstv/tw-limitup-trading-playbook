@@ -3,11 +3,11 @@
     "d1": {
       "schema_version": "p2.20.3",
       "phase": "d1",
-      "date": "2026-08-03",
-      "scheduled_at": "2026-08-03T09:16:00+08:00",
-      "checked_at": "2026-08-03T09:44:42.028801+08:00",
-      "actual_finished_at": "2026-08-03T09:43:49.165018+08:00",
-      "status": "ok_with_retry_failure",
+      "date": "2026-08-04",
+      "scheduled_at": "2026-08-04T09:16:00+08:00",
+      "checked_at": "2026-08-04T09:20:05.300197+08:00",
+      "actual_finished_at": "2026-08-04T09:16:29.187178+08:00",
+      "status": "ok_with_notification_failure",
       "failed_step": null,
       "reasons": [],
       "steps": {
@@ -16,8 +16,8 @@
           "detail": "D1 09:15 判斷已完成"
         },
         "retry": {
-          "status": "failed",
-          "detail": "主排程未完成，但 D1 資料已產生"
+          "status": "ok",
+          "detail": "第一次完成"
         },
         "freshness": {
           "status": "ok",
@@ -32,60 +32,49 @@
           "detail": "看盤頁與每日資料均可公開讀取"
         },
         "telegram": {
-          "status": "ok",
-          "detail": "交易摘要已送達"
+          "status": "failed",
+          "detail": "Telegram 交易摘要未確認送達"
         }
       },
       "versions": {
-        "preflight_data_commit": "10969705bc709517e33479456523c4a47d7518b5",
-        "preflight_pages_commit": "fd3c803046e3fe9c0dd948b601af0c8840d5c235",
-        "pages_local_commit": "fcd9b5587ca2b8d56fc24ef7fe34e8cedcd28849",
-        "pages_remote_commit": "fcd9b5587ca2b8d56fc24ef7fe34e8cedcd28849",
-        "data_runtime_commit": "10969705bc709517e33479456523c4a47d7518b5"
+        "preflight_data_commit": "0bc3d09849bf1134d0fb8f82a0c77930bf5df6b1",
+        "preflight_pages_commit": "abd5b3b619c131ba5973e8c6d317b6bfa5e21a72",
+        "pages_local_commit": "ba35f82404680032bbde67732f62d39ffff6031a",
+        "pages_remote_commit": "ba35f82404680032bbde67732f62d39ffff6031a",
+        "data_runtime_commit": "0bc3d09849bf1134d0fb8f82a0c77930bf5df6b1"
       },
       "retry": {
         "schema_version": "p2.20.2",
         "phase": "d1",
-        "date": "2026-08-03",
-        "status": "failed",
-        "retry_delay_seconds": 90,
+        "date": "2026-08-04",
+        "status": "ok",
+        "retry_delay_seconds": 0,
         "attempts": [
           {
             "attempt": 1,
-            "started_at": "2026-08-03T09:42:14.698041+08:00",
-            "finished_at": "2026-08-03T09:42:16.658793+08:00",
-            "exit_code": 1,
-            "stdout_tail": "Already up to date.\nUpdating 049ea52..798e6d4\nFast-forward\n data/daily/2026-07-15.json           | 133 ++++++++-\n data/daily/2026-07-16.json           | 541 +++++++++++++++++++++++++++++++++++\n data/daily/2026-07-17.json           | 160 +++++++++++\n data/daily/2026-07-20.json           |  37 +++\n data/daily/2026-07-21.json           | 107 +++++++\n data/daily/2026-07-22.json           | 195 +++++++++++++\n data/daily/2026-07-23.json           | 259 +++++++++++++++++\n data/daily/2026-07-24.json           | 124 ++++++++\n data/daily/2026-07-27.json           |  37 +++\n data/daily/2026-07-28.json           |  65 +++++\n data/daily/2026-07-29.json           |  35 +++\n data/daily/2026-07-30.json           |  37 +++\n data/daily/2026-07-31.json           |  61 ++++\n data/daily/index.json                |  16 +-\n data/intraday-backtest-coverage.json |  10 +-\n data/market-freshness.json           |  22 +-\n data/paper-evaluation.json           |  23 +-\n data/runtime-readiness.json          |  14 +-\n data/strategy-evaluation.json        | 106 ++++---\n data/system-health.json              | 134 +++------\n 20 files changed, 1953 insertions(+), 163 deletions(-)\n create mode 100644 data/daily/2026-07-16.json\n create mode 100644 data/daily/2026-07-17.json\n create mode 100644 data/daily/2026-07-20.json\n create mode 100644 data/daily/2026-07-21.json\n create mode 100644 data/daily/2026-07-22.json\n create mode 100644 data/daily/2026-07-23.json\n create mode 100644 data/daily/2026-07-24.json\n create mode 100644 data/daily/2026-07-27.json\n create mode 100644 data/daily/2026-07-28.json\n create mode 100644 data/daily/2026-07-29.json\n create mode 100644 data/daily/2026-07-30.json\n create mode 100644 data/daily/2026-07-31.json\n",
-            "stderr_tail": "From https://github.com/bedstv/tw-market-data\n * branch            main       -> FETCH_HEAD\nFrom https://github.com/bedstv/tw-limitup-trading-playbook\n * branch            main       -> FETCH_HEAD\n   049ea52..798e6d4  main       -> origin/main\nD1 candidate snapshots must be captured between 09:15:00 and 09:17:59; now is 09:42:16.\n"
-          },
-          {
-            "attempt": 2,
-            "started_at": "2026-08-03T09:43:46.665971+08:00",
-            "finished_at": "2026-08-03T09:43:49.165018+08:00",
-            "exit_code": 1,
-            "stdout_tail": "Already up to date.\nAlready up to date.\n",
-            "stderr_tail": "From https://github.com/bedstv/tw-market-data\n * branch            main       -> FETCH_HEAD\nFrom https://github.com/bedstv/tw-limitup-trading-playbook\n * branch            main       -> FETCH_HEAD\nD1 candidate snapshots must be captured between 09:15:00 and 09:17:59; now is 09:43:48.\n"
+            "started_at": "2026-08-04T09:16:05.374636+08:00",
+            "finished_at": "2026-08-04T09:16:29.187178+08:00",
+            "exit_code": 0,
+            "stdout_tail": "Already up to date.\nAlready up to date.\n[main ba35f82] data: publish D1 09:15 decision\n 1 file changed, 45 insertions(+), 7 deletions(-)\nTelegram notification failed: The read operation timed out\n",
+            "stderr_tail": "From https://github.com/bedstv/tw-market-data\n * branch            main       -> FETCH_HEAD\nFrom https://github.com/bedstv/tw-limitup-trading-playbook\n * branch            main       -> FETCH_HEAD\nTo https://github.com/bedstv/tw-limitup-trading-playbook.git\n   2c43bd1..ba35f82  main -> main\nTelegram notification failed after D1 data was published\n"
           }
         ],
-        "recorded_at": "2026-08-03T09:43:49.165055+08:00"
+        "recorded_at": "2026-08-04T09:16:29.187285+08:00"
       },
-      "operational_reasons": [
-        "主排程未完成，但 D1 資料已產生"
-      ],
       "freshness": {
         "schema_version": "p2.21",
-        "checked_at": "2026-08-03T09:44:42.073166+08:00",
-        "as_of_date": "2026-08-03",
+        "checked_at": "2026-08-04T09:20:05.344852+08:00",
+        "as_of_date": "2026-08-04",
         "calendar_source": "official_live",
         "market_day": {
-          "date": "2026-08-03",
+          "date": "2026-08-04",
           "status": "trading",
           "source": "weekday",
           "reason": "一般交易日"
         },
-        "previous_trading_date": "2026-07-31",
-        "latest_data_date": "2026-07-31",
-        "expected_latest_data_date": "2026-07-31",
+        "previous_trading_date": "2026-08-03",
+        "latest_data_date": "2026-08-03",
+        "expected_latest_data_date": "2026-08-03",
         "is_stale": false,
         "expectations": {
           "d1_0915": {
@@ -98,7 +87,11 @@
           }
         }
       },
-      "telegram_delivery_status": "sent"
+      "telegram_delivery_status": "failed",
+      "notification_status": "failed",
+      "notification_reasons": [
+        "Telegram 交易摘要未確認送達"
+      ]
     },
     "afterhours": {
       "schema_version": "p2.20.3",
