@@ -4,7 +4,7 @@
   "as_of_date": "2026-08-03",
   "effective_date": "2026-08-03",
   "previous_trade_date": "2026-07-31",
-  "trade_ready": false,
+  "trade_ready": true,
   "afterhours_ready": true,
   "d1_watch_ready": true,
   "health": {
@@ -25,9 +25,18 @@
     "taiex_return_0915": 0.006429304437062022,
     "eps_snapshot_stock_count": 90,
     "warning_snapshot_row_count": 44,
-    "limitations": [
-      "2026-08-03 盤後 D0 候選須等待下一交易日 09:15 大盤資料，尚不可標示可交易。"
-    ]
+    "limitations": [],
+    "d0_eligible_count": 1,
+    "d0_regime_0915_date": "2026-08-04",
+    "d1_quote_coverage": {
+      "candidate_count": 1,
+      "covered_count": 1,
+      "coverage_pct": 100.0,
+      "source_counts": {
+        "Fugle 1m fallback after TWSE MIS gap": 1
+      },
+      "missing_stock_ids": []
+    }
   },
   "d0_candidates": [
     {
@@ -46,12 +55,30 @@
       "possible_disposition_next_day": false,
       "currently_disposed_snapshot": false,
       "risk_flags_trade_ready": false,
-      "next_step": "Wait for next trading day 09:15 market regime; D1 open watch; avoid direct chase if D1 open gap >5%",
+      "next_step": "Neutral market; confirm candidate price and volume conditions.",
       "industry_code": "26",
       "industry": "光電業",
       "industry_candidate_count": 1,
       "industry_consensus": false,
-      "market_regime_0915": "PENDING_NEXT_TRADING_DAY"
+      "market_regime_0915": "NEUTRAL",
+      "d1_trade_date": "2026-08-04",
+      "taiex_return_0915": -0.006755341131013282,
+      "d1_open": 93.5,
+      "price_0915": 91.6,
+      "d1_open_gap_pct": 0.011904761904761862,
+      "stock_return_0915": -0.008658008658008809,
+      "stock_minus_taiex_return_pp": -0.19026675269955273,
+      "above_intraday_mean_0915": false,
+      "intraday_mean_available_0915": true,
+      "above_opening_low_0915": true,
+      "d1_decision_status": "WATCH",
+      "d1_decision_reason": "Neutral market; confirm candidate price and volume conditions.",
+      "d1_decision_ready": true,
+      "d1_quote_source": "Fugle 1m fallback after TWSE MIS gap",
+      "d1_quote_valid_bar_count": 16,
+      "paper_trade_rule_version": "p2.11_v2",
+      "paper_entry_trigger_price": 91.6,
+      "stop_loss_price": 87.0
     }
   ],
   "d1_watch": [
@@ -85,5 +112,16 @@
       "corporate_action_detail": ""
     }
   ],
-  "d2_watch": []
+  "d2_watch": [],
+  "d0_decision_ready": true,
+  "d0_decision_date": "2026-08-04",
+  "d1_quote_coverage": {
+    "candidate_count": 1,
+    "covered_count": 1,
+    "coverage_pct": 100.0,
+    "source_counts": {
+      "Fugle 1m fallback after TWSE MIS gap": 1
+    },
+    "missing_stock_ids": []
+  }
 }
