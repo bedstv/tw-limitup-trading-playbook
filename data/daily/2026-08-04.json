@@ -25,9 +25,16 @@
     "taiex_return_0915": -0.006755341131013282,
     "eps_snapshot_stock_count": 105,
     "warning_snapshot_row_count": 39,
-    "limitations": [
-      "2026-08-04 盤後 D0 候選須等待下一交易日 09:15 大盤資料，尚不可標示可交易。"
-    ]
+    "limitations": [],
+    "d0_eligible_count": 0,
+    "d0_regime_0915_date": "2026-08-05",
+    "d1_quote_coverage": {
+      "candidate_count": 0,
+      "covered_count": 0,
+      "coverage_pct": 0.0,
+      "source_counts": {},
+      "missing_stock_ids": []
+    }
   },
   "d0_candidates": [],
   "d1_watch": [
@@ -61,5 +68,14 @@
       "corporate_action_detail": ""
     }
   ],
-  "d2_watch": []
+  "d2_watch": [],
+  "d0_decision_ready": true,
+  "d0_decision_date": "2026-08-05",
+  "d1_quote_coverage": {
+    "candidate_count": 0,
+    "covered_count": 0,
+    "coverage_pct": 0.0,
+    "source_counts": {},
+    "missing_stock_ids": []
+  }
 }
