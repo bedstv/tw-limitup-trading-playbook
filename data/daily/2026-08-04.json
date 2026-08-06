@@ -27,7 +27,7 @@
     "warning_snapshot_row_count": 39,
     "limitations": [],
     "d0_eligible_count": 0,
-    "d0_regime_0915_date": "2026-08-05",
+    "d0_regime_0915_date": "2026-08-06",
     "d1_quote_coverage": {
       "candidate_count": 0,
       "covered_count": 0,
@@ -70,7 +70,7 @@
   ],
   "d2_watch": [],
   "d0_decision_ready": true,
-  "d0_decision_date": "2026-08-05",
+  "d0_decision_date": "2026-08-06",
   "d1_quote_coverage": {
     "candidate_count": 0,
     "covered_count": 0,
