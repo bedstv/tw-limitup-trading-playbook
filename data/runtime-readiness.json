@@ -1,7 +1,7 @@
 {
   "schema_version": "p2.20.1",
-  "checked_at": "2026-08-07T09:10:05.434290+08:00",
-  "phase": "d1",
+  "checked_at": "2026-08-07T15:20:07.884316+08:00",
+  "phase": "afterhours",
   "status": "ok",
   "errors": [],
   "versions": {
@@ -25,13 +25,13 @@
     "pages": {
       "path": "/Users/suh/.local/share/tw-stock-runtime/tw-limitup-trading-playbook",
       "exists": true,
-      "before_commit": "5cba2535b0ea655bbfdbe3400afdba8d56905655",
+      "before_commit": "144520a692adba3c5979e0a0f65f77877c8dee7a",
       "dirty_before_sync": false,
       "ignored_generated_changes_before_sync": [],
       "sync_exit_code": 0,
       "sync_message": "Already up to date.",
-      "commit": "5cba2535b0ea655bbfdbe3400afdba8d56905655",
-      "origin_main": "5cba2535b0ea655bbfdbe3400afdba8d56905655",
+      "commit": "144520a692adba3c5979e0a0f65f77877c8dee7a",
+      "origin_main": "144520a692adba3c5979e0a0f65f77877c8dee7a",
       "dirty_after_sync": false,
       "ignored_generated_changes_after_sync": []
     }
