@@ -1,24 +1,24 @@
 {
   "schema_version": "2.11.1",
   "rule_version": "p2.11_v2",
-  "decision_day_count": 7,
+  "decision_day_count": 8,
   "minimum_decision_days": 20,
   "status": "collecting_fixed_rule_sample",
-  "candidate_count": 18,
-  "executed_count": 8,
-  "win_rate_net": 0.25,
-  "avg_net_return": -0.018731537944162893,
-  "median_net_return": -0.024565449789605395,
-  "sum_net_return_equal_weight": -0.14985230355330315,
+  "candidate_count": 19,
+  "executed_count": 9,
+  "win_rate_net": 0.3333333333333333,
+  "avg_net_return": -0.015327116296952133,
+  "median_net_return": -0.018353121801433,
+  "sum_net_return_equal_weight": -0.1379440466725692,
   "stop_loss_count": 2,
   "hold_review_count": 0,
   "data_incomplete_count": 1,
-  "settled_count": 8,
+  "settled_count": 9,
   "unsettled_count": 1,
   "outcome_counts": {
     "not_traded": 9,
     "data_incomplete": 1,
-    "executed": 8
+    "executed": 9
   },
   "limitations": [
     "Forward paper-trading only; not a live execution record.",
