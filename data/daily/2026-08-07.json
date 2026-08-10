@@ -25,9 +25,18 @@
     "taiex_return_0915": -0.000376154083524205,
     "eps_snapshot_stock_count": 317,
     "warning_snapshot_row_count": 31,
-    "limitations": [
-      "2026-08-07 盤後 D0 候選須等待下一交易日 09:15 大盤資料，尚不可標示可交易。"
-    ]
+    "limitations": [],
+    "d0_eligible_count": 0,
+    "d0_regime_0915_date": "2026-08-10",
+    "d1_quote_coverage": {
+      "candidate_count": 1,
+      "covered_count": 1,
+      "coverage_pct": 100.0,
+      "source_counts": {
+        "Fugle 1m fallback after TWSE MIS gap": 1
+      },
+      "missing_stock_ids": []
+    }
   },
   "d0_candidates": [
     {
@@ -46,12 +55,30 @@
       "possible_disposition_next_day": false,
       "currently_disposed_snapshot": false,
       "risk_flags_trade_ready": false,
-      "next_step": "Wait for next trading day 09:15 market regime; D1 open watch; avoid direct chase if D1 open gap >5%",
+      "next_step": "Strong market downranks volume-breakout B setups in V1.",
       "industry_code": "25",
       "industry": "電腦及週邊設備",
       "industry_candidate_count": 1,
       "industry_consensus": false,
-      "market_regime_0915": "PENDING_NEXT_TRADING_DAY"
+      "market_regime_0915": "STRONG",
+      "d1_trade_date": "2026-08-10",
+      "taiex_return_0915": 0.015324953177899392,
+      "d1_open": 51.8,
+      "price_0915": 50.6,
+      "d1_open_gap_pct": -0.020793950850661602,
+      "stock_return_0915": -0.04347826086956519,
+      "stock_minus_taiex_return_pp": -5.880321404746458,
+      "above_intraday_mean_0915": false,
+      "intraday_mean_available_0915": true,
+      "above_opening_low_0915": true,
+      "d1_decision_status": "DOWNRANK",
+      "d1_decision_reason": "Strong market downranks volume-breakout B setups in V1.",
+      "d1_decision_ready": true,
+      "d1_quote_source": "Fugle 1m fallback after TWSE MIS gap",
+      "d1_quote_valid_bar_count": 16,
+      "paper_trade_rule_version": "p2.11_v2",
+      "paper_entry_trigger_price": "",
+      "stop_loss_price": 48.2
     }
   ],
   "d1_watch": [
@@ -87,5 +114,16 @@
       "corporate_action_detail": ""
     }
   ],
-  "d2_watch": []
+  "d2_watch": [],
+  "d0_decision_ready": true,
+  "d0_decision_date": "2026-08-10",
+  "d1_quote_coverage": {
+    "candidate_count": 1,
+    "covered_count": 1,
+    "coverage_pct": 100.0,
+    "source_counts": {
+      "Fugle 1m fallback after TWSE MIS gap": 1
+    },
+    "missing_stock_ids": []
+  }
 }
