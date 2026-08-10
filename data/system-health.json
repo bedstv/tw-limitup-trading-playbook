@@ -3,10 +3,10 @@
     "d1": {
       "schema_version": "p2.20.3",
       "phase": "d1",
-      "date": "2026-08-07",
-      "scheduled_at": "2026-08-07T09:16:00+08:00",
-      "checked_at": "2026-08-07T09:20:04.009207+08:00",
-      "actual_finished_at": "2026-08-07T09:17:48.727103+08:00",
+      "date": "2026-08-10",
+      "scheduled_at": "2026-08-10T09:16:00+08:00",
+      "checked_at": "2026-08-10T09:20:05.176869+08:00",
+      "actual_finished_at": "2026-08-10T09:16:14.584126+08:00",
       "status": "ok",
       "failed_step": null,
       "reasons": [],
@@ -17,7 +17,7 @@
         },
         "retry": {
           "status": "ok",
-          "detail": "第一次失敗後已恢復"
+          "detail": "第一次完成"
         },
         "freshness": {
           "status": "ok",
@@ -38,51 +38,43 @@
       },
       "versions": {
         "preflight_data_commit": "0bc3d09849bf1134d0fb8f82a0c77930bf5df6b1",
-        "preflight_pages_commit": "5cba2535b0ea655bbfdbe3400afdba8d56905655",
-        "pages_local_commit": "4c2104bcd672952f727d611c37e13b4b271d8d76",
-        "pages_remote_commit": "4c2104bcd672952f727d611c37e13b4b271d8d76",
+        "preflight_pages_commit": "cbb6a40b822fa895df2616096f1f758fb926a2fc",
+        "pages_local_commit": "7dc79947a475676f7ce2486be0ace55129adf924",
+        "pages_remote_commit": "7dc79947a475676f7ce2486be0ace55129adf924",
         "data_runtime_commit": "0bc3d09849bf1134d0fb8f82a0c77930bf5df6b1"
       },
       "retry": {
         "schema_version": "p2.20.2",
         "phase": "d1",
-        "date": "2026-08-07",
-        "status": "recovered",
-        "retry_delay_seconds": 90,
+        "date": "2026-08-10",
+        "status": "ok",
+        "retry_delay_seconds": 0,
         "attempts": [
           {
             "attempt": 1,
-            "started_at": "2026-08-07T09:16:03.931411+08:00",
-            "finished_at": "2026-08-07T09:16:09.106652+08:00",
-            "exit_code": 1,
-            "stdout_tail": "Already up to date.\nAlready up to date.\n",
-            "stderr_tail": "From https://github.com/bedstv/tw-market-data\n * branch            main       -> FETCH_HEAD\nFrom https://github.com/bedstv/tw-limitup-trading-playbook\n * branch            main       -> FETCH_HEAD\nTraceback (most recent call last):\n  File \"/Users/suh/.local/share/tw-stock-runtime/tw-market-data/scripts/run_p27_d1_0915_update.py\", line 300, in <module>\n    main()\n  File \"/Users/suh/.local/share/tw-stock-runtime/tw-market-data/scripts/run_p27_d1_0915_update.py\", line 208, in main\n    regime = classify_0915(fetch_taiex_intraday(), args.decision_date)\n  File \"/Users/suh/.local/share/tw-stock-runtime/tw-market-data/src/tw_market_data/intraday_regime.py\", line 27, in fetch_taiex_intraday\n    quote = fetch_json(\n  File \"/Users/suh/.local/share/tw-stock-runtime/tw-market-data/src/tw_market_data/intraday_regime.py\", line 19, in fetch_json\n    return json.loads(response.read().decode(\"utf-8-sig\"))\n  File \"/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/json/__init__.py\", line 346, in loads\n    return _default_decoder.decode(s)\n  File \"/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/json/decoder.py\", line 337, in decode\n    obj, end = self.raw_decode(s, idx=_w(s, 0).end())\n  File \"/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/json/decoder.py\", line 355, in raw_decode\n    raise JSONDecodeError(\"Expecting value\", s, err.value) from None\njson.decoder.JSONDecodeError: Expecting value: line 22 column 1 (char 21)\n"
-          },
-          {
-            "attempt": 2,
-            "started_at": "2026-08-07T09:17:39.243109+08:00",
-            "finished_at": "2026-08-07T09:17:48.727103+08:00",
+            "started_at": "2026-08-10T09:16:04.580027+08:00",
+            "finished_at": "2026-08-10T09:16:14.584126+08:00",
             "exit_code": 0,
-            "stdout_tail": "Already up to date.\nAlready up to date.\n[main 4c2104b] data: publish D1 09:15 decision\n 1 file changed, 45 insertions(+), 7 deletions(-)\n",
-            "stderr_tail": "From https://github.com/bedstv/tw-market-data\n * branch            main       -> FETCH_HEAD\nFrom https://github.com/bedstv/tw-limitup-trading-playbook\n * branch            main       -> FETCH_HEAD\nTo https://github.com/bedstv/tw-limitup-trading-playbook.git\n   e16ed3f..4c2104b  main -> main\n"
+            "stdout_tail": "Already up to date.\nAlready up to date.\n[main 7dc7994] data: publish D1 09:15 decision\n 1 file changed, 44 insertions(+), 6 deletions(-)\n",
+            "stderr_tail": "From https://github.com/bedstv/tw-market-data\n * branch            main       -> FETCH_HEAD\nFrom https://github.com/bedstv/tw-limitup-trading-playbook\n * branch            main       -> FETCH_HEAD\nTo https://github.com/bedstv/tw-limitup-trading-playbook.git\n   5c2d7df..7dc7994  main -> main\n"
           }
         ],
-        "recorded_at": "2026-08-07T09:17:48.727240+08:00"
+        "recorded_at": "2026-08-10T09:16:14.584263+08:00"
       },
       "freshness": {
         "schema_version": "p2.21",
-        "checked_at": "2026-08-07T09:20:04.064167+08:00",
-        "as_of_date": "2026-08-07",
+        "checked_at": "2026-08-10T09:20:05.223631+08:00",
+        "as_of_date": "2026-08-10",
         "calendar_source": "official_live",
         "market_day": {
-          "date": "2026-08-07",
+          "date": "2026-08-10",
           "status": "trading",
           "source": "weekday",
           "reason": "一般交易日"
         },
-        "previous_trading_date": "2026-08-06",
-        "latest_data_date": "2026-08-06",
-        "expected_latest_data_date": "2026-08-06",
+        "previous_trading_date": "2026-08-07",
+        "latest_data_date": "2026-08-07",
+        "expected_latest_data_date": "2026-08-07",
         "is_stale": false,
         "expectations": {
           "d1_0915": {
