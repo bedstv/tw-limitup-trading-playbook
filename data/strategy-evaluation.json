@@ -1,19 +1,19 @@
 {
   "schema_version": "p2.24",
   "rule_version": "p2.11_v2",
-  "decision_day_count": 9,
+  "decision_day_count": 1,
   "minimum_decision_days": 20,
   "status": "collecting_fixed_rule_sample",
   "overall": {
-    "candidate_count": 20,
-    "settled_count": 9,
-    "avg_net_return": -0.015327116296952133,
-    "median_net_return": -0.018353121801433,
-    "win_rate": 0.3333333333333333,
-    "stop_loss_rate": 0.1,
-    "max_drawdown_equal_weight": -0.1964838825006715
+    "candidate_count": 4,
+    "settled_count": 0,
+    "avg_net_return": null,
+    "median_net_return": null,
+    "win_rate": null,
+    "stop_loss_rate": 0.0,
+    "max_drawdown_equal_weight": null
   },
-  "unsettled_count": 1,
+  "unsettled_count": 0,
   "formal_review": {
     "status": "collecting",
     "minimum_decision_days": 20,
@@ -26,15 +26,15 @@
     "baseline": {
       "group_name": "all",
       "group_value": "all",
-      "signal_count": 969,
-      "executed_count": 221,
-      "execution_rate": "0.2280701754",
-      "win_rate_net": "0.407239819",
-      "avg_net_return": "0.0124066213",
+      "signal_count": 971,
+      "executed_count": 223,
+      "execution_rate": "0.2296601442",
+      "win_rate_net": "0.4035874439",
+      "avg_net_return": "0.0122057126",
       "median_net_return": "-0.0239102091",
-      "sum_net_return_equal_weight": "2.741863307",
-      "stop_loss_count": 85,
-      "stop_loss_rate_executed": "0.3846153846",
+      "sum_net_return_equal_weight": "2.7218739182",
+      "stop_loss_count": 86,
+      "stop_loss_rate_executed": "0.3856502242",
       "no_entry_count": 6,
       "invalidated_before_entry_count": 652,
       "ambiguous_count": 90
@@ -42,15 +42,15 @@
     "walk_forward": {
       "rule_name": "baseline_all",
       "period": "validate",
-      "signal_count": 596,
-      "executed_count": 126,
-      "execution_rate": "0.211409396",
-      "win_rate_net": "0.3888888889",
-      "avg_net_return": "0.0109318268",
+      "signal_count": 598,
+      "executed_count": 128,
+      "execution_rate": "0.2140468227",
+      "win_rate_net": "0.3828125",
+      "avg_net_return": "0.01060485",
       "median_net_return": "-0.0275428805",
-      "sum_net_return_equal_weight": "1.3774101824",
-      "stop_loss_count": 50,
-      "stop_loss_rate_executed": "0.3968253968",
+      "sum_net_return_equal_weight": "1.3574207936",
+      "stop_loss_count": 51,
+      "stop_loss_rate_executed": "0.3984375",
       "invalidated_before_entry_count": 409,
       "ambiguous_count": 59,
       "rule_expr": "all D1 blowoff signals"
@@ -60,104 +60,39 @@
   "splits": {
     "setup_type": {
       "B": {
-        "candidate_count": 20,
-        "settled_count": 9,
-        "avg_net_return": -0.015327116296952133,
-        "median_net_return": -0.018353121801433,
-        "win_rate": 0.3333333333333333,
-        "stop_loss_rate": 0.1,
-        "max_drawdown_equal_weight": -0.1964838825006715
+        "candidate_count": 4,
+        "settled_count": 0,
+        "avg_net_return": null,
+        "median_net_return": null,
+        "win_rate": null,
+        "stop_loss_rate": 0.0,
+        "max_drawdown_equal_weight": null
       }
     },
     "market_regime_0915": {
-      "": {
-        "candidate_count": 3,
-        "settled_count": 0,
-        "avg_net_return": null,
-        "median_net_return": null,
-        "win_rate": null,
-        "stop_loss_rate": 0.0,
-        "max_drawdown_equal_weight": null
-      },
       "NEUTRAL": {
-        "candidate_count": 6,
-        "settled_count": 6,
-        "avg_net_return": -0.023331911200682655,
-        "median_net_return": -0.024565449789605395,
-        "win_rate": 0.3333333333333333,
-        "stop_loss_rate": 0.16666666666666666,
-        "max_drawdown_equal_weight": -0.15189972408482988
-      },
-      "STRONG": {
-        "candidate_count": 6,
+        "candidate_count": 4,
         "settled_count": 0,
         "avg_net_return": null,
         "median_net_return": null,
         "win_rate": null,
         "stop_loss_rate": 0.0,
         "max_drawdown_equal_weight": null
-      },
-      "WEAK": {
-        "candidate_count": 5,
-        "settled_count": 3,
-        "avg_net_return": 0.000682473510508912,
-        "median_net_return": -0.003,
-        "win_rate": 0.3333333333333333,
-        "stop_loss_rate": 0.2,
-        "max_drawdown_equal_weight": -0.044584158415841624
       }
     },
     "liquidity_tier": {
       "": {
-        "candidate_count": 20,
-        "settled_count": 9,
-        "avg_net_return": -0.015327116296952133,
-        "median_net_return": -0.018353121801433,
-        "win_rate": 0.3333333333333333,
-        "stop_loss_rate": 0.1,
-        "max_drawdown_equal_weight": -0.1964838825006715
+        "candidate_count": 4,
+        "settled_count": 0,
+        "avg_net_return": null,
+        "median_net_return": null,
+        "win_rate": null,
+        "stop_loss_rate": 0.0,
+        "max_drawdown_equal_weight": null
       }
     },
     "industry_consensus": {
-      "": {
-        "candidate_count": 3,
-        "settled_count": 0,
-        "avg_net_return": null,
-        "median_net_return": null,
-        "win_rate": null,
-        "stop_loss_rate": 0.0,
-        "max_drawdown_equal_weight": null
-      },
       "False": {
-        "candidate_count": 12,
-        "settled_count": 7,
-        "avg_net_return": -0.00723969954310975,
-        "median_net_return": -0.003,
-        "win_rate": 0.42857142857142855,
-        "stop_loss_rate": 0.16666666666666666,
-        "max_drawdown_equal_weight": -0.10921773262987056
-      },
-      "True": {
-        "candidate_count": 5,
-        "settled_count": 2,
-        "avg_net_return": -0.04363307493540047,
-        "median_net_return": -0.04363307493540047,
-        "win_rate": 0.0,
-        "stop_loss_rate": 0.0,
-        "max_drawdown_equal_weight": -0.08726614987080095
-      }
-    },
-    "d1_decision_status": {
-      "DOWNRANK": {
-        "candidate_count": 5,
-        "settled_count": 0,
-        "avg_net_return": null,
-        "median_net_return": null,
-        "win_rate": null,
-        "stop_loss_rate": 0.0,
-        "max_drawdown_equal_weight": null
-      },
-      "PULLBACK_ONLY": {
         "candidate_count": 1,
         "settled_count": 0,
         "avg_net_return": null,
@@ -166,23 +101,25 @@
         "stop_loss_rate": 0.0,
         "max_drawdown_equal_weight": null
       },
-      "REJECT": {
-        "candidate_count": 5,
+      "True": {
+        "candidate_count": 3,
         "settled_count": 0,
         "avg_net_return": null,
         "median_net_return": null,
         "win_rate": null,
         "stop_loss_rate": 0.0,
         "max_drawdown_equal_weight": null
-      },
+      }
+    },
+    "d1_decision_status": {
       "WATCH": {
-        "candidate_count": 9,
-        "settled_count": 9,
-        "avg_net_return": -0.015327116296952133,
-        "median_net_return": -0.018353121801433,
-        "win_rate": 0.3333333333333333,
-        "stop_loss_rate": 0.2222222222222222,
-        "max_drawdown_equal_weight": -0.1964838825006715
+        "candidate_count": 4,
+        "settled_count": 0,
+        "avg_net_return": null,
+        "median_net_return": null,
+        "win_rate": null,
+        "stop_loss_rate": 0.0,
+        "max_drawdown_equal_weight": null
       }
     }
   },
