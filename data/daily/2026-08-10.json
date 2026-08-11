@@ -36,6 +36,10 @@
         "Fugle 1m completed 09:15 bar": 4
       },
       "missing_stock_ids": []
+    },
+    "risk_status_counts": {
+      "EPS_NOT_ANNOUNCED": 4,
+      "VERIFIED_CLEAR": 1
     }
   },
   "d0_candidates": [
@@ -54,7 +58,7 @@
       "eps_ytd_negative": false,
       "possible_disposition_next_day": false,
       "currently_disposed_snapshot": false,
-      "risk_flags_trade_ready": false,
+      "risk_flags_trade_ready": true,
       "next_step": "Neutral market; confirm candidate price and volume conditions.",
       "industry_code": "25",
       "industry": "電腦及週邊設備",
@@ -78,7 +82,18 @@
       "d1_quote_valid_bar_count": 16,
       "paper_trade_rule_version": "p2.11_v2",
       "paper_entry_trigger_price": 112.0,
-      "stop_loss_price": 105.0
+      "stop_loss_price": 105.0,
+      "risk_data_status": "EPS_NOT_ANNOUNCED",
+      "risk_data_status_label": "EPS 尚未公告",
+      "risk_status_label": "EPS 尚未公告",
+      "risk_snapshot_date": "2026-08-10",
+      "eps_status": "NOT_ANNOUNCED",
+      "eps_ytd": "",
+      "eps_snapshot_date": "",
+      "eps_source": "",
+      "disposition_status": "CLEAR",
+      "disposition_snapshot_date": "2026-08-10",
+      "disposition_sources": []
     },
     {
       "stock_id": "9934",
@@ -95,7 +110,7 @@
       "eps_ytd_negative": false,
       "possible_disposition_next_day": false,
       "currently_disposed_snapshot": false,
-      "risk_flags_trade_ready": false,
+      "risk_flags_trade_ready": true,
       "next_step": "Neutral market; confirm candidate price and volume conditions.",
       "industry_code": "38",
       "industry": "居家生活",
@@ -119,7 +134,18 @@
       "d1_quote_valid_bar_count": 16,
       "paper_trade_rule_version": "p2.11_v2",
       "paper_entry_trigger_price": 11.45,
-      "stop_loss_price": 11.7
+      "stop_loss_price": 11.7,
+      "risk_data_status": "EPS_NOT_ANNOUNCED",
+      "risk_data_status_label": "EPS 尚未公告",
+      "risk_status_label": "EPS 尚未公告",
+      "risk_snapshot_date": "2026-08-10",
+      "eps_status": "NOT_ANNOUNCED",
+      "eps_ytd": "",
+      "eps_snapshot_date": "",
+      "eps_source": "",
+      "disposition_status": "CLEAR",
+      "disposition_snapshot_date": "2026-08-10",
+      "disposition_sources": []
     },
     {
       "stock_id": "2465",
@@ -136,7 +162,7 @@
       "eps_ytd_negative": false,
       "possible_disposition_next_day": false,
       "currently_disposed_snapshot": false,
-      "risk_flags_trade_ready": false,
+      "risk_flags_trade_ready": true,
       "next_step": "Neutral market; confirm candidate price and volume conditions.",
       "industry_code": "25",
       "industry": "電腦及週邊設備",
@@ -160,7 +186,18 @@
       "d1_quote_valid_bar_count": 16,
       "paper_trade_rule_version": "p2.11_v2",
       "paper_entry_trigger_price": 91.0,
-      "stop_loss_price": 90.0
+      "stop_loss_price": 90.0,
+      "risk_data_status": "EPS_NOT_ANNOUNCED",
+      "risk_data_status_label": "EPS 尚未公告",
+      "risk_status_label": "EPS 尚未公告",
+      "risk_snapshot_date": "2026-08-10",
+      "eps_status": "NOT_ANNOUNCED",
+      "eps_ytd": "",
+      "eps_snapshot_date": "",
+      "eps_source": "",
+      "disposition_status": "CLEAR",
+      "disposition_snapshot_date": "2026-08-10",
+      "disposition_sources": []
     },
     {
       "stock_id": "6206",
@@ -203,7 +240,16 @@
       "d1_quote_valid_bar_count": 14,
       "paper_trade_rule_version": "p2.11_v2",
       "paper_entry_trigger_price": 143.5,
-      "stop_loss_price": 147.5
+      "stop_loss_price": 147.5,
+      "risk_data_status": "VERIFIED_CLEAR",
+      "risk_data_status_label": "已驗證無 EPS／處置風險",
+      "risk_status_label": "已驗證無 EPS／處置風險",
+      "risk_snapshot_date": "2026-08-10",
+      "eps_status": "NON_NEGATIVE",
+      "eps_source": "https://openapi.twse.com.tw/v1/opendata/t187ap06_L_ci",
+      "disposition_status": "CLEAR",
+      "disposition_snapshot_date": "2026-08-10",
+      "disposition_sources": []
     }
   ],
   "d1_watch": [
@@ -229,12 +275,23 @@
       "industry_candidate_count": 1,
       "industry_consensus": false,
       "currently_disposed_snapshot": false,
-      "risk_flags_trade_ready": false,
+      "risk_flags_trade_ready": true,
       "market_regime_0915": "STRONG",
       "taiex_return_0915": "1.53%",
       "corporate_action": false,
       "corporate_action_type": "",
-      "corporate_action_detail": ""
+      "corporate_action_detail": "",
+      "risk_data_status": "EPS_NOT_ANNOUNCED",
+      "risk_data_status_label": "EPS 尚未公告",
+      "risk_status_label": "EPS 尚未公告",
+      "risk_snapshot_date": "2026-08-10",
+      "eps_status": "NOT_ANNOUNCED",
+      "eps_ytd": "",
+      "eps_snapshot_date": "",
+      "eps_source": "",
+      "disposition_status": "CLEAR",
+      "disposition_snapshot_date": "2026-08-10",
+      "disposition_sources": []
     }
   ],
   "d2_watch": [],
