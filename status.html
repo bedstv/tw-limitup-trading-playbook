@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>系統狀態｜漲停後交易作戰手冊</title>
+    <link rel="stylesheet" href="ux.css?v=20260811" />
+    <script type="module" src="status-page.js?v=20260811"></script>
+  </head>
+  <body data-page="status">
+    <a class="skip-link" href="#main">跳到主要內容</a>
+    <header class="topbar"><a class="brand" href="market.html"><span class="brand-mark">LT</span><span>漲停後作戰手冊</span></a><nav class="desktop-nav" aria-label="主要導覽"><a href="market.html" data-nav="market">每日看盤</a><a href="rules.html" data-nav="rules">策略規則</a><a href="validation.html" data-nav="validation">策略驗證</a><a href="status.html" data-nav="status">系統狀態</a></nav></header>
+    <main id="main" class="page-shell">
+      <section class="hero compact-hero"><div><p class="eyebrow">自動更新與資料來源</p><h1>資料有沒有準時到？</h1><p>這裡集中顯示排程、Telegram、公開頁面與資料新鮮度；技術訊息不再擠在每日候選前面。</p></div><button id="refresh-status" class="secondary-button" type="button">重新檢查畫面資料</button></section>
+      <div id="status-error" class="notice notice-danger" hidden></div>
+      <section id="status-content" class="content-grid" aria-live="polite" aria-busy="true"><article class="content-card wide"><div class="skeleton skeleton-heading"></div><div class="skeleton skeleton-line"></div></article></section>
+    </main>
+    <nav class="mobile-nav" aria-label="手機主要導覽"><a href="market.html" data-nav="market"><span aria-hidden="true">盤</span>每日看盤</a><a href="rules.html" data-nav="rules"><span aria-hidden="true">則</span>策略規則</a><a href="validation.html" data-nav="validation"><span aria-hidden="true">驗</span>策略驗證</a><a href="status.html" data-nav="status"><span aria-hidden="true">況</span>系統狀態</a></nav>
+  </body>
+</html>

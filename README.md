@@ -83,6 +83,11 @@ P2.30 已保留 `p2.11_v2` 固定基準，新增 D1確認突破與 D2+高量重�
 不發個股買進通知、不自動替換策略。詳見
 [P2.30 雙軌策略改善與影子驗證](references/p230_dual_track_shadow_validation.md)。
 
+P2.31–P2.36 已完成 Dashboard UX 全面改版：首頁直接進入每日決策中心，明確拆開
+當日 09:15、下一交易日準備與 D2+ 觀察，另設策略規則、策略驗證、系統狀態頁，
+並加入手機底部導覽、按需載入與顯示／通知安全阻擋。詳見
+[P2.31–P2.36 Dashboard UX 全面改版](references/p231_p236_ux_overhaul.md)。
+
 P2.3 已修正 2026-07-07 TPEx partial market 與錯日期/空資料快取風險；Dashboard 不再因
 該日 TPEx 缺漏而降級，D0/D1/D2 名單也已重新產生。詳見
 [P2.3 資料完整性修正](references/p23_data_completeness.md)。

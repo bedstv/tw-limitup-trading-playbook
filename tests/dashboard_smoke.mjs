@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { buildHistoryByStock, csvForRows, filterAndSortRows, industrySummary, markdownForRows, paperProgress, paperRecords } from "../dashboard-core.js";
+import { buildDecisionLanes, candidateView, reasonLabel, riskGeometry } from "../ux-core.js";
 
 const index = JSON.parse(await readFile(new URL("../data/daily/index.json", import.meta.url)));
 const documents = await Promise.all(index.available_dates.map(async (date) => JSON.parse(await readFile(new URL(`../data/daily/${date}.json`, import.meta.url)))));
@@ -16,28 +17,26 @@ const history = buildHistoryByStock(documents);
 assert.ok(history.size > 0, "history must include tracked stocks");
 assert.match(csvForRows(filtered), /stock_id/, "CSV export must have headers");
 assert.match(markdownForRows(filtered, index.latest), /台股候選匯出/, "Markdown export must have a title");
-assert.match(await readFile(new URL("../index.html", import.meta.url), "utf8"), /看板欄位怎麼看/, "dashboard must include a glossary");
-assert.match(await readFile(new URL("../index.html", import.meta.url), "utf8"), /資料來源與可用性/, "dashboard must explain data provenance");
-assert.match(await readFile(new URL("../index.html", import.meta.url), "utf8"), /策略與回測/, "dashboard must separate strategy basics");
-assert.match(await readFile(new URL("../index.html", import.meta.url), "utf8"), /每日看盤/, "dashboard must separate daily market view");
 const marketPage = await readFile(new URL("../market.html", import.meta.url), "utf8");
 assert.match(marketPage, /data-page="market"/, "daily market must have an independent page");
-assert.match(marketPage, /id="d0-table"/, "daily market must include D0 candidates");
-assert.match(marketPage, /id="d1-table"/, "daily market must include D1 watch rows");
-assert.match(marketPage, /資料更新履歷/, "daily market must show update history");
-assert.match(marketPage, /複製目前連結/, "daily market must offer a shareable filtered view");
+assert.match(marketPage, /今日 09:15 判斷/, "daily market must show the current D1 decision lane");
+assert.match(marketPage, /明日準備名單/, "daily market must keep D0 future candidates separate");
+assert.match(marketPage, /D2\+ 後續觀察/, "daily market must show a separate D2 lane");
+assert.doesNotMatch(marketPage, /D0 次日可交易/, "daily market must not use a misleading YES or NO trade-ready tile");
+assert.match(marketPage, /複製此畫面連結/, "daily market must offer a shareable filtered view");
 assert.match(marketPage, /板塊共識/, "daily market must show industry consensus");
-assert.match(await readFile(new URL("../script.js", import.meta.url), "utf8"), /重新整理資料/, "dashboard must offer recovery when loading fails");
-assert.match(await readFile(new URL("../script.js", import.meta.url), "utf8"), /runtime-readiness\.json/, "dashboard must show current runtime readiness separately from past runs");
-assert.match(await readFile(new URL("../script.js", import.meta.url), "utf8"), /不可延後套用到下一交易日/, "dashboard must not treat a missed D1 decision as a future tradable signal");
-assert.match(await readFile(new URL("../script.js", import.meta.url), "utf8"), /無 EPS／處置風險/, "dashboard must clearly label candidates without risk flags");
-assert.match(await readFile(new URL("../script.js", import.meta.url), "utf8"), /官方資料日/, "dashboard must show the per-stock risk source date");
+const marketScript = await readFile(new URL("../market-page.js", import.meta.url), "utf8");
+assert.match(marketScript, /這不是「零候選」/, "daily market must distinguish loading failures from an empty candidate set");
+assert.match(marketScript, /歷史模式不代表現在仍可交易/, "historical dates must not be presented as current advice");
+assert.match(marketScript, /Promise\.allSettled/, "secondary health data and history must tolerate partial failures");
 const sourceMissing = filterAndSortRows(
   [{ stock_id: "9999", risk_data_status: "OFFICIAL_SOURCE_MISSING" }],
   { setup: "all", liquidity: "all", risk: "flagged", decision: "all", sort: "risk" },
 );
 assert.equal(sourceMissing.length, 1, "official source gaps must be treated as a visible risk flag");
-assert.match(await readFile(new URL("../styles.css", import.meta.url), "utf8"), /td::before/, "daily market must have mobile card labels");
+const uxCss = await readFile(new URL("../ux.css", import.meta.url), "utf8");
+assert.match(uxCss, /\.mobile-nav/, "mobile users must retain the primary navigation");
+assert.match(uxCss, /min-height: 44px/, "interactive controls must meet the minimum touch target");
 const progress = paperProgress([{ paper_trading: { rule_version: "p2.11_v2", candidate_count: 1, watch_count: 1, executed_count: 0 }, paper_trading_records: [{ rule_version: "p2.11_v2", net_return: "0.012" }] }]);
 assert.equal(progress.remaining_days, 19, "paper progress must count D1 decision days");
 assert.equal(progress.settled_count, 1, "paper progress must count settled records");
@@ -47,26 +46,39 @@ assert.equal(records.length, 1, "paper evidence must only show the fixed V2 rule
 assert.equal(records[0].decision_date, "2026-07-14", "paper evidence must retain a display date");
 const industries = industrySummary([{ stock_id: "1111", industry: "半導體業" }, { stock_id: "2222", industry: "半導體業" }, { stock_id: "3333", industry: "電子零組件業" }]);
 assert.equal(industries[0].count, 2, "industry consensus must group candidates by industry");
-assert.match(await readFile(new URL("../index.html", import.meta.url), "utf8"), /紙上交易驗證/, "dashboard must show paper-trading evidence");
-assert.match(marketPage, /今日重點/, "daily market must include a concise today summary");
-assert.match(marketPage, /資料來源/, "daily market must show per-stock data sources");
-assert.match(marketPage, /異常原因/, "daily market must explain abnormal conditions");
-assert.match(await readFile(new URL("../script.js", import.meta.url), "utf8"), /renderTodaySummary/, "daily market must render a concise trading summary");
-assert.match(await readFile(new URL("../script.js", import.meta.url), "utf8"), /個股資料未齊，整批不可標示為可交易/, "daily summary must distinguish partial 09:15 coverage from a tradable batch");
-assert.match(await readFile(new URL("../script.js", import.meta.url), "utf8"), /缺資料個股已排除，因此整批尚不可標示為可交易/, "daily status must explain why partial coverage is not trade-ready");
-assert.match(await readFile(new URL("../script.js", import.meta.url), "utf8"), /公司行動已改變價格基準/, "daily market must translate corporate-action exclusions");
+assert.match(await readFile(new URL("../validation.html", import.meta.url), "utf8"), /目前有證據顯示能賺錢嗎/, "validation must be a separate plain-language page");
+assert.match(await readFile(new URL("../status.html", import.meta.url), "utf8"), /資料有沒有準時到/, "system health must be a separate page");
+assert.match(await readFile(new URL("../rules.html", import.meta.url), "utf8"), /一票否決的安全條件/, "strategy rules must explain blocking conditions");
+assert.match(marketPage, /今天該做什麼/, "daily market must include a concise action summary");
+assert.match(marketScript, /查看風險與資料來源/, "daily market must show per-stock data sources");
+assert.match(await readFile(new URL("../ux-core.js", import.meta.url), "utf8"), /公司行動改變價格基準/, "daily market must translate corporate-action exclusions");
 const setupAResearch = JSON.parse(await readFile(new URL("../data/setup-a-research.json", import.meta.url)));
 assert.equal(setupAResearch.production_impact, "none", "A setup research must not affect production selection");
 assert.equal(setupAResearch.walk_forward.minimum_validation_trades, 10, "A setup research must keep the ten-trade promotion gate");
-assert.match(await readFile(new URL("../script.js", import.meta.url), "utf8"), /formalReview/, "dashboard must display the formal review gate when new evaluation data arrives");
-assert.match(await readFile(new URL("../index.html", import.meta.url), "utf8"), /strategy-review-checklist/, "dashboard must reserve a human review checklist area");
-assert.match(await readFile(new URL("../index.html", import.meta.url), "utf8"), /A 型策略研究/, "dashboard must show A setup research status");
-assert.match(await readFile(new URL("../index.html", import.meta.url), "utf8"), /paper-evidence-details/, "strategy evidence cards must keep padded content");
-assert.match(await readFile(new URL("../styles.css", import.meta.url), "utf8"), /\.paper-evidence-card \.paper-evidence-details/, "strategy evidence details must have card padding");
-assert.match(await readFile(new URL("../script.js", import.meta.url), "utf8"), /未記錄流動性分組/, "strategy splits must label missing liquidity data in Chinese");
-assert.match(await readFile(new URL("../script.js", import.meta.url), "utf8"), /有板塊共識/, "strategy splits must translate boolean consensus values");
-assert.match(await readFile(new URL("../script.js", import.meta.url), "utf8"), /樣本收集中/, "strategy review status must be shown in Chinese");
-assert.match(await readFile(new URL("../index.html", import.meta.url), "utf8"), /P2\.30 · 策略挑戰組/, "dashboard must show P2.30 challengers");
-assert.match(await readFile(new URL("../index.html", import.meta.url), "utf8"), /影子策略只做模擬/, "dashboard must explain shadow-only status");
-assert.match(await readFile(new URL("../script.js", import.meta.url), "utf8"), /setup-a-research\.json/, "dashboard must load A setup research data");
+const validationScript = await readFile(new URL("../validation-page.js", import.meta.url), "utf8");
+assert.match(validationScript, /不能說策略已證明可賺錢/, "validation conclusion must be plain and evidence-led");
+assert.match(validationScript, /影子挑戰組｜不發買進通知/, "shadow strategy status must be explicit");
+assert.match(validationScript, /日線歷史回測 vs\. 09:15 分鐘線驗證/, "daily and minute evidence must remain separate");
+
+const invalidGeometry = riskGeometry({ paper_entry_trigger_price: 11.45, stop_loss_price: 11.7 });
+assert.equal(invalidGeometry.valid, false, "stop at or above trigger must be blocked by the UX safety model");
+assert.equal(invalidGeometry.reasonCode, "STOP_NOT_BELOW_TRIGGER", "invalid stop geometry must have a stable reason code");
+const blockedCandidate = candidateView({ d1_decision_status: "WATCH", d1_decision_ready: true, paper_entry_trigger_price: 143.5, stop_loss_price: 147.5 }, "d1", { formationDate: "2026-08-10", decisionDate: "2026-08-11" });
+assert.equal(blockedCandidate.action, "條件無效，不介入", "unsafe WATCH rows must not be presented as actionable");
+const lanes = buildDecisionLanes({
+  selected: { effective_date: "2026-08-11", d0_candidates: [{ stock_id: "6446" }], d2_watch: [] },
+  previous: { effective_date: "2026-08-10", d0_decision_date: "2026-08-11", d0_candidates: [{ stock_id: "3022", d1_decision_status: "WATCH" }] },
+  selectedDate: "2026-08-11",
+  nextTradingDate: "2026-08-12",
+});
+assert.equal(lanes.d1.rows[0].formationDate, "2026-08-10", "D1 lane must preserve the candidate formation date");
+assert.equal(lanes.d0.rows[0].decisionDate, "2026-08-12", "D0 lane must show the next decision date");
+const noPrevious = buildDecisionLanes({ selected: { d0_candidates: [], d2_watch: [] }, previous: null, selectedDate: "2026-08-11", nextTradingDate: "2026-08-12" });
+assert.equal(noPrevious.d1.rows.length, 0, "a missing prior document must be an empty D1 lane, never a fabricated decision");
+assert.equal(candidateView({ d1_decision_status: "WATCH", d1_decision_ready: false }, "d1").state, "blocked", "missing 09:15 quote evidence must block the row");
+assert.equal(candidateView({ d1_decision_status: "WATCH", risk_data_status: "OFFICIAL_SOURCE_MISSING", risk_flags_trade_ready: false }, "d1").state, "blocked", "missing official risk evidence must block the row");
+assert.equal(candidateView({ d1_decision_status: "WATCH", possible_disposition_next_day: true }, "d1").state, "blocked", "possible next-day disposition must block the row");
+assert.equal(candidateView({ d1_decision_status: "WATCH", corporate_action: true }, "d1").state, "blocked", "corporate actions must block an ordinary price-basis decision");
+assert.equal(candidateView({ status: "invalidated" }, "d2").state, "blocked", "an invalidated D2 row must not remain actionable");
+assert.doesNotMatch(reasonLabel({ next_step: "No D2 reclaim setup; monitor only if relative strength confirmed" }), /No D2|reclaim|monitor/i, "known next-step text must render in Chinese");
 console.log(`dashboard_smoke=PASS dates=${documents.length} tracked_stocks=${history.size}`);
