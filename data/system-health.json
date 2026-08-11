@@ -5,7 +5,7 @@
       "phase": "d1",
       "date": "2026-08-11",
       "scheduled_at": "2026-08-11T09:16:00+08:00",
-      "checked_at": "2026-08-11T09:20:04.662957+08:00",
+      "checked_at": "2026-08-11T10:51:17.398135+08:00",
       "actual_finished_at": "2026-08-11T09:16:27.037318+08:00",
       "status": "ok",
       "failed_step": null,
@@ -14,6 +14,10 @@
         "dashboard_data": {
           "status": "ok",
           "detail": "D1 09:15 判斷已完成"
+        },
+        "regime_evidence": {
+          "status": "ok",
+          "detail": "09:15 大盤證據與 Dashboard／個股判斷一致"
         },
         "retry": {
           "status": "ok",
@@ -37,11 +41,11 @@
         }
       },
       "versions": {
-        "preflight_data_commit": "0bc3d09849bf1134d0fb8f82a0c77930bf5df6b1",
-        "preflight_pages_commit": "d13c49d88e5dca4e85da77cb2b16e2cf1dd5ce6f",
-        "pages_local_commit": "f9cdb4ebdfda670eead17a2af9c251d9955dddc7",
-        "pages_remote_commit": "f9cdb4ebdfda670eead17a2af9c251d9955dddc7",
-        "data_runtime_commit": "0bc3d09849bf1134d0fb8f82a0c77930bf5df6b1"
+        "preflight_data_commit": "83058433705818dda10ef5dd77695c66af0aa7ef",
+        "preflight_pages_commit": "208afcf17aa737dde8deec5c8b30272e44e15d73",
+        "pages_local_commit": "938b56c29ead167207273913b4231331a2d1384b",
+        "pages_remote_commit": "938b56c29ead167207273913b4231331a2d1384b",
+        "data_runtime_commit": "8e25f3a7a2d2fed25dbc69b70eff781f9885b9af"
       },
       "retry": {
         "schema_version": "p2.20.2",
@@ -61,9 +65,22 @@
         ],
         "recorded_at": "2026-08-11T09:16:27.037453+08:00"
       },
+      "publication": {
+        "status": "published",
+        "failed_step": null,
+        "reason": "",
+        "detail": "To https://github.com/bedstv/tw-limitup-trading-playbook.git\n   4abeee2..938b56c  main -> main",
+        "schema_version": "p2.20.4",
+        "phase": "d1",
+        "date": "2026-08-11",
+        "local_data_saved": true,
+        "local_commit_created": true,
+        "local_commit_detail": "[main 938b56c] data: align 2026-08-11 09:15 evidence\n 1 file changed, 12 insertions(+), 14 deletions(-)",
+        "recorded_at": "2026-08-11T10:50:45.313757+08:00"
+      },
       "freshness": {
         "schema_version": "p2.21",
-        "checked_at": "2026-08-11T09:20:04.711016+08:00",
+        "checked_at": "2026-08-11T10:51:17.441445+08:00",
         "as_of_date": "2026-08-11",
         "calendar_source": "official_live",
         "market_day": {
