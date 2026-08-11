@@ -1,18 +1,25 @@
 {
   "schema_version": "p2.25",
   "minimum_decision_days": 60,
-  "available_decision_days": 2,
+  "available_decision_days": 8,
   "available_dates": [
     "2026-07-09",
+    "2026-07-14",
+    "2026-07-16",
+    "2026-07-17",
+    "2026-07-24",
+    "2026-08-04",
+    "2026-08-07",
     "2026-08-11"
   ],
-  "candidate_count": 5,
-  "data_incomplete_count": 4,
+  "candidate_count": 15,
+  "data_incomplete_count": 0,
   "provider_counts": {
-    "Fugle": 1,
-    "未取得完整分鐘線": 4
+    "Fugle": 9,
+    "未取得完整分鐘線": 2,
+    "Fugle intraday": 4
   },
-  "finmind_unavailable_observations": 4,
+  "finmind_unavailable_observations": 0,
   "historical_backtest_allowed": false,
   "status": "insufficient_historical_coverage",
   "reason": "需有至少 60 個完整 D1 分鐘線判斷日才可重跑歷史分鐘回測；目前僅保留 forward 封存資料。",
