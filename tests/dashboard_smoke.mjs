@@ -61,6 +61,11 @@ assert.equal(setupAResearch.walk_forward.minimum_validation_trades, 10, "A setup
 assert.match(await readFile(new URL("../script.js", import.meta.url), "utf8"), /formalReview/, "dashboard must display the formal review gate when new evaluation data arrives");
 assert.match(await readFile(new URL("../index.html", import.meta.url), "utf8"), /strategy-review-checklist/, "dashboard must reserve a human review checklist area");
 assert.match(await readFile(new URL("../index.html", import.meta.url), "utf8"), /A 型策略研究/, "dashboard must show A setup research status");
+assert.match(await readFile(new URL("../index.html", import.meta.url), "utf8"), /paper-evidence-details/, "strategy evidence cards must keep padded content");
+assert.match(await readFile(new URL("../styles.css", import.meta.url), "utf8"), /\.paper-evidence-card \.paper-evidence-details/, "strategy evidence details must have card padding");
+assert.match(await readFile(new URL("../script.js", import.meta.url), "utf8"), /未記錄流動性分組/, "strategy splits must label missing liquidity data in Chinese");
+assert.match(await readFile(new URL("../script.js", import.meta.url), "utf8"), /有板塊共識/, "strategy splits must translate boolean consensus values");
+assert.match(await readFile(new URL("../script.js", import.meta.url), "utf8"), /樣本收集中/, "strategy review status must be shown in Chinese");
 assert.match(await readFile(new URL("../index.html", import.meta.url), "utf8"), /P2\.30 · 策略挑戰組/, "dashboard must show P2.30 challengers");
 assert.match(await readFile(new URL("../index.html", import.meta.url), "utf8"), /影子策略只做模擬/, "dashboard must explain shadow-only status");
 assert.match(await readFile(new URL("../script.js", import.meta.url), "utf8"), /setup-a-research\.json/, "dashboard must load A setup research data");

@@ -161,6 +161,30 @@ const paperOutcomeLabel = (value) => ({
 }[value] || text(value));
 const paperSourceLabel = (value) => ({ "Fugle:historical/candles:1m": "Fugle 1 分鐘線", not_captured: "尚未封存" }[value] || text(value));
 const paperPrice = (value) => value === null || value === undefined || value === "" ? "—" : Number(value).toFixed(2);
+const strategyGroupLabel = (dimension, value) => {
+  const name = text(value, "").trim();
+  const missingLabels = {
+    setup_type: "未記錄型態",
+    market_regime_0915: "尚未取得 09:15 大盤",
+    liquidity_tier: "未記錄流動性分組",
+    industry_consensus: "尚未判定板塊共識",
+    d1_decision_status: "尚未判定 D1 決策",
+    market_regime: "尚未取得大盤狀態",
+    sector_confirmation: "尚未判定板塊確認",
+  };
+  if (!name) return missingLabels[dimension] || "未分類";
+  const translations = {
+    setup_type: { A: "A 型", B: "B 型" },
+    market_regime_0915: { STRONG: "強勢盤", NEUTRAL: "中性盤", WEAK: "弱勢盤" },
+    liquidity_tier: { PRIMARY_5000_PLUS: "主池（5,000 張以上）", FALLBACK_2000_4999: "備選池（2,000–4,999 張）" },
+    industry_consensus: { True: "有板塊共識", False: "無板塊共識" },
+    d1_decision_status: { WATCH: "可觀察", PULLBACK_ONLY: "等待拉回", DOWNRANK: "降權觀察", REJECT: "不介入", PENDING: "等待判定" },
+    market_regime: { STRONG: "強勢盤", NEUTRAL: "中性盤", WEAK: "弱勢盤" },
+    sector_confirmation: { True: "有板塊確認", False: "無板塊確認" },
+  };
+  return translations[dimension]?.[name] || name;
+};
+const reviewStatusLabel = (value) => ({ collecting: "樣本收集中", ready_for_review: "可進行人工審查" }[value] || text(value, "樣本收集中"));
 const renderPaperEvidence = () => {
   if (!dashboard.paperEvidenceSummary || !dashboard.paperEvidenceTable) return;
   const records = paperRecords([...state.documents.values()]);
@@ -182,7 +206,7 @@ const renderStrategyEvaluation = () => {
     : `樣本已達中期門檻：平均淨報酬 ${percent(overall.avg_net_return)}、中位數 ${percent(overall.median_net_return)}、勝率 ${percent(overall.win_rate)}。${formalReview.message || "請持續累積並人工檢查。"}`;
   const labels = { setup_type: "A／B 型", market_regime_0915: "09:15 大盤", liquidity_tier: "流動性", industry_consensus: "板塊共識", d1_decision_status: "D1 決策" };
   dashboard.strategyEvaluationSplits.innerHTML = Object.entries(evaluation.splits || {}).map(([key, groups]) => {
-    const textGroups = Object.entries(groups).map(([name, value]) => `${name}：${value.candidate_count} 筆／已結算 ${value.settled_count} 筆`).join("；");
+    const textGroups = Object.entries(groups).map(([name, value]) => `${strategyGroupLabel(key, name)}：${value.candidate_count} 筆／已結算 ${value.settled_count} 筆`).join("；");
     return `<p><strong>${escapeHtml(labels[key] || key)}</strong>：${escapeHtml(textGroups || "尚無資料")}</p>`;
   }).join("");
   const reviewState = formalReview.status || "collecting";
@@ -192,7 +216,7 @@ const renderStrategyEvaluation = () => {
     [(evaluation.unsettled_count || 0) === 0, `待結算／待補證據：${evaluation.unsettled_count || 0} 筆；正式評估前須為 0。`],
     [Boolean(overall.settled_count), `已結算交易：${overall.settled_count || 0} 筆；須一併閱讀平均、中位數、勝率、停損率與最大回撤。`],
   ];
-  dashboard.strategyReviewChecklist.innerHTML = `<p><strong>人工評估清單</strong>（${escapeHtml(reviewState)}）：僅在所有條件完成後，由人工決定保留、研究或淘汰；系統不會自動升級或下單。</p>${checklist.map(([done, label]) => `<p>${done ? "✓" : "○"} ${escapeHtml(label)}</p>`).join("")}`;
+  dashboard.strategyReviewChecklist.innerHTML = `<p><strong>人工評估清單</strong>（${escapeHtml(reviewStatusLabel(reviewState))}）：僅在所有條件完成後，由人工決定保留、研究或淘汰；系統不會自動升級或下單。</p>${checklist.map(([done, label]) => `<p>${done ? "✓" : "○"} ${escapeHtml(label)}</p>`).join("")}`;
 };
 const metricNumber = (value, digits = 2) => value === null || value === undefined || value === "" ? "—" : Number(value).toFixed(digits);
 const profitFactor = (value) => value === null || value === undefined || value === "" ? "—" : Number(value).toFixed(2);
@@ -230,12 +254,12 @@ const renderShadowStrategies = () => {
   }).join("");
   const d1Splits = evaluation.splits?.p2_30_d1_confirmed_v1 || evaluation.splits?.["p2.30_d1_confirmed_v1"] || {};
   const readableSplits = [
-    ["大盤狀態", d1Splits.market_regime],
-    ["板塊確認", d1Splits.sector_confirmation],
-    ["風險距離", d1Splits.risk_distance],
+    ["大盤狀態", "market_regime", d1Splits.market_regime],
+    ["板塊確認", "sector_confirmation", d1Splits.sector_confirmation],
+    ["風險距離", "risk_distance", d1Splits.risk_distance],
   ];
-  dashboard.shadowStrategySplits.innerHTML = readableSplits.map(([label, groups]) => {
-    const content = Object.entries(groups || {}).map(([name, value]) => `${name}：${value.candidate_count || 0} 筆，已結算 ${value.settled_count || 0} 筆`).join("；") || "尚無資料";
+  dashboard.shadowStrategySplits.innerHTML = readableSplits.map(([label, dimension, groups]) => {
+    const content = Object.entries(groups || {}).map(([name, value]) => `${strategyGroupLabel(dimension, name)}：${value.candidate_count || 0} 筆，已結算 ${value.settled_count || 0} 筆`).join("；") || "尚無資料";
     return `<p><strong>${escapeHtml(label)}</strong>：${escapeHtml(content)}</p>`;
   }).join("");
 };
