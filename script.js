@@ -37,6 +37,8 @@ const dashboard = {
   todaySummaryTitle: document.querySelector("#today-summary-title"), todaySummaryNote: document.querySelector("#today-summary-note"), todayFocusCards: document.querySelector("#today-focus-cards"),
   strategyEvaluationSummary: document.querySelector("#strategy-evaluation-summary"), strategyEvaluationSplits: document.querySelector("#strategy-evaluation-splits"),
   strategyReviewChecklist: document.querySelector("#strategy-review-checklist"),
+  shadowStrategySummary: document.querySelector("#shadow-strategy-summary"), shadowStrategyCards: document.querySelector("#shadow-strategy-cards"),
+  shadowStrategySplits: document.querySelector("#shadow-strategy-splits"),
   intradayCoverageSummary: document.querySelector("#intraday-coverage-summary"),
   setupAResearchSummary: document.querySelector("#setup-a-research-summary"), setupAResearchDetails: document.querySelector("#setup-a-research-details"),
   paperEvidenceSummary: document.querySelector("#paper-evidence-summary"), paperEvidenceTable: document.querySelector("#paper-evidence-table"),
@@ -191,6 +193,51 @@ const renderStrategyEvaluation = () => {
     [Boolean(overall.settled_count), `已結算交易：${overall.settled_count || 0} 筆；須一併閱讀平均、中位數、勝率、停損率與最大回撤。`],
   ];
   dashboard.strategyReviewChecklist.innerHTML = `<p><strong>人工評估清單</strong>（${escapeHtml(reviewState)}）：僅在所有條件完成後，由人工決定保留、研究或淘汰；系統不會自動升級或下單。</p>${checklist.map(([done, label]) => `<p>${done ? "✓" : "○"} ${escapeHtml(label)}</p>`).join("")}`;
+};
+const metricNumber = (value, digits = 2) => value === null || value === undefined || value === "" ? "—" : Number(value).toFixed(digits);
+const profitFactor = (value) => value === null || value === undefined || value === "" ? "—" : Number(value).toFixed(2);
+const shadowGateLabel = (gate) => gate?.manual_review_required ? "已達門檻，等待人工審查" : "收集影子樣本中";
+const renderShadowStrategies = () => {
+  if (!dashboard.shadowStrategySummary || !dashboard.shadowStrategyCards || !dashboard.shadowStrategySplits) return;
+  const evaluation = state.shadowEvaluation;
+  if (!evaluation) {
+    dashboard.shadowStrategySummary.textContent = "尚未產生 P2.30 影子策略資料；固定基準仍正常運作。";
+    dashboard.shadowStrategyCards.innerHTML = "";
+    dashboard.shadowStrategySplits.innerHTML = "";
+    return;
+  }
+  const strategies = evaluation.strategies || {};
+  dashboard.shadowStrategySummary.textContent = `目前仍以 p2.11_v2 為固定基準；D1確認突破與D2+高量重返同步模擬。績效同時扣除單邊15 bps正常成本與30 bps壓力成本，允許沒有交易。`;
+  dashboard.shadowStrategyCards.innerHTML = Object.entries(strategies).map(([version, strategy]) => {
+    const normal = strategy.normal || {};
+    const stress = strategy.stress || {};
+    const isShadow = version !== "p2.11_v2";
+    const status = isShadow ? shadowGateLabel(strategy.gate) : "固定基準（未修改）";
+    const historical = strategy.historical_daily_proxy?.stress_cost;
+    return `<article class="shadow-strategy-item ${isShadow ? "is-shadow" : "is-baseline"}">
+      <div class="shadow-strategy-head"><div><small>${escapeHtml(version)}</small><h4>${escapeHtml(strategy.label || version)}</h4></div>${badge(status, isShadow ? "warn" : "ok")}</div>
+      <dl class="shadow-metrics">
+        <div><dt>候選／確認進場</dt><dd>${normal.candidate_count || 0}／${normal.confirmed_entry_count || 0}</dd></div>
+        <div><dt>未進場／資料不足</dt><dd>${normal.no_entry_count || 0}／${normal.data_incomplete_count || 0}</dd></div>
+        <div><dt>正常成本平均／中位數</dt><dd>${percent(normal.average_net_return)}／${percent(normal.median_net_return)}</dd></div>
+        <div><dt>壓力成本平均／中位數</dt><dd>${percent(stress.average_net_return)}／${percent(stress.median_net_return)}</dd></div>
+        <div><dt>壓力成本勝率／獲利因子</dt><dd>${percent(stress.win_rate)}／${profitFactor(stress.profit_factor)}</dd></div>
+        <div><dt>停損率／最大回撤</dt><dd>${percent(stress.stop_loss_rate)}／${percent(stress.max_drawdown_equal_weight)}</dd></div>
+      </dl>
+      ${historical ? `<p class="shadow-history-note"><strong>日線研究代理（不可當正式證據）</strong>：${historical.signal_count || 0} 個訊號／${historical.settled_count || 0} 筆結算；30 bps 平均 ${percent(historical.average_net_return)}、獲利因子 ${profitFactor(historical.profit_factor)}。</p>` : ""}
+      ${strategy.gate ? `<p class="shadow-gate-message">${escapeHtml(strategy.gate.message || "持續收集樣本。")}</p>` : ""}
+    </article>`;
+  }).join("");
+  const d1Splits = evaluation.splits?.p2_30_d1_confirmed_v1 || evaluation.splits?.["p2.30_d1_confirmed_v1"] || {};
+  const readableSplits = [
+    ["大盤狀態", d1Splits.market_regime],
+    ["板塊確認", d1Splits.sector_confirmation],
+    ["風險距離", d1Splits.risk_distance],
+  ];
+  dashboard.shadowStrategySplits.innerHTML = readableSplits.map(([label, groups]) => {
+    const content = Object.entries(groups || {}).map(([name, value]) => `${name}：${value.candidate_count || 0} 筆，已結算 ${value.settled_count || 0} 筆`).join("；") || "尚無資料";
+    return `<p><strong>${escapeHtml(label)}</strong>：${escapeHtml(content)}</p>`;
+  }).join("");
 };
 const renderIntradayCoverage = () => {
   if (!dashboard.intradayCoverageSummary) return;
@@ -432,6 +479,7 @@ const initDashboard = async () => {
     state.marketFreshness = await fetchJson("data/market-freshness.json", null);
     state.paperEvaluation = await fetchJson("data/paper-evaluation.json", null);
     state.strategyEvaluation = await fetchJson("data/strategy-evaluation.json", null);
+    state.shadowEvaluation = await fetchJson("data/p230-shadow-evaluation.json", null);
     state.intradayCoverage = await fetchJson("data/intraday-backtest-coverage.json", null);
     state.setupAResearch = await fetchJson("data/setup-a-research.json", null);
     state.backtestSummary = await fetchJson("data/backtest-summary.json", null);
@@ -444,6 +492,7 @@ const initDashboard = async () => {
     renderBacktestSummary(state.backtestSummary);
     renderPaperEvidence();
     renderStrategyEvaluation();
+    renderShadowStrategies();
     renderIntradayCoverage();
     renderSetupAResearch();
     renderDashboard(documents[dates.indexOf(dashboard.dateSelect.value)]);
@@ -454,6 +503,7 @@ const initStrategy = async () => {
   try {
     state.backtestSummary = await fetchJson("data/backtest-summary.json", null);
     state.strategyEvaluation = await fetchJson("data/strategy-evaluation.json", null);
+    state.shadowEvaluation = await fetchJson("data/p230-shadow-evaluation.json", null);
     state.intradayCoverage = await fetchJson("data/intraday-backtest-coverage.json", null);
     state.setupAResearch = await fetchJson("data/setup-a-research.json", null);
     const index = await fetchJson("data/daily/index.json");
@@ -462,6 +512,7 @@ const initStrategy = async () => {
     renderBacktestSummary(state.backtestSummary);
     renderPaperEvidence();
     renderStrategyEvaluation();
+    renderShadowStrategies();
     renderIntradayCoverage();
     renderSetupAResearch();
   } catch (error) {

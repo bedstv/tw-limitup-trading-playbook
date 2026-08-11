@@ -78,6 +78,11 @@ P2.10 已將 Dashboard production 化：可檢視 D0 → D1 → D2+ 狀態歷程
 CSV／Markdown 匯出，並有每日 artifact smoke test。詳見
 [P2.10 Dashboard production 化](references/p210_dashboard_production.md)。
 
+P2.30 已保留 `p2.11_v2` 固定基準，新增 D1確認突破與 D2+高量重返兩個影子策略，
+採下一分鐘模擬成交、雙成本情境、板塊確認與帳戶風險上限。挑戰組只做 forward 驗證，
+不發個股買進通知、不自動替換策略。詳見
+[P2.30 雙軌策略改善與影子驗證](references/p230_dual_track_shadow_validation.md)。
+
 P2.3 已修正 2026-07-07 TPEx partial market 與錯日期/空資料快取風險；Dashboard 不再因
 該日 TPEx 缺漏而降級，D0/D1/D2 名單也已重新產生。詳見
 [P2.3 資料完整性修正](references/p23_data_completeness.md)。

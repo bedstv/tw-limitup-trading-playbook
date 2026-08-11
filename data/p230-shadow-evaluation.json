@@ -1,0 +1,558 @@
+{
+  "schema_version": "p2.30.0",
+  "shadow_only": true,
+  "buy_notifications_enabled": false,
+  "baseline_frozen": true,
+  "cost_scenarios_bps_one_way": [
+    15,
+    30
+  ],
+  "strategies": {
+    "p2.11_v2": {
+      "label": "固定基準 p2.11_v2",
+      "normal": {
+        "candidate_count": 20,
+        "confirmed_entry_count": 9,
+        "settled_count": 9,
+        "no_entry_count": 10,
+        "data_incomplete_count": 1,
+        "average_net_return": -0.015327116296952133,
+        "median_net_return": -0.018353121801433,
+        "win_rate": 0.3333333333333333,
+        "profit_factor": 0.3317369277224661,
+        "stop_loss_rate": 0.2222222222222222,
+        "max_drawdown_equal_weight": -0.1964838825006715,
+        "largest_winner_profit_contribution": 0.7247842952242488
+      },
+      "stress": {
+        "candidate_count": 20,
+        "confirmed_entry_count": 9,
+        "settled_count": 9,
+        "no_entry_count": 10,
+        "data_incomplete_count": 1,
+        "average_net_return": -0.01832711629695213,
+        "median_net_return": -0.021353121801433,
+        "win_rate": 0.3333333333333333,
+        "profit_factor": 0.2650265339298088,
+        "stop_loss_rate": 0.2222222222222222,
+        "max_drawdown_equal_weight": -0.21448388250067146,
+        "largest_winner_profit_contribution": 0.7840175411942397
+      }
+    },
+    "p2.30_d1_confirmed_v1": {
+      "label": "D1確認突破（影子）",
+      "normal": {
+        "candidate_count": 0,
+        "confirmed_entry_count": 0,
+        "settled_count": 0,
+        "no_entry_count": 0,
+        "data_incomplete_count": 0,
+        "average_net_return": null,
+        "median_net_return": null,
+        "win_rate": null,
+        "profit_factor": null,
+        "stop_loss_rate": null,
+        "max_drawdown_equal_weight": null,
+        "largest_winner_profit_contribution": null
+      },
+      "stress": {
+        "candidate_count": 0,
+        "confirmed_entry_count": 0,
+        "settled_count": 0,
+        "no_entry_count": 0,
+        "data_incomplete_count": 0,
+        "average_net_return": null,
+        "median_net_return": null,
+        "win_rate": null,
+        "profit_factor": null,
+        "stop_loss_rate": null,
+        "max_drawdown_equal_weight": null,
+        "largest_winner_profit_contribution": null
+      },
+      "gate": {
+        "status": "collecting",
+        "decision_day_count": 0,
+        "checks": {
+          "at_least_60_decision_days": false,
+          "at_least_30_settled_entries": false,
+          "positive_stress_average": false,
+          "profit_factor_at_least_1_2": false,
+          "drawdown_20pct_below_baseline": false,
+          "stop_rate_not_above_baseline": false,
+          "largest_winner_below_25pct": false,
+          "no_unresolved_data_gaps": true
+        },
+        "manual_review_required": false,
+        "automatic_replacement": false,
+        "message": "影子樣本持續收集中，尚未達正式升級門檻。"
+      }
+    },
+    "p2.30_d2_reclaim_hv_v1": {
+      "label": "D2+高量重返（影子）",
+      "normal": {
+        "candidate_count": 0,
+        "confirmed_entry_count": 0,
+        "settled_count": 0,
+        "no_entry_count": 0,
+        "data_incomplete_count": 0,
+        "average_net_return": null,
+        "median_net_return": null,
+        "win_rate": null,
+        "profit_factor": null,
+        "stop_loss_rate": null,
+        "max_drawdown_equal_weight": null,
+        "largest_winner_profit_contribution": null
+      },
+      "stress": {
+        "candidate_count": 0,
+        "confirmed_entry_count": 0,
+        "settled_count": 0,
+        "no_entry_count": 0,
+        "data_incomplete_count": 0,
+        "average_net_return": null,
+        "median_net_return": null,
+        "win_rate": null,
+        "profit_factor": null,
+        "stop_loss_rate": null,
+        "max_drawdown_equal_weight": null,
+        "largest_winner_profit_contribution": null
+      },
+      "historical_daily_proxy": {
+        "schema_version": "p2.30.0",
+        "rule_version": "p2.30_d2_reclaim_hv_v1",
+        "validation_type": "fixed_rule_expanding_year_daily_proxy",
+        "overall": {
+          "signal_count": 19,
+          "settled_count": 5,
+          "average_net_return": 0.06542432714,
+          "median_net_return": 0.1027719298,
+          "win_rate": 0.8,
+          "profit_factor": 6.877650209201401,
+          "stop_loss_rate": 0.2,
+          "max_drawdown_equal_weight": -0.05565517240000001
+        },
+        "normal_cost": {
+          "signal_count": 19,
+          "settled_count": 5,
+          "average_net_return": 0.06842432714,
+          "median_net_return": 0.1057719298,
+          "win_rate": 0.8,
+          "profit_factor": 7.497398453109993,
+          "stop_loss_rate": 0.2,
+          "max_drawdown_equal_weight": -0.052655172400000005
+        },
+        "stress_cost": {
+          "signal_count": 19,
+          "settled_count": 5,
+          "average_net_return": 0.06542432714,
+          "median_net_return": 0.1027719298,
+          "win_rate": 0.8,
+          "profit_factor": 6.877650209201401,
+          "stop_loss_rate": 0.2,
+          "max_drawdown_equal_weight": -0.05565517240000001
+        },
+        "years": [
+          {
+            "test_year": 2016,
+            "test_normal": {
+              "signal_count": 0,
+              "settled_count": 0,
+              "average_net_return": null,
+              "median_net_return": null,
+              "win_rate": null,
+              "profit_factor": null,
+              "stop_loss_rate": null,
+              "max_drawdown_equal_weight": null
+            },
+            "test_stress": {
+              "signal_count": 0,
+              "settled_count": 0,
+              "average_net_return": null,
+              "median_net_return": null,
+              "win_rate": null,
+              "profit_factor": null,
+              "stop_loss_rate": null,
+              "max_drawdown_equal_weight": null
+            },
+            "expanding_through_year_stress": {
+              "signal_count": 0,
+              "settled_count": 0,
+              "average_net_return": null,
+              "median_net_return": null,
+              "win_rate": null,
+              "profit_factor": null,
+              "stop_loss_rate": null,
+              "max_drawdown_equal_weight": null
+            }
+          },
+          {
+            "test_year": 2017,
+            "test_normal": {
+              "signal_count": 1,
+              "settled_count": 0,
+              "average_net_return": null,
+              "median_net_return": null,
+              "win_rate": null,
+              "profit_factor": null,
+              "stop_loss_rate": null,
+              "max_drawdown_equal_weight": null
+            },
+            "test_stress": {
+              "signal_count": 1,
+              "settled_count": 0,
+              "average_net_return": null,
+              "median_net_return": null,
+              "win_rate": null,
+              "profit_factor": null,
+              "stop_loss_rate": null,
+              "max_drawdown_equal_weight": null
+            },
+            "expanding_through_year_stress": {
+              "signal_count": 1,
+              "settled_count": 0,
+              "average_net_return": null,
+              "median_net_return": null,
+              "win_rate": null,
+              "profit_factor": null,
+              "stop_loss_rate": null,
+              "max_drawdown_equal_weight": null
+            }
+          },
+          {
+            "test_year": 2018,
+            "test_normal": {
+              "signal_count": 1,
+              "settled_count": 0,
+              "average_net_return": null,
+              "median_net_return": null,
+              "win_rate": null,
+              "profit_factor": null,
+              "stop_loss_rate": null,
+              "max_drawdown_equal_weight": null
+            },
+            "test_stress": {
+              "signal_count": 1,
+              "settled_count": 0,
+              "average_net_return": null,
+              "median_net_return": null,
+              "win_rate": null,
+              "profit_factor": null,
+              "stop_loss_rate": null,
+              "max_drawdown_equal_weight": null
+            },
+            "expanding_through_year_stress": {
+              "signal_count": 2,
+              "settled_count": 0,
+              "average_net_return": null,
+              "median_net_return": null,
+              "win_rate": null,
+              "profit_factor": null,
+              "stop_loss_rate": null,
+              "max_drawdown_equal_weight": null
+            }
+          },
+          {
+            "test_year": 2019,
+            "test_normal": {
+              "signal_count": 0,
+              "settled_count": 0,
+              "average_net_return": null,
+              "median_net_return": null,
+              "win_rate": null,
+              "profit_factor": null,
+              "stop_loss_rate": null,
+              "max_drawdown_equal_weight": null
+            },
+            "test_stress": {
+              "signal_count": 0,
+              "settled_count": 0,
+              "average_net_return": null,
+              "median_net_return": null,
+              "win_rate": null,
+              "profit_factor": null,
+              "stop_loss_rate": null,
+              "max_drawdown_equal_weight": null
+            },
+            "expanding_through_year_stress": {
+              "signal_count": 2,
+              "settled_count": 0,
+              "average_net_return": null,
+              "median_net_return": null,
+              "win_rate": null,
+              "profit_factor": null,
+              "stop_loss_rate": null,
+              "max_drawdown_equal_weight": null
+            }
+          },
+          {
+            "test_year": 2020,
+            "test_normal": {
+              "signal_count": 2,
+              "settled_count": 1,
+              "average_net_return": 0.0144291939,
+              "median_net_return": 0.0144291939,
+              "win_rate": 1.0,
+              "profit_factor": null,
+              "stop_loss_rate": 0.0,
+              "max_drawdown_equal_weight": 0.0
+            },
+            "test_stress": {
+              "signal_count": 2,
+              "settled_count": 1,
+              "average_net_return": 0.0114291939,
+              "median_net_return": 0.0114291939,
+              "win_rate": 1.0,
+              "profit_factor": null,
+              "stop_loss_rate": 0.0,
+              "max_drawdown_equal_weight": 0.0
+            },
+            "expanding_through_year_stress": {
+              "signal_count": 4,
+              "settled_count": 1,
+              "average_net_return": 0.0114291939,
+              "median_net_return": 0.0114291939,
+              "win_rate": 1.0,
+              "profit_factor": null,
+              "stop_loss_rate": 0.0,
+              "max_drawdown_equal_weight": 0.0
+            }
+          },
+          {
+            "test_year": 2021,
+            "test_normal": {
+              "signal_count": 1,
+              "settled_count": 0,
+              "average_net_return": null,
+              "median_net_return": null,
+              "win_rate": null,
+              "profit_factor": null,
+              "stop_loss_rate": null,
+              "max_drawdown_equal_weight": null
+            },
+            "test_stress": {
+              "signal_count": 1,
+              "settled_count": 0,
+              "average_net_return": null,
+              "median_net_return": null,
+              "win_rate": null,
+              "profit_factor": null,
+              "stop_loss_rate": null,
+              "max_drawdown_equal_weight": null
+            },
+            "expanding_through_year_stress": {
+              "signal_count": 5,
+              "settled_count": 1,
+              "average_net_return": 0.0114291939,
+              "median_net_return": 0.0114291939,
+              "win_rate": 1.0,
+              "profit_factor": null,
+              "stop_loss_rate": 0.0,
+              "max_drawdown_equal_weight": 0.0
+            }
+          },
+          {
+            "test_year": 2022,
+            "test_normal": {
+              "signal_count": 2,
+              "settled_count": 1,
+              "average_net_return": 0.1057719298,
+              "median_net_return": 0.1057719298,
+              "win_rate": 1.0,
+              "profit_factor": null,
+              "stop_loss_rate": 0.0,
+              "max_drawdown_equal_weight": 0.0
+            },
+            "test_stress": {
+              "signal_count": 2,
+              "settled_count": 1,
+              "average_net_return": 0.1027719298,
+              "median_net_return": 0.1027719298,
+              "win_rate": 1.0,
+              "profit_factor": null,
+              "stop_loss_rate": 0.0,
+              "max_drawdown_equal_weight": 0.0
+            },
+            "expanding_through_year_stress": {
+              "signal_count": 7,
+              "settled_count": 2,
+              "average_net_return": 0.057100561849999995,
+              "median_net_return": 0.057100561849999995,
+              "win_rate": 1.0,
+              "profit_factor": null,
+              "stop_loss_rate": 0.0,
+              "max_drawdown_equal_weight": 0.0
+            }
+          },
+          {
+            "test_year": 2023,
+            "test_normal": {
+              "signal_count": 2,
+              "settled_count": 1,
+              "average_net_return": 0.1118148148,
+              "median_net_return": 0.1118148148,
+              "win_rate": 1.0,
+              "profit_factor": null,
+              "stop_loss_rate": 0.0,
+              "max_drawdown_equal_weight": 0.0
+            },
+            "test_stress": {
+              "signal_count": 2,
+              "settled_count": 1,
+              "average_net_return": 0.1088148148,
+              "median_net_return": 0.1088148148,
+              "win_rate": 1.0,
+              "profit_factor": null,
+              "stop_loss_rate": 0.0,
+              "max_drawdown_equal_weight": 0.0
+            },
+            "expanding_through_year_stress": {
+              "signal_count": 9,
+              "settled_count": 3,
+              "average_net_return": 0.07433864616666666,
+              "median_net_return": 0.1027719298,
+              "win_rate": 1.0,
+              "profit_factor": null,
+              "stop_loss_rate": 0.0,
+              "max_drawdown_equal_weight": 0.0
+            }
+          },
+          {
+            "test_year": 2024,
+            "test_normal": {
+              "signal_count": 6,
+              "settled_count": 1,
+              "average_net_return": -0.0526551724,
+              "median_net_return": -0.0526551724,
+              "win_rate": 0.0,
+              "profit_factor": 0.0,
+              "stop_loss_rate": 1.0,
+              "max_drawdown_equal_weight": -0.0526551724
+            },
+            "test_stress": {
+              "signal_count": 6,
+              "settled_count": 1,
+              "average_net_return": -0.0556551724,
+              "median_net_return": -0.0556551724,
+              "win_rate": 0.0,
+              "profit_factor": 0.0,
+              "stop_loss_rate": 1.0,
+              "max_drawdown_equal_weight": -0.0556551724
+            },
+            "expanding_through_year_stress": {
+              "signal_count": 15,
+              "settled_count": 4,
+              "average_net_return": 0.041840191525,
+              "median_net_return": 0.057100561849999995,
+              "win_rate": 0.75,
+              "profit_factor": 4.007101746036456,
+              "stop_loss_rate": 0.25,
+              "max_drawdown_equal_weight": -0.05565517240000001
+            }
+          },
+          {
+            "test_year": 2025,
+            "test_normal": {
+              "signal_count": 2,
+              "settled_count": 1,
+              "average_net_return": 0.1627608696,
+              "median_net_return": 0.1627608696,
+              "win_rate": 1.0,
+              "profit_factor": null,
+              "stop_loss_rate": 0.0,
+              "max_drawdown_equal_weight": 0.0
+            },
+            "test_stress": {
+              "signal_count": 2,
+              "settled_count": 1,
+              "average_net_return": 0.1597608696,
+              "median_net_return": 0.1597608696,
+              "win_rate": 1.0,
+              "profit_factor": null,
+              "stop_loss_rate": 0.0,
+              "max_drawdown_equal_weight": 0.0
+            },
+            "expanding_through_year_stress": {
+              "signal_count": 17,
+              "settled_count": 5,
+              "average_net_return": 0.06542432714,
+              "median_net_return": 0.1027719298,
+              "win_rate": 0.8,
+              "profit_factor": 6.877650209201401,
+              "stop_loss_rate": 0.2,
+              "max_drawdown_equal_weight": -0.05565517240000001
+            }
+          },
+          {
+            "test_year": 2026,
+            "test_normal": {
+              "signal_count": 2,
+              "settled_count": 0,
+              "average_net_return": null,
+              "median_net_return": null,
+              "win_rate": null,
+              "profit_factor": null,
+              "stop_loss_rate": null,
+              "max_drawdown_equal_weight": null
+            },
+            "test_stress": {
+              "signal_count": 2,
+              "settled_count": 0,
+              "average_net_return": null,
+              "median_net_return": null,
+              "win_rate": null,
+              "profit_factor": null,
+              "stop_loss_rate": null,
+              "max_drawdown_equal_weight": null
+            },
+            "expanding_through_year_stress": {
+              "signal_count": 19,
+              "settled_count": 5,
+              "average_net_return": 0.06542432714,
+              "median_net_return": 0.1027719298,
+              "win_rate": 0.8,
+              "profit_factor": 6.877650209201401,
+              "stop_loss_rate": 0.2,
+              "max_drawdown_equal_weight": -0.05565517240000001
+            }
+          }
+        ],
+        "limitations": [
+          "日線只能確認價格觸及，無法證明連續三根分鐘收盤、VWAP、量比與相對大盤條件。",
+          "同日同時觸及進場與停損時採保守不交易；本結果只是假設研究，不是獨立樣本外證據。",
+          "正式升級仍要求至少20筆forward分鐘影子交易。"
+        ]
+      },
+      "gate": {
+        "status": "collecting",
+        "checks": {
+          "historical_at_least_30": false,
+          "forward_at_least_20": false,
+          "positive_stress_average": false,
+          "profit_factor_at_least_1_2": false,
+          "drawdown_not_worse_than_baseline": false,
+          "stop_rate_not_above_baseline": false
+        },
+        "manual_review_required": false,
+        "automatic_replacement": false,
+        "message": "歷史與 forward 影子樣本尚未同時達標。"
+      }
+    }
+  },
+  "splits": {
+    "p2.30_d1_confirmed_v1": {
+      "market_regime": {},
+      "sector_confirmation": {},
+      "risk_distance": {}
+    },
+    "p2.30_d2_reclaim_hv_v1": {
+      "sector_confirmation": {},
+      "risk_distance": {}
+    }
+  },
+  "notification_policy": "只在第20個判斷日中期檢查或正式門檻達成時通知；不發送影子買進訊號。",
+  "limitations": [
+    "既有分鐘資料只作探索重播；未達60個判斷日前不宣稱當沖回測有效。",
+    "D2歷史日線結果是盤中順序不明的研究代理，不能取代forward分鐘影子驗證。",
+    "所有升級結果只觸發人工審查，不會自動替換基準、下單或發送買進通知。"
+  ]
+}
