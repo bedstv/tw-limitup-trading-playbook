@@ -15,9 +15,8 @@
   "candidate_count": 15,
   "data_incomplete_count": 0,
   "provider_counts": {
-    "Fugle": 9,
-    "未取得完整分鐘線": 2,
-    "Fugle intraday": 4
+    "Fugle": 13,
+    "未取得完整分鐘線": 2
   },
   "finmind_unavailable_observations": 0,
   "historical_backtest_allowed": false,
