@@ -99,6 +99,14 @@ const sourceLabel = (row, stage) => {
 };
 const industryBadges = (row) => [badge(text(row.industry, "未分類"), "industry"), row.industry_consensus ? badge(`板塊共識 ×${row.industry_candidate_count}`, "consensus") : ""].join("");
 const riskBadges = (row) => {
+  if (row.risk_status_label) {
+    const type = row.risk_data_status === "VERIFIED_CLEAR" ? "ok"
+      : row.risk_data_status === "EPS_NOT_ANNOUNCED" || row.risk_data_status === "OFFICIAL_SOURCE_MISSING" ? "warn"
+      : "risk";
+    const date = text(row.risk_snapshot_date, "");
+    const sourceDate = date ? `<br><small>官方資料日 ${escapeHtml(date)}</small>` : "";
+    return `${badge(row.risk_status_label, type)}${sourceDate}`;
+  }
   const labels = [];
   if (row.eps_ytd_negative) labels.push(badge("EPS虧損", "risk"));
   if (row.currently_disposed_snapshot) labels.push(badge("處置中", "risk"));

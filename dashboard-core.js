@@ -6,6 +6,7 @@ export const riskCount = (row) =>
     row.eps_ytd_negative,
     row.currently_disposed_snapshot,
     row.possible_disposition_next_day,
+    row.risk_data_status === "OFFICIAL_SOURCE_MISSING",
   ].filter(Boolean).length;
 
 export const decisionStatus = (row) => row.d1_decision_status || "PENDING";
