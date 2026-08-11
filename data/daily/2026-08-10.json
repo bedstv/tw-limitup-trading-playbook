@@ -4,7 +4,7 @@
   "as_of_date": "2026-08-10",
   "effective_date": "2026-08-10",
   "previous_trade_date": "2026-08-07",
-  "trade_ready": false,
+  "trade_ready": true,
   "afterhours_ready": true,
   "d1_watch_ready": true,
   "health": {
@@ -25,9 +25,19 @@
     "taiex_return_0915": 0.015324953177899392,
     "eps_snapshot_stock_count": 475,
     "warning_snapshot_row_count": 47,
-    "limitations": [
-      "2026-08-10 盤後 D0 候選須等待下一交易日 09:15 大盤資料，尚不可標示可交易。"
-    ]
+    "limitations": [],
+    "d0_eligible_count": 4,
+    "d0_regime_0915_date": "2026-08-11",
+    "d1_quote_coverage": {
+      "candidate_count": 4,
+      "covered_count": 4,
+      "coverage_pct": 100.0,
+      "source_counts": {
+        "Fugle 1m fallback after TWSE MIS gap": 3,
+        "TWSE MIS live quote": 1
+      },
+      "missing_stock_ids": []
+    }
   },
   "d0_candidates": [
     {
@@ -46,12 +56,30 @@
       "possible_disposition_next_day": false,
       "currently_disposed_snapshot": false,
       "risk_flags_trade_ready": false,
-      "next_step": "Wait for next trading day 09:15 market regime; D1 open watch; avoid direct chase if D1 open gap >5%",
+      "next_step": "Neutral market; confirm candidate price and volume conditions.",
       "industry_code": "25",
       "industry": "電腦及週邊設備",
       "industry_candidate_count": 3,
       "industry_consensus": true,
-      "market_regime_0915": "PENDING_NEXT_TRADING_DAY"
+      "market_regime_0915": "NEUTRAL",
+      "d1_trade_date": "2026-08-11",
+      "taiex_return_0915": 0.000360570823677131,
+      "d1_open": 115.5,
+      "price_0915": 112.0,
+      "d1_open_gap_pct": 0.022123893805309658,
+      "stock_return_0915": -0.008849557522123908,
+      "stock_minus_taiex_return_pp": -0.9210128345801039,
+      "above_intraday_mean_0915": false,
+      "intraday_mean_available_0915": true,
+      "above_opening_low_0915": true,
+      "d1_decision_status": "WATCH",
+      "d1_decision_reason": "Neutral market; confirm candidate price and volume conditions.",
+      "d1_decision_ready": true,
+      "d1_quote_source": "Fugle 1m fallback after TWSE MIS gap",
+      "d1_quote_valid_bar_count": 16,
+      "paper_trade_rule_version": "p2.11_v2",
+      "paper_entry_trigger_price": 112.0,
+      "stop_loss_price": 105.0
     },
     {
       "stock_id": "9934",
@@ -69,12 +97,30 @@
       "possible_disposition_next_day": false,
       "currently_disposed_snapshot": false,
       "risk_flags_trade_ready": false,
-      "next_step": "Wait for next trading day 09:15 market regime; D1 open watch; avoid direct chase if D1 open gap >5%",
+      "next_step": "Neutral market; confirm candidate price and volume conditions.",
       "industry_code": "38",
       "industry": "居家生活",
       "industry_candidate_count": 1,
       "industry_consensus": false,
-      "market_regime_0915": "PENDING_NEXT_TRADING_DAY"
+      "market_regime_0915": "NEUTRAL",
+      "d1_trade_date": "2026-08-11",
+      "taiex_return_0915": 0.000360570823677131,
+      "d1_open": 11.85,
+      "price_0915": 11.45,
+      "d1_open_gap_pct": -0.012500000000000067,
+      "stock_return_0915": -0.04583333333333339,
+      "stock_minus_taiex_return_pp": -4.619390415701052,
+      "above_intraday_mean_0915": false,
+      "intraday_mean_available_0915": true,
+      "above_opening_low_0915": true,
+      "d1_decision_status": "WATCH",
+      "d1_decision_reason": "Neutral market; confirm candidate price and volume conditions.",
+      "d1_decision_ready": true,
+      "d1_quote_source": "Fugle 1m fallback after TWSE MIS gap",
+      "d1_quote_valid_bar_count": 16,
+      "paper_trade_rule_version": "p2.11_v2",
+      "paper_entry_trigger_price": 11.45,
+      "stop_loss_price": 11.7
     },
     {
       "stock_id": "2465",
@@ -92,12 +138,30 @@
       "possible_disposition_next_day": false,
       "currently_disposed_snapshot": false,
       "risk_flags_trade_ready": false,
-      "next_step": "Wait for next trading day 09:15 market regime; D1 open watch; avoid direct chase if D1 open gap >5%",
+      "next_step": "Neutral market; confirm candidate price and volume conditions.",
       "industry_code": "25",
       "industry": "電腦及週邊設備",
       "industry_candidate_count": 3,
       "industry_consensus": true,
-      "market_regime_0915": "PENDING_NEXT_TRADING_DAY"
+      "market_regime_0915": "NEUTRAL",
+      "d1_trade_date": "2026-08-11",
+      "taiex_return_0915": 0.000360570823677131,
+      "d1_open": 94.6,
+      "price_0915": 91.0,
+      "d1_open_gap_pct": 0.010683760683760646,
+      "stock_return_0915": -0.02777777777777768,
+      "stock_minus_taiex_return_pp": -2.813834860145481,
+      "above_intraday_mean_0915": false,
+      "intraday_mean_available_0915": false,
+      "above_opening_low_0915": true,
+      "d1_decision_status": "WATCH",
+      "d1_decision_reason": "Neutral market; confirm candidate price and volume conditions.",
+      "d1_decision_ready": true,
+      "d1_quote_source": "TWSE MIS live quote",
+      "d1_quote_valid_bar_count": 0,
+      "paper_trade_rule_version": "p2.11_v2",
+      "paper_entry_trigger_price": 91.0,
+      "stop_loss_price": 90.0
     },
     {
       "stock_id": "6206",
@@ -115,14 +179,32 @@
       "possible_disposition_next_day": false,
       "currently_disposed_snapshot": false,
       "risk_flags_trade_ready": true,
-      "next_step": "Wait for next trading day 09:15 market regime; D1 open watch; avoid direct chase if D1 open gap >5%",
+      "next_step": "Neutral market; confirm candidate price and volume conditions.",
       "industry_code": "25",
       "industry": "電腦及週邊設備",
       "industry_candidate_count": 3,
       "industry_consensus": true,
       "eps_ytd": "5.93",
       "eps_snapshot_date": "2026-08-10",
-      "market_regime_0915": "PENDING_NEXT_TRADING_DAY"
+      "market_regime_0915": "NEUTRAL",
+      "d1_trade_date": "2026-08-11",
+      "taiex_return_0915": 0.000360570823677131,
+      "d1_open": 154.0,
+      "price_0915": 143.5,
+      "d1_open_gap_pct": -0.025316455696202556,
+      "stock_return_0915": -0.09177215189873422,
+      "stock_minus_taiex_return_pp": -9.213272272241134,
+      "above_intraday_mean_0915": false,
+      "intraday_mean_available_0915": true,
+      "above_opening_low_0915": true,
+      "d1_decision_status": "WATCH",
+      "d1_decision_reason": "Neutral market; confirm candidate price and volume conditions.",
+      "d1_decision_ready": true,
+      "d1_quote_source": "Fugle 1m fallback after TWSE MIS gap",
+      "d1_quote_valid_bar_count": 14,
+      "paper_trade_rule_version": "p2.11_v2",
+      "paper_entry_trigger_price": 143.5,
+      "stop_loss_price": 147.5
     }
   ],
   "d1_watch": [
@@ -156,5 +238,17 @@
       "corporate_action_detail": ""
     }
   ],
-  "d2_watch": []
+  "d2_watch": [],
+  "d0_decision_ready": true,
+  "d0_decision_date": "2026-08-11",
+  "d1_quote_coverage": {
+    "candidate_count": 4,
+    "covered_count": 4,
+    "coverage_pct": 100.0,
+    "source_counts": {
+      "Fugle 1m fallback after TWSE MIS gap": 3,
+      "TWSE MIS live quote": 1
+    },
+    "missing_stock_ids": []
+  }
 }
