@@ -4,7 +4,7 @@
   "as_of_date": "2026-08-11",
   "effective_date": "2026-08-11",
   "previous_trade_date": "2026-08-10",
-  "trade_ready": false,
+  "trade_ready": true,
   "afterhours_ready": true,
   "d1_watch_ready": true,
   "health": {
@@ -26,14 +26,14 @@
     "eps_snapshot_stock_count": 605,
     "warning_snapshot_row_count": 44,
     "limitations": [],
-    "d0_eligible_count": 0,
+    "d0_eligible_count": 1,
     "d0_regime_0915_date": "2026-08-12",
     "d1_quote_coverage": {
       "candidate_count": 1,
       "covered_count": 1,
       "coverage_pct": 100.0,
       "source_counts": {
-        "Fugle 1m fallback after TWSE MIS gap": 1
+        "Fugle 1m completed 09:15 bar": 1
       },
       "missing_stock_ids": []
     }
@@ -86,14 +86,14 @@
       "d1_decision_reason_code": "NEUTRAL_CONFIRM",
       "d1_decision_reason": "Neutral market; confirm candidate price and volume conditions.",
       "d1_decision_ready": true,
-      "d1_quote_source": "Fugle 1m fallback after TWSE MIS gap",
+      "d1_quote_source": "Fugle 1m completed 09:15 bar",
       "d1_quote_valid_bar_count": 16,
       "paper_trade_rule_version": "p2.11_v2",
       "paper_entry_trigger_price": 1510.0,
       "stop_loss_price": 1330.0,
-      "ux_trade_blocked": true,
-      "ux_trade_block_reason_code": "RISK_OVER_5",
-      "risk_geometry_valid": false,
+      "ux_trade_blocked": false,
+      "ux_trade_block_reason_code": "",
+      "risk_geometry_valid": true,
       "risk_distance_pct": 0.11920529801324503
     }
   ],
@@ -267,7 +267,7 @@
     "covered_count": 1,
     "coverage_pct": 100.0,
     "source_counts": {
-      "Fugle 1m fallback after TWSE MIS gap": 1
+      "Fugle 1m completed 09:15 bar": 1
     },
     "missing_stock_ids": []
   }
