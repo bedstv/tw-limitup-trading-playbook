@@ -9,7 +9,7 @@ import {
   regimeLabel,
   riskStatusLabel,
   setupLabel,
-} from "./ux-core.js";
+} from "./ux-core.js?v=20260812-statusfix";
 import { downloadText, setupSite } from "./site.js";
 
 setupSite();
@@ -31,6 +31,7 @@ const isAfterHours = () => {
   const now = new Date();
   return now.getHours() > 13 || (now.getHours() === 13 && now.getMinutes() >= 30);
 };
+const taipeiDate = () => new Date().toLocaleDateString("en-CA", { timeZone: "Asia/Taipei" });
 
 const value = (row, ...keys) => keys.map((key) => row?.[key]).find((item) => item !== undefined && item !== null && item !== "");
 const sourceLabel = (row) => {
@@ -50,7 +51,7 @@ const riskChip = (row) => {
 };
 
 const cardMetrics = (row) => {
-  if (row.stage === "d0") return [
+  if (row.stage === "d0" || row.decisionPending) return [
     metric("盤後收盤", formatPrice(row.close)), metric("成交量", formatLots(row.volume_lots)), metric("量比", value(row, "volume_ratio_median20") ? `${Number(row.volume_ratio_median20).toFixed(2)} 倍` : "—"),
   ];
   if (row.stage === "d1") return [
@@ -66,7 +67,7 @@ const candidateCard = (row) => {
   const stockName = value(row, "name", "stock_name") || "名稱未取得";
   const dateText = row.stage === "d0"
     ? `形成日 ${row.formationDate} · 預定判斷 ${row.decisionDate || "下一交易日"}`
-    : row.stage === "d1" ? `候選形成 ${row.formationDate} · 09:15 判斷 ${row.decisionDate}` : `D2+ 觀察 · 本頁狀態日 ${row.decisionDate}`;
+    : row.stage === "d1" ? `候選形成 ${row.formationDate} · ${row.decisionPending ? "預定判斷" : "09:15 判斷"} ${row.decisionDate}` : `D2+ 觀察 · 本頁狀態日 ${row.decisionDate}`;
   const issueList = row.issues.length > 1 ? `<ul>${row.issues.slice(1).map((issue) => `<li>${escapeHtml(issue.label)}</li>`).join("")}</ul>` : "";
   const sector = row.industry || "板塊未分類";
   return `<article class="candidate-card" data-state="${escapeHtml(row.state)}">
@@ -109,7 +110,7 @@ const renderRows = () => {
   elements.subtitle.textContent = lane.subtitle;
   elements.list.setAttribute("aria-busy", "false");
   if (!lane.rows.length) {
-    const explanation = state.activeStage === "d1" ? "這個交易日沒有可配對的前一交易日候選，或 09:15 判斷尚未完成。" : state.activeStage === "d0" ? "當天沒有符合固定規則的盤後候選，這是正常結果。" : "目前沒有仍有效的 D2+ 觀察股。";
+    const explanation = state.activeStage === "d1" ? "這個形成日沒有盤後候選，因此下一交易日沒有需要判斷的股票。" : state.activeStage === "d0" ? "當天沒有符合固定規則的盤後候選，這是正常結果。" : "目前沒有仍有效的 D2+ 觀察股。";
     elements.list.innerHTML = `<div class="empty-state"><h3>此階段沒有名單</h3><p>${explanation}</p></div>`;
   } else if (!rows.length) {
     elements.list.innerHTML = `<div class="empty-state"><h3>篩選後沒有股票</h3><p>原始名單有 ${lane.rows.length} 檔；請清除篩選後再查看。</p></div>`;
@@ -134,10 +135,11 @@ const renderOverview = () => {
   const d1Watch = lanes.d1.rows.filter((row) => row.state === "watching" || row.state === "caution").length;
   const blocked = lanes.d1.rows.filter((row) => row.state === "blocked").length;
   const historical = isHistoricalMode(state.selectedDate, state.latestDate);
-  const headline = historical ? `正在查看 ${state.selectedDate} 的歷史封存` : isAfterHours() ? `盤後先準備 ${lanes.d0.decisionDate || "下一交易日"} 的名單` : "先看今天 09:15 的判斷結果";
-  const note = historical ? "歷史模式不代表現在仍可交易；請以每張卡片的形成日、判斷日與失效條件為準。" : `${d1Watch} 檔保留監看、${blocked} 檔已被安全條件阻擋；${lanes.d0.rows.length} 檔是明日準備名單，今天不可套用。`;
+  const decisionIsToday = lanes.d1.decisionDate === taipeiDate();
+  const headline = historical ? `正在查看 ${state.selectedDate} 的歷史封存` : decisionIsToday && !lanes.d1.decisionReady ? `等待今天 ${lanes.d1.decisionDate} 09:15 判斷` : decisionIsToday ? `今天 ${lanes.d1.decisionDate} 的 09:15 判斷已完成` : `盤後先準備 ${lanes.d0.decisionDate || "下一交易日"} 的名單`;
+  const note = historical ? "歷史模式不代表現在仍可交易；請以每張卡片的形成日、判斷日與失效條件為準。" : !lanes.d1.decisionReady ? `${lanes.d1.rows.length} 檔盤後候選等待 ${lanes.d1.decisionDate || "下一交易日"} 09:15 判斷，目前尚無任何股票可標示為保留監看。` : `${d1Watch} 檔保留監看、${blocked} 檔已被安全條件阻擋。`;
   const dayWord = historical ? "當日" : "今日";
-  elements.overview.innerHTML = `<div><h2>${escapeHtml(headline)}</h2><p>${escapeHtml(note)}</p></div><div class="overview-stats"><div class="overview-stat"><strong>${d1Watch}</strong><span>${dayWord}保留監看</span></div><div class="overview-stat"><strong>${blocked}</strong><span>${dayWord}禁止介入</span></div><div class="overview-stat"><strong>${lanes.d0.rows.length}</strong><span>下次準備</span></div></div>`;
+  elements.overview.innerHTML = `<div><h2>${escapeHtml(headline)}</h2><p>${escapeHtml(note)}</p></div><div class="overview-stats"><div class="overview-stat"><strong>${d1Watch}</strong><span>${dayWord}保留監看</span></div><div class="overview-stat"><strong>${blocked}</strong><span>${dayWord}禁止介入</span></div><div class="overview-stat"><strong>${lanes.d1.decisionReady ? 0 : lanes.d1.rows.length}</strong><span>等待 09:15</span></div></div>`;
   elements.overview.setAttribute("aria-busy", "false");
   elements.historical.hidden = !historical;
   if (historical) elements.historical.textContent = `歷史模式：這是 ${state.selectedDate} 的封存資料，不是今天的即時建議。最新可用資料日為 ${state.latestDate}。`;
@@ -180,12 +182,12 @@ const renderDate = async (date) => {
     state.selectedDate = date;
     const nextTradingDate = nextIndexedDate || state.freshness?.next_trading_date || "";
     state.lanes = buildDecisionLanes({ selected, previous, selectedDate: date, nextTradingDate });
-    elements.tabs.forEach((tab) => { tab.disabled = false; tab.querySelector("span").textContent = state.lanes[tab.dataset.stage].rows.length; });
+    elements.tabs.forEach((tab) => { const lane = state.lanes[tab.dataset.stage]; tab.disabled = false; tab.firstChild.nodeValue = `${lane.tabLabel} `; tab.querySelector("span").textContent = lane.rows.length; });
     elements.filterToggle.disabled = false;
     renderOverview();
     renderIndustry();
     const requestedStage = new URL(location.href).searchParams.get("stage");
-    const defaultStage = !isHistoricalMode(date, state.latestDate) && isAfterHours() ? "d0" : "d1";
+    const defaultStage = state.lanes.d1.decisionDate === taipeiDate() || isHistoricalMode(date, state.latestDate) ? "d1" : isAfterHours() ? "d0" : "d1";
     setActiveStage(requestedStage || defaultStage, { updateUrl: true });
   } catch (error) {
     elements.error.hidden = false;

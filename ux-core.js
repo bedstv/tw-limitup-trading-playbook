@@ -116,7 +116,9 @@ export const riskGeometry = (row) => {
   const stopPrice = Number(stop);
   if (stopPrice >= entry) return { available: true, valid: false, distance: null, reasonCode: "STOP_NOT_BELOW_TRIGGER" };
   const distance = (entry - stopPrice) / entry;
-  if (distance > 0.05) return { available: true, valid: false, distance, reasonCode: "RISK_OVER_5" };
+  const ruleVersion = text(row?.strategy_version || row?.rule_version || row?.paper_trade_rule_version, "");
+  const enforceFivePercent = row?.enforce_max_risk_pct === true || ruleVersion.startsWith("p2.30_");
+  if (enforceFivePercent && distance > 0.05) return { available: true, valid: false, distance, reasonCode: "RISK_OVER_5" };
   return { available: true, valid: true, distance, reasonCode: "" };
 };
 
@@ -149,8 +151,16 @@ export const candidateView = (row, stage, context = {}) => {
     action = d2StatusLabel(row?.status);
     state = ["invalidated", "expired"].includes(String(row?.status || "").toLowerCase()) ? "blocked" : "watching";
   } else if (issues.length) {
-    action = "條件無效，不介入";
+    const primaryCode = issues[0].code;
+    action = primaryCode === "STOP_NOT_BELOW_TRIGGER" ? "停損條件已失效"
+      : primaryCode === "QUOTE_MISSING" || primaryCode === "RISK_SOURCE_MISSING" ? "資料不足，不介入"
+        : primaryCode === "DISPOSITION" || primaryCode === "POSSIBLE_DISPOSITION" ? "處置風險，不介入"
+          : primaryCode === "CORPORATE_ACTION" ? "價格基準改變，不介入"
+            : "條件無效，不介入";
     state = "blocked";
+  } else if (stage === "d1" && context.decisionReady === false) {
+    action = `等待 ${context.decisionDate || "下一交易日"} 09:15 判斷`;
+    state = "waiting";
   } else if (stage === "d1") {
     state = rawDecision === "REJECT" ? "blocked" : rawDecision === "WATCH" ? "watching" : rawDecision === "PULLBACK_ONLY" ? "caution" : "waiting";
   }
@@ -165,39 +175,45 @@ export const candidateView = (row, stage, context = {}) => {
     issues,
     reason: issues[0]?.label || reasonLabel(row),
     geometry,
+    decisionPending: stage === "d1" && context.decisionReady === false,
   };
 };
 
 export const buildDecisionLanes = ({ selected, previous, selectedDate, nextTradingDate }) => {
-  const previousMatches = previous?.d0_decision_date === selectedDate;
-  const d1Rows = previousMatches ? (previous.d0_candidates || []) : [];
+  const formationDate = selected?.effective_date || selectedDate;
+  const decisionDate = selected?.d0_decision_date || nextTradingDate || "";
+  const decisionReady = Boolean(selected?.d0_decision_ready && selected?.d0_decision_date);
+  const d1Rows = selected?.d0_candidates || [];
   return {
     d1: {
       id: "d1",
-      title: "今天 09:15 判斷",
-      subtitle: previousMatches ? `${previous.effective_date} 盤後候選 → ${selectedDate} 09:15 判斷` : `${selectedDate} 尚無可用的 09:15 判斷名單`,
-      formationDate: previousMatches ? previous.effective_date : "",
-      decisionDate: selectedDate,
-      rows: d1Rows.map((row) => candidateView(row, "d1", { formationDate: previous.effective_date, decisionDate: selectedDate })),
+      tabLabel: decisionReady ? "09:15 判斷結果" : "09:15 待判斷",
+      title: decisionReady ? "09:15 判斷結果" : `${decisionDate || "下一交易日"} 09:15 待判斷`,
+      subtitle: `${formationDate} 盤後候選 → ${decisionDate || "下一交易日"} 09:15 ${decisionReady ? "已完成" : "等待判斷"}`,
+      formationDate,
+      decisionDate,
+      decisionReady,
+      rows: d1Rows.map((row) => candidateView(row, "d1", { formationDate, decisionDate, decisionReady })),
     },
     d0: {
       id: "d0",
-      title: "明日準備名單",
-      subtitle: `${selectedDate} 盤後候選 → ${nextTradingDate || "下一交易日"} 09:15 判斷`,
-      formationDate: selectedDate,
-      decisionDate: nextTradingDate || "",
-      rows: (selected?.d0_candidates || []).map((row) => candidateView(row, "d0", { formationDate: selectedDate, decisionDate: nextTradingDate })),
+      tabLabel: "盤後準備名單",
+      title: "盤後準備名單",
+      subtitle: `${formationDate} 盤後候選 → ${decisionDate || "下一交易日"} 09:15 判斷`,
+      formationDate,
+      decisionDate,
+      rows: (selected?.d0_candidates || []).map((row) => candidateView(row, "d0", { formationDate, decisionDate })),
     },
     d2: {
       id: "d2",
+      tabLabel: "D2+ 後續觀察",
       title: "D2+ 後續觀察",
       subtitle: "只保留仍有效的重返警示價觀察",
       formationDate: "",
-      decisionDate: selectedDate,
-      rows: (selected?.d2_watch || []).map((row) => candidateView(row, "d2", { decisionDate: selectedDate })),
+      decisionDate: formationDate,
+      rows: (selected?.d2_watch || []).map((row) => candidateView(row, "d2", { decisionDate: formationDate })),
     },
   };
 };
 
 export const isHistoricalMode = (selectedDate, latestDate) => Boolean(selectedDate && latestDate && selectedDate !== latestDate);
-

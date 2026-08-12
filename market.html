@@ -6,7 +6,7 @@
     <meta name="description" content="台股漲停後候選股的盤後準備、隔日 09:15 判斷與 D2+ 後續觀察。" />
     <title>每日決策中心｜漲停後交易作戰手冊</title>
     <link rel="stylesheet" href="ux.css?v=20260811" />
-    <script type="module" src="market-page.js?v=20260811"></script>
+    <script type="module" src="market-page.js?v=20260812-statusfix"></script>
   </head>
   <body data-page="market">
     <a class="skip-link" href="#main">跳到主要內容</a>
@@ -27,7 +27,7 @@
           <h1 id="page-title">今天該做什麼？</h1>
           <p id="page-intro">先確認日期與階段，再閱讀個股條件。本頁只提供研究與紙上觀察，不會自動下單。</p>
         </div>
-        <label class="date-control" for="decision-date"><span>看盤交易日</span><select id="decision-date" disabled><option>載入中…</option></select></label>
+        <label class="date-control" for="decision-date"><span>候選形成日</span><select id="decision-date" disabled><option>載入中…</option></select></label>
       </section>
 
       <div id="historical-banner" class="notice notice-history" hidden></div>
@@ -45,8 +45,8 @@
         </div>
 
         <div id="stage-tabs" class="stage-tabs" role="tablist" aria-label="選擇交易階段">
-          <button id="tab-d1" role="tab" type="button" data-stage="d1" aria-controls="candidate-list" aria-selected="true" disabled>今日 09:15 判斷 <span>—</span></button>
-          <button id="tab-d0" role="tab" type="button" data-stage="d0" aria-controls="candidate-list" aria-selected="false" disabled>明日準備名單 <span>—</span></button>
+          <button id="tab-d1" role="tab" type="button" data-stage="d1" aria-controls="candidate-list" aria-selected="true" disabled>09:15 判斷 <span>—</span></button>
+          <button id="tab-d0" role="tab" type="button" data-stage="d0" aria-controls="candidate-list" aria-selected="false" disabled>盤後準備名單 <span>—</span></button>
           <button id="tab-d2" role="tab" type="button" data-stage="d2" aria-controls="candidate-list" aria-selected="false" disabled>D2+ 後續觀察 <span>—</span></button>
         </div>
 
@@ -82,7 +82,7 @@
         <div id="history-content"><button id="load-history" class="secondary-button" type="button">載入歷程</button></div>
       </details>
 
-      <aside class="plain-warning"><strong>使用原則：</strong>「保留監看」不等於買進。未到指定日期、資料不完整、處置／公司行動風險、停損價不合理或風險超過 5%，一律不介入。</aside>
+      <aside class="plain-warning"><strong>使用原則：</strong>「保留監看」不等於買進。未到指定日期、資料不完整、處置／公司行動風險或停損價不合理，一律不介入。5% 風險上限只適用 P2.30 影子策略，不會淘汰固定基準候選。</aside>
     </main>
 
     <nav class="mobile-nav" aria-label="手機主要導覽">
