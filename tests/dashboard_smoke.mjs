@@ -19,9 +19,9 @@ assert.match(csvForRows(filtered), /stock_id/, "CSV export must have headers");
 assert.match(markdownForRows(filtered, index.latest), /台股候選匯出/, "Markdown export must have a title");
 const marketPage = await readFile(new URL("../market.html", import.meta.url), "utf8");
 assert.match(marketPage, /data-page="market"/, "daily market must have an independent page");
-assert.match(marketPage, /09:15 判斷/, "daily market must show the D1 decision lane");
-assert.match(marketPage, /盤後準備名單/, "daily market must keep D0 preparation separate");
-assert.match(marketPage, /D2\+ 後續觀察/, "daily market must show a separate D2 lane");
+assert.match(marketPage, /今天開盤後怎麼做/, "daily market must show the D1 decision lane in plain language");
+assert.match(marketPage, /下一交易日先看這些/, "daily market must keep D0 preparation separate in plain language");
+assert.match(marketPage, /之後幾天等反彈/, "daily market must show a plain-language D2 lane");
 assert.doesNotMatch(marketPage, /D0 次日可交易/, "daily market must not use a misleading YES or NO trade-ready tile");
 assert.match(marketPage, /複製此畫面連結/, "daily market must offer a shareable filtered view");
 assert.match(marketPage, /板塊共識/, "daily market must show industry consensus");
@@ -50,8 +50,9 @@ assert.match(await readFile(new URL("../validation.html", import.meta.url), "utf
 assert.match(await readFile(new URL("../status.html", import.meta.url), "utf8"), /資料有沒有準時到/, "system health must be a separate page");
 assert.match(await readFile(new URL("../rules.html", import.meta.url), "utf8"), /固定基準的一票否決條件/, "strategy rules must explain baseline blocking conditions");
 assert.match(marketPage, /今天該做什麼/, "daily market must include a concise action summary");
-assert.match(marketScript, /查看風險與資料來源/, "daily market must show per-stock data sources");
-assert.match(await readFile(new URL("../ux-core.js", import.meta.url), "utf8"), /公司行動改變價格基準/, "daily market must translate corporate-action exclusions");
+assert.match(marketScript, /為什麼列入？資料完整嗎？/, "daily market must show per-stock data sources in plain language");
+assert.match(marketScript, /現在怎麼做/, "every stock card must lead with an actionable plain-language instruction");
+assert.match(await readFile(new URL("../ux-core.js", import.meta.url), "utf8"), /公司行動改變了價格基準/, "daily market must translate corporate-action exclusions");
 const setupAResearch = JSON.parse(await readFile(new URL("../data/setup-a-research.json", import.meta.url)));
 assert.equal(setupAResearch.production_impact, "none", "A setup research must not affect production selection");
 assert.equal(setupAResearch.walk_forward.minimum_validation_trades, 10, "A setup research must keep the ten-trade promotion gate");
@@ -69,7 +70,8 @@ assert.ok(baselineWideStop.distance > 0.05, "baseline risk distance remains visi
 const shadowWideStop = riskGeometry({ paper_trade_rule_version: "p2.30_d1_confirmed_v1", paper_entry_trigger_price: 112, stop_loss_price: 105 });
 assert.equal(shadowWideStop.reasonCode, "RISK_OVER_5", "the shadow strategy must retain its five-percent gate");
 const blockedCandidate = candidateView({ d1_decision_status: "WATCH", d1_decision_ready: true, paper_entry_trigger_price: 143.5, stop_loss_price: 147.5 }, "d1", { formationDate: "2026-08-10", decisionDate: "2026-08-11" });
-assert.equal(blockedCandidate.action, "停損條件已失效", "unsafe WATCH rows must explain the stop contradiction instead of using a generic label");
+assert.equal(blockedCandidate.action, "停損價不合理，今天不考慮", "unsafe WATCH rows must explain the stop contradiction instead of using a generic label");
+assert.match(blockedCandidate.instruction, /今天不要考慮這檔/, "a blocked row must provide a full plain-language instruction");
 const lanes = buildDecisionLanes({
   selected: { effective_date: "2026-08-11", d0_candidates: [{ stock_id: "6446" }], d2_watch: [] },
   previous: { effective_date: "2026-08-10", d0_decision_date: "2026-08-11", d0_candidates: [{ stock_id: "3022", d1_decision_status: "WATCH" }] },
@@ -78,10 +80,13 @@ const lanes = buildDecisionLanes({
 });
 assert.equal(lanes.d1.rows[0].formationDate, "2026-08-11", "the current D1 lane must use the latest after-hours candidate, not yesterday's completed decision");
 assert.equal(lanes.d1.rows[0].decisionDate, "2026-08-12", "a pending latest candidate must show the next trading-day decision date");
-assert.equal(lanes.d1.rows[0].action, "等待 2026-08-12 09:15 判斷", "a pre-open candidate must be shown as pending rather than invalid");
+assert.equal(lanes.d1.rows[0].action, "還沒到 09:15，先不要買", "a pre-open candidate must be shown as pending rather than invalid");
+assert.match(lanes.d1.rows[0].instruction, /2026-08-12 09:15/, "a pending candidate must name the exact decision time");
 assert.equal(lanes.d0.rows[0].decisionDate, "2026-08-12", "D0 lane must show the next decision date");
-const completedLanes = buildDecisionLanes({ selected: { effective_date: "2026-08-11", d0_decision_date: "2026-08-12", d0_decision_ready: true, d0_candidates: [{ stock_id: "6446", d1_decision_status: "WATCH", d1_decision_ready: true }] }, selectedDate: "2026-08-11", nextTradingDate: "2026-08-12" });
-assert.equal(completedLanes.d1.rows[0].action, "保留監看，尚未觸發", "the same artifact must switch from pending to the completed D1 result after the 09:15 update");
+const completedLanes = buildDecisionLanes({ selected: { effective_date: "2026-08-11", d0_decision_date: "2026-08-12", d0_decision_ready: true, d0_candidates: [{ stock_id: "6446", d1_decision_status: "WATCH", d1_decision_ready: true, paper_entry_trigger_price: 1510, stop_loss_price: 1330 }] }, selectedDate: "2026-08-11", nextTradingDate: "2026-08-12" });
+assert.equal(completedLanes.d1.rows[0].action, "先不要買，等待價格確認", "the completed D1 result must state the action in plain language");
+assert.doesNotMatch(completedLanes.d1.rows[0].action, /保留監看|尚未觸發/, "the main action must not expose system jargon");
+assert.match(completedLanes.d1.rows[0].instruction, /1,510 元.*1,330 元/, "a WATCH row must explain the price to wait for and the stop in one sentence");
 const noPrevious = buildDecisionLanes({ selected: { d0_candidates: [], d2_watch: [] }, previous: null, selectedDate: "2026-08-11", nextTradingDate: "2026-08-12" });
 assert.equal(noPrevious.d1.rows.length, 0, "a missing prior document must be an empty D1 lane, never a fabricated decision");
 assert.equal(candidateView({ d1_decision_status: "WATCH", d1_decision_ready: false }, "d1").state, "blocked", "missing 09:15 quote evidence must block the row");

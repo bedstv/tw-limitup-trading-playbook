@@ -9,7 +9,7 @@ import {
   regimeLabel,
   riskStatusLabel,
   setupLabel,
-} from "./ux-core.js?v=20260812-statusfix";
+} from "./ux-core.js?v=20260812-plainux";
 import { downloadText, setupSite } from "./site.js";
 
 setupSite();
@@ -52,14 +52,14 @@ const riskChip = (row) => {
 
 const cardMetrics = (row) => {
   if (row.stage === "d0" || row.decisionPending) return [
-    metric("盤後收盤", formatPrice(row.close)), metric("成交量", formatLots(row.volume_lots)), metric("量比", value(row, "volume_ratio_median20") ? `${Number(row.volume_ratio_median20).toFixed(2)} 倍` : "—"),
+    metric("今天收盤", formatPrice(row.close)), metric("今天成交量", formatLots(row.volume_lots)), metric("相較近期量能", value(row, "volume_ratio_median20") ? `${Number(row.volume_ratio_median20).toFixed(2)} 倍` : "—"),
   ];
   if (row.stage === "d1") return [
-    metric("觸發參考", formatPrice(row.paper_entry_trigger_price)), metric("停損參考", formatPrice(row.stop_loss_price)), metric("開盤跳空", formatPercent(value(row, "d1_open_gap_pct", "open_gap_pct"))),
-    metric("09:15 大盤", regimeLabel(row.market_regime_0915)), metric("相對大盤", value(row, "stock_minus_taiex_return_pp") !== undefined ? `${Number(row.stock_minus_taiex_return_pp).toFixed(2)} 個百分點` : "—"), metric("風險距離", row.geometry.distance !== null ? formatPercent(row.geometry.distance) : "—"),
+    metric("等股價到", formatPrice(row.paper_entry_trigger_price)), metric("買進後停損", formatPrice(row.stop_loss_price)), metric("開盤相對昨收", formatPercent(value(row, "d1_open_gap_pct", "open_gap_pct"))),
+    metric("09:15 大盤狀況", regimeLabel(row.market_regime_0915)), metric("個股比大盤強弱", value(row, "stock_minus_taiex_return_pp") !== undefined ? `${Number(row.stock_minus_taiex_return_pp).toFixed(2)} 個百分點` : "—"), metric("進場到停損距離", row.geometry.distance !== null ? formatPercent(row.geometry.distance) : "—"),
   ];
   return [
-    metric("重返警示價", formatPrice(row.alert_reclaim_price)), metric("失效價", formatPrice(value(row, "invalidation_price", "stop_loss_price"))), metric("觀察至", value(row, "expires_on", "expiry_date") || "依規則最長 5 日"),
+    metric("等反彈到", formatPrice(row.alert_reclaim_price)), metric("跌破就放棄", formatPrice(value(row, "invalidation_price", "stop_loss_price"))), metric("最晚觀察到", value(row, "expires_on", "expiry_date") || "最長 5 個交易日"),
   ];
 };
 
@@ -73,10 +73,11 @@ const candidateCard = (row) => {
   return `<article class="candidate-card" data-state="${escapeHtml(row.state)}">
     <div class="candidate-head"><div><h3>${escapeHtml(row.stock_id)} ${escapeHtml(stockName)}</h3><p>${escapeHtml(sector)}</p></div><span class="action-badge">${escapeHtml(row.action)}</span></div>
     <p class="candidate-dates">${escapeHtml(dateText)}</p>
+    <div class="candidate-instruction"><strong>現在怎麼做</strong><p>${escapeHtml(row.instruction)}</p></div>
     <dl class="candidate-metrics">${cardMetrics(row).join("")}</dl>
-    <p class="candidate-reason">${escapeHtml(row.reason)}</p>${issueList}
+    <p class="candidate-reason"><strong>為什麼：</strong>${escapeHtml(row.reason)}</p>${issueList}
     <div class="risk-row"><span class="chip">${escapeHtml(setupLabel(row.setup_type))}</span>${row.industry_consensus ? `<span class="chip confirm">同板塊候選達 2 檔以上</span>` : ""}${riskChip(row)}</div>
-    <details><summary>查看風險與資料來源</summary><div class="detail-list">
+    <details><summary>為什麼列入？資料完整嗎？</summary><div class="detail-list">
       <span><strong>EPS：</strong>${escapeHtml(epsLabel(row))}</span>
       <span><strong>處置：</strong>${escapeHtml(dispositionLabel(row))}</span>
       <span><strong>公司行動：</strong>${escapeHtml(companyActionLabel(row))}</span>
@@ -137,9 +138,9 @@ const renderOverview = () => {
   const historical = isHistoricalMode(state.selectedDate, state.latestDate);
   const decisionIsToday = lanes.d1.decisionDate === taipeiDate();
   const headline = historical ? `正在查看 ${state.selectedDate} 的歷史封存` : decisionIsToday && !lanes.d1.decisionReady ? `等待今天 ${lanes.d1.decisionDate} 09:15 判斷` : decisionIsToday ? `今天 ${lanes.d1.decisionDate} 的 09:15 判斷已完成` : `盤後先準備 ${lanes.d0.decisionDate || "下一交易日"} 的名單`;
-  const note = historical ? "歷史模式不代表現在仍可交易；請以每張卡片的形成日、判斷日與失效條件為準。" : !lanes.d1.decisionReady ? `${lanes.d1.rows.length} 檔盤後候選等待 ${lanes.d1.decisionDate || "下一交易日"} 09:15 判斷，目前尚無任何股票可標示為保留監看。` : `${d1Watch} 檔保留監看、${blocked} 檔已被安全條件阻擋。`;
+  const note = historical ? "歷史模式不代表現在仍可交易；請以每張卡片的形成日、判斷日與放棄條件為準。" : !lanes.d1.decisionReady ? `${lanes.d1.rows.length} 檔盤後候選要等到 ${lanes.d1.decisionDate || "下一交易日"} 09:15 才能判斷，現在都不要買。` : `${d1Watch} 檔正在等待價格與成交量確認、${blocked} 檔今天不考慮。`;
   const dayWord = historical ? "當日" : "今日";
-  elements.overview.innerHTML = `<div><h2>${escapeHtml(headline)}</h2><p>${escapeHtml(note)}</p></div><div class="overview-stats"><div class="overview-stat"><strong>${d1Watch}</strong><span>${dayWord}保留監看</span></div><div class="overview-stat"><strong>${blocked}</strong><span>${dayWord}禁止介入</span></div><div class="overview-stat"><strong>${lanes.d1.decisionReady ? 0 : lanes.d1.rows.length}</strong><span>等待 09:15</span></div></div>`;
+  elements.overview.innerHTML = `<div><h2>${escapeHtml(headline)}</h2><p>${escapeHtml(note)}</p></div><div class="overview-stats"><div class="overview-stat"><strong>${d1Watch}</strong><span>${dayWord}等待價格確認</span></div><div class="overview-stat"><strong>${blocked}</strong><span>${dayWord}不考慮</span></div><div class="overview-stat"><strong>${lanes.d1.decisionReady ? 0 : lanes.d1.rows.length}</strong><span>還沒完成判斷</span></div></div>`;
   elements.overview.setAttribute("aria-busy", "false");
   elements.historical.hidden = !historical;
   if (historical) elements.historical.textContent = `歷史模式：這是 ${state.selectedDate} 的封存資料，不是今天的即時建議。最新可用資料日為 ${state.latestDate}。`;
@@ -242,7 +243,7 @@ const bindEvents = () => {
   elements.loadHistory.addEventListener("click", loadHistory);
   elements.exportCsv.addEventListener("click", () => {
     const rows = state.currentRows;
-    const csv = [["股票代號", "名稱", "板塊", "階段", "動作", "形成日", "判斷日", "觸發參考", "停損參考", "原因"], ...rows.map((row) => [row.stock_id, row.name, row.industry, state.lanes[state.activeStage].title, row.action, row.formationDate, row.decisionDate, row.paper_entry_trigger_price || "", row.stop_loss_price || "", row.reason])].map((cells) => cells.map((cell) => `"${String(cell ?? "").replaceAll('"', '""')}"`).join(",")).join("\n");
+    const csv = [["股票代號", "名稱", "板塊", "階段", "現在怎麼做", "形成日", "判斷日", "等股價到", "買進後停損", "原因"], ...rows.map((row) => [row.stock_id, row.name, row.industry, state.lanes[state.activeStage].title, row.instruction, row.formationDate, row.decisionDate, row.paper_entry_trigger_price || "", row.stop_loss_price || "", row.reason])].map((cells) => cells.map((cell) => `"${String(cell ?? "").replaceAll('"', '""')}"`).join(",")).join("\n");
     downloadText(`${state.selectedDate}-${state.activeStage}-候選.csv`, `\ufeff${csv}`, "text/csv;charset=utf-8");
   });
   elements.copyLink.addEventListener("click", async () => {

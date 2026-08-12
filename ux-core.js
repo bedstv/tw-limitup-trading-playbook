@@ -42,46 +42,46 @@ export const formatPercent = (value, { alreadyPercent = false } = {}) => {
 };
 
 export const setupLabel = (value) => ({
-  A: "A 型｜盤整量縮漲停",
-  B: "B 型｜突破前高、帶量漲停",
+  A: "盤整後量縮漲停（A 型）",
+  B: "突破前高、成交量放大（B 型）",
 }[value] || "型態未分類");
 
 export const regimeLabel = (value) => ({
-  STRONG: "強勢盤",
-  NEUTRAL: "中性盤",
-  WEAK: "弱勢盤",
-}[value] || "尚未取得大盤狀態");
+  STRONG: "大盤偏強",
+  NEUTRAL: "大盤漲跌不明顯",
+  WEAK: "大盤偏弱",
+}[value] || "大盤資料尚未取得");
 
 export const decisionLabel = (value) => ({
-  WATCH: "保留監看，尚未觸發",
-  PULLBACK_ONLY: "等待拉回，不可追價",
-  DOWNRANK: "次要觀察",
-  REJECT: "不介入",
-  DATA_INCOMPLETE: "資料不足，禁止判斷",
-  PENDING: "尚未到判斷時間",
-}[value] || "等待條件確認");
+  WATCH: "先不要買，等待價格確認",
+  PULLBACK_ONLY: "開太高，不要追；等拉回",
+  DOWNRANK: "優先度較低，今天先不考慮",
+  REJECT: "今天不考慮",
+  DATA_INCOMPLETE: "資料不完整，今天不考慮",
+  PENDING: "還沒到判斷時間，先不要買",
+}[value] || "條件還沒確認，先不要買");
 
 export const d2StatusLabel = (value) => ({
-  reclaimed: "已重返，等待完整確認",
-  watching: "持續等待重返",
-  watch: "持續等待重返",
-  invalidated: "已失效，停止觀察",
-  expired: "已到期，停止觀察",
-}[String(value || "").toLowerCase()] || "持續觀察");
+  reclaimed: "價格已反彈，仍要等量價確認",
+  watching: "還沒反彈到目標價，繼續等",
+  watch: "還沒反彈到目標價，繼續等",
+  invalidated: "已跌破放棄價，停止觀察",
+  expired: "觀察期限已到，停止觀察",
+}[String(value || "").toLowerCase()] || "條件還沒完成，繼續等");
 
 const reasonCodeLabels = {
-  NEUTRAL_CONFIRM: "大盤中性；仍須等待個股價格、VWAP 與量能同時確認。",
-  GAP_OVER_5: "開盤跳空超過 5%，不可直接追價。",
-  GAP_OVER_7: "開盤跳空超過 7%，不介入。",
-  STRONG_B_DOWNRANK: "大盤強勢時，B 型突破股依固定規則降為次要觀察。",
-  WEAK_B_PASSED: "弱勢盤中仍維持相對強勢，可保留監看，但尚未觸發進場。",
-  WEAK_B_FAILED: "弱勢盤中的相對強度未通過，不介入。",
-  CORPORATE_ACTION: "公司行動改變價格基準，不使用一般跳空或停損判斷。",
-  DISPOSITION: "候選股已進入處置，不介入。",
-  POSSIBLE_DISPOSITION: "候選股可能於下一交易日進入處置，不介入。",
-  QUOTE_MISSING: "09:15 個股資料不足，禁止產生交易判斷。",
-  STOP_NOT_BELOW_TRIGGER: "停損價未低於觸發價，風險條件無效，不介入。",
-  RISK_OVER_5: "觸發價至停損價的風險超過 5%，不介入。",
+  NEUTRAL_CONFIRM: "大盤漲跌不明顯；個股還要同時符合股價站穩與成交量放大，才繼續考慮。",
+  GAP_OVER_5: "開盤比前一日收盤高超過 5%，現在追價風險太高。",
+  GAP_OVER_7: "開盤比前一日收盤高超過 7%，今天不考慮。",
+  STRONG_B_DOWNRANK: "大盤偏強時容易有人追漲；這種放量突破股先降低優先度。",
+  WEAK_B_PASSED: "大盤偏弱，但這檔股票相對較強；仍要等價格與成交量確認，現在先不要買。",
+  WEAK_B_FAILED: "大盤偏弱，而且這檔股票不夠強，今天不考慮。",
+  CORPORATE_ACTION: "除權息等公司行動改變了價格基準，今天不使用一般買進與停損判斷。",
+  DISPOSITION: "這檔股票目前為處置股，今天不考慮。",
+  POSSIBLE_DISPOSITION: "這檔股票下一交易日可能遭處置，今天不考慮。",
+  QUOTE_MISSING: "09:15 個股報價不完整，今天無法安全判斷。",
+  STOP_NOT_BELOW_TRIGGER: "停損價沒有低於等待確認的價格，風險設定不合理，今天不考慮。",
+  RISK_OVER_5: "等待確認的價格到停損價相差超過 5%，可能損失過大，今天不考慮。",
 };
 
 export const reasonLabel = (row) => {
@@ -99,9 +99,9 @@ export const reasonLabel = (row) => {
   if (lower.includes("corporate action")) return reasonCodeLabels.CORPORATE_ACTION;
   if (lower.includes("possible") && lower.includes("disposition")) return reasonCodeLabels.POSSIBLE_DISPOSITION;
   if (lower.includes("under disposition")) return reasonCodeLabels.DISPOSITION;
-  if (lower.includes("no d2 reclaim")) return "尚未形成 D2+ 重返條件；只保留相對強勢觀察。";
-  if (lower.includes("add to d2 reclaim")) return "已進入 D2+ 重返觀察，必須等待價格與量能完成確認。";
-  if (lower.includes("next trading day") || lower.includes("d1 open watch")) return "等待下一交易日 09:15 判斷；若開盤跳空超過 5%，不可直接追價。";
+  if (lower.includes("no d2 reclaim")) return "價格尚未反彈回關鍵價位，目前只能繼續等待。";
+  if (lower.includes("add to d2 reclaim")) return "價格可能正在反彈，但必須等站穩且成交量放大後才重新考慮。";
+  if (lower.includes("next trading day") || lower.includes("d1 open watch")) return "現在先不要買；等下一交易日 09:15 看完大盤與個股表現再判斷。";
   if (/[a-z]{3}/i.test(value)) return "系統已保存判斷原因；中文說明尚待對應，不能據此進場。";
   return value;
 };
@@ -125,7 +125,7 @@ export const riskGeometry = (row) => {
 export const safetyIssues = (row, stage) => {
   const issues = [];
   if (stage === "d1" && row?.d1_decision_ready === false) issues.push({ code: "QUOTE_MISSING", label: reasonCodeLabels.QUOTE_MISSING });
-  if (row?.risk_data_status === "OFFICIAL_SOURCE_MISSING" || row?.risk_flags_trade_ready === false) issues.push({ code: "RISK_SOURCE_MISSING", label: "EPS／處置官方資料不完整，禁止判斷。" });
+  if (row?.risk_data_status === "OFFICIAL_SOURCE_MISSING" || row?.risk_flags_trade_ready === false) issues.push({ code: "RISK_SOURCE_MISSING", label: "EPS 或處置資料不完整，今天無法安全判斷。" });
   if (row?.currently_disposed_snapshot) issues.push({ code: "DISPOSITION", label: reasonCodeLabels.DISPOSITION });
   if (row?.possible_disposition_next_day) issues.push({ code: "POSSIBLE_DISPOSITION", label: reasonCodeLabels.POSSIBLE_DISPOSITION });
   if (row?.corporate_action) issues.push({ code: "CORPORATE_ACTION", label: reasonCodeLabels.CORPORATE_ACTION });
@@ -146,25 +146,47 @@ export const candidateView = (row, stage, context = {}) => {
   const issues = safetyIssues(row, stage);
   const rawDecision = decisionStatus(row);
   let state = "waiting";
-  let action = stage === "d0" ? `等待 ${context.decisionDate || "下一交易日"} 09:15 判斷` : decisionLabel(rawDecision);
+  let action = stage === "d0" ? "明天 09:15 前先不要買" : decisionLabel(rawDecision);
   if (stage === "d2") {
     action = d2StatusLabel(row?.status);
     state = ["invalidated", "expired"].includes(String(row?.status || "").toLowerCase()) ? "blocked" : "watching";
   } else if (issues.length) {
     const primaryCode = issues[0].code;
-    action = primaryCode === "STOP_NOT_BELOW_TRIGGER" ? "停損條件已失效"
-      : primaryCode === "QUOTE_MISSING" || primaryCode === "RISK_SOURCE_MISSING" ? "資料不足，不介入"
-        : primaryCode === "DISPOSITION" || primaryCode === "POSSIBLE_DISPOSITION" ? "處置風險，不介入"
-          : primaryCode === "CORPORATE_ACTION" ? "價格基準改變，不介入"
-            : "條件無效，不介入";
+    action = primaryCode === "STOP_NOT_BELOW_TRIGGER" ? "停損價不合理，今天不考慮"
+      : primaryCode === "QUOTE_MISSING" || primaryCode === "RISK_SOURCE_MISSING" ? "資料不完整，今天不考慮"
+        : primaryCode === "DISPOSITION" || primaryCode === "POSSIBLE_DISPOSITION" ? "有處置風險，今天不考慮"
+          : primaryCode === "CORPORATE_ACTION" ? "價格基準改變，今天不考慮"
+            : "風險太高，今天不考慮";
     state = "blocked";
   } else if (stage === "d1" && context.decisionReady === false) {
-    action = `等待 ${context.decisionDate || "下一交易日"} 09:15 判斷`;
+    action = "還沒到 09:15，先不要買";
     state = "waiting";
   } else if (stage === "d1") {
     state = rawDecision === "REJECT" ? "blocked" : rawDecision === "WATCH" ? "watching" : rawDecision === "PULLBACK_ONLY" ? "caution" : "waiting";
   }
   const geometry = riskGeometry(row);
+  const trigger = formatPrice(row?.paper_entry_trigger_price);
+  const stop = formatPrice(row?.stop_loss_price);
+  const decisionDate = context.decisionDate || row?.d1_trade_date || row?.d1_date || "下一交易日";
+  let instruction = "現在先不要買，等待系統把條件說明完整。";
+  if (issues.length) instruction = `今天不要考慮這檔。原因：${issues[0].label}`;
+  else if (stage === "d0" || (stage === "d1" && context.decisionReady === false)) instruction = `現在不要買。等到 ${decisionDate} 09:15 取得大盤與個股資料後，系統才會告訴你是否繼續觀察。`;
+  else if (stage === "d1" && rawDecision === "WATCH") {
+    const triggerStep = trigger === "—" ? "先等價格與成交量完成確認" : `先等股價到 ${trigger} 元，再確認成交量與走勢`;
+    const stopStep = stop === "—" ? "停損價尚未取得前，不要進入下一步" : `若之後買進，跌破 ${stop} 元就停損`;
+    instruction = `現在不要買。${triggerStep}；兩者都符合才考慮下一步。${stopStep}。`;
+  }
+  else if (stage === "d1" && rawDecision === "PULLBACK_ONLY") instruction = `開盤漲太多，現在不要追。等股價拉回後重新確認成交量與走勢；沒有重新轉強就不交易。`;
+  else if (stage === "d1" && rawDecision === "DOWNRANK") instruction = "今天優先度較低，先看其他候選；沒有額外轉強證據就不交易。";
+  else if (stage === "d1" && ["REJECT", "DATA_INCOMPLETE"].includes(rawDecision)) instruction = `今天不要考慮這檔。原因：${reasonLabel(row)}`;
+  else if (stage === "d2") {
+    const status = String(row?.status || "").toLowerCase();
+    const reclaim = formatPrice(row?.alert_reclaim_price);
+    const invalidation = formatPrice(row?.invalidation_price ?? row?.stop_loss_price);
+    instruction = ["invalidated", "expired"].includes(status)
+      ? "停止觀察這檔，不要再等待買進條件。"
+      : `現在不要買。等股價由下往上回到 ${reclaim} 元並連續站穩，成交量也放大後才重新考慮；跌破 ${invalidation} 元就放棄。`;
+  }
   return {
     ...row,
     stage,
@@ -174,6 +196,7 @@ export const candidateView = (row, stage, context = {}) => {
     state,
     issues,
     reason: issues[0]?.label || reasonLabel(row),
+    instruction,
     geometry,
     decisionPending: stage === "d1" && context.decisionReady === false,
   };
@@ -187,9 +210,9 @@ export const buildDecisionLanes = ({ selected, previous, selectedDate, nextTradi
   return {
     d1: {
       id: "d1",
-      tabLabel: decisionReady ? "09:15 判斷結果" : "09:15 待判斷",
-      title: decisionReady ? "09:15 判斷結果" : `${decisionDate || "下一交易日"} 09:15 待判斷`,
-      subtitle: `${formationDate} 盤後候選 → ${decisionDate || "下一交易日"} 09:15 ${decisionReady ? "已完成" : "等待判斷"}`,
+      tabLabel: decisionReady ? "今天開盤後怎麼做" : "等待 09:15 判斷",
+      title: decisionReady ? "今天開盤後怎麼做" : `${decisionDate || "下一交易日"} 09:15 才能判斷`,
+      subtitle: `${formationDate} 盤後選出 → ${decisionDate || "下一交易日"} 09:15 ${decisionReady ? "已完成判斷" : "再看大盤與個股表現"}`,
       formationDate,
       decisionDate,
       decisionReady,
@@ -197,18 +220,18 @@ export const buildDecisionLanes = ({ selected, previous, selectedDate, nextTradi
     },
     d0: {
       id: "d0",
-      tabLabel: "盤後準備名單",
-      title: "盤後準備名單",
-      subtitle: `${formationDate} 盤後候選 → ${decisionDate || "下一交易日"} 09:15 判斷`,
+      tabLabel: "下一交易日先看這些",
+      title: "下一交易日先看這些",
+      subtitle: `${formationDate} 盤後選出 → ${decisionDate || "下一交易日"} 09:15 再判斷，現在不要買`,
       formationDate,
       decisionDate,
       rows: (selected?.d0_candidates || []).map((row) => candidateView(row, "d0", { formationDate, decisionDate })),
     },
     d2: {
       id: "d2",
-      tabLabel: "D2+ 後續觀察",
-      title: "D2+ 後續觀察",
-      subtitle: "只保留仍有效的重返警示價觀察",
+      tabLabel: "之後幾天等反彈",
+      title: "之後幾天等反彈",
+      subtitle: "只有價格反彈到目標、站穩且成交量放大，才重新考慮",
       formationDate: "",
       decisionDate: formationDate,
       rows: (selected?.d2_watch || []).map((row) => candidateView(row, "d2", { decisionDate: formationDate })),

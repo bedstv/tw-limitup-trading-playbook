@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="台股漲停後候選股的盤後準備、隔日 09:15 判斷與 D2+ 後續觀察。" />
+    <meta name="description" content="用白話顯示台股漲停後候選股現在該等待、放棄或注意哪些價格。" />
     <title>每日決策中心｜漲停後交易作戰手冊</title>
-    <link rel="stylesheet" href="ux.css?v=20260811" />
-    <script type="module" src="market-page.js?v=20260812-statusfix"></script>
+    <link rel="stylesheet" href="ux.css?v=20260812-plainux" />
+    <script type="module" src="market-page.js?v=20260812-plainux"></script>
   </head>
   <body data-page="market">
     <a class="skip-link" href="#main">跳到主要內容</a>
@@ -40,14 +40,14 @@
 
       <section class="stage-section" aria-labelledby="stage-heading">
         <div class="section-heading">
-          <div><p class="eyebrow">分開看每一個交易階段</p><h2 id="stage-heading">不要把今天與明天的名單混在一起</h2></div>
+          <div><p class="eyebrow">依時間分開查看</p><h2 id="stage-heading">先選你現在要看的名單</h2></div>
           <button id="clear-filters" class="text-button" type="button" hidden>清除篩選</button>
         </div>
 
         <div id="stage-tabs" class="stage-tabs" role="tablist" aria-label="選擇交易階段">
-          <button id="tab-d1" role="tab" type="button" data-stage="d1" aria-controls="candidate-list" aria-selected="true" disabled>09:15 判斷 <span>—</span></button>
-          <button id="tab-d0" role="tab" type="button" data-stage="d0" aria-controls="candidate-list" aria-selected="false" disabled>盤後準備名單 <span>—</span></button>
-          <button id="tab-d2" role="tab" type="button" data-stage="d2" aria-controls="candidate-list" aria-selected="false" disabled>D2+ 後續觀察 <span>—</span></button>
+          <button id="tab-d1" role="tab" type="button" data-stage="d1" aria-controls="candidate-list" aria-selected="true" disabled>今天開盤後怎麼做 <span>—</span></button>
+          <button id="tab-d0" role="tab" type="button" data-stage="d0" aria-controls="candidate-list" aria-selected="false" disabled>下一交易日先看這些 <span>—</span></button>
+          <button id="tab-d2" role="tab" type="button" data-stage="d2" aria-controls="candidate-list" aria-selected="false" disabled>之後幾天等反彈 <span>—</span></button>
         </div>
 
         <div class="stage-toolbar">
@@ -78,11 +78,11 @@
       </details>
 
       <details class="support-panel" id="history-panel">
-        <summary>查看個股 D0 → D1 → D2+ 歷程（需要時才載入）</summary>
+        <summary>查看這檔股票從入選到停止觀察的過程（需要時才載入）</summary>
         <div id="history-content"><button id="load-history" class="secondary-button" type="button">載入歷程</button></div>
       </details>
 
-      <aside class="plain-warning"><strong>使用原則：</strong>「保留監看」不等於買進。未到指定日期、資料不完整、處置／公司行動風險或停損價不合理，一律不介入。5% 風險上限只適用 P2.30 影子策略，不會淘汰固定基準候選。</aside>
+      <aside class="plain-warning"><strong>最重要的原則：</strong>出現在名單上不代表現在可以買。每張卡片都會直接寫「現在怎麼做」；還沒到指定時間、資料不完整、有處置／公司行動風險或停損價不合理時，今天都不要考慮。</aside>
     </main>
 
     <nav class="mobile-nav" aria-label="手機主要導覽">

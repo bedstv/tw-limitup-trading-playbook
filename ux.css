@@ -79,6 +79,13 @@ button:disabled, select:disabled { cursor: wait; opacity: .58; }
 .candidate-card[data-state="caution"] .action-badge { color: var(--amber); background: var(--amber-soft); }
 .candidate-card[data-state="blocked"] .action-badge { color: var(--danger); background: var(--danger-soft); }
 .candidate-dates { margin: 12px 0; padding: 9px 11px; border-radius: 10px; background: #f3f5f2; color: var(--muted); font-size: .82rem; }
+.candidate-instruction { margin: 12px 0; padding: 14px; border: 1px solid #bdd5ff; border-radius: 12px; background: var(--blue-soft); }
+.candidate-instruction strong { display: block; margin-bottom: 4px; color: var(--blue); font-size: .78rem; }
+.candidate-instruction p { margin: 0; font-weight: 850; line-height: 1.65; }
+.candidate-card[data-state="blocked"] .candidate-instruction { border-color: #f0b8b2; background: var(--danger-soft); }
+.candidate-card[data-state="blocked"] .candidate-instruction strong { color: var(--danger); }
+.candidate-card[data-state="caution"] .candidate-instruction { border-color: #efd092; background: var(--amber-soft); }
+.candidate-card[data-state="caution"] .candidate-instruction strong { color: var(--amber); }
 .candidate-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 12px 0; }
 .candidate-metrics div { padding: 10px; border: 1px solid var(--line); border-radius: 10px; }
 .candidate-metrics dt { color: var(--muted); font-size: .7rem; font-weight: 800; }
