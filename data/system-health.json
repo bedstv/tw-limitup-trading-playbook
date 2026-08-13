@@ -3,10 +3,10 @@
     "d1": {
       "schema_version": "p2.20.3",
       "phase": "d1",
-      "date": "2026-08-12",
-      "scheduled_at": "2026-08-12T09:16:00+08:00",
-      "checked_at": "2026-08-12T09:31:57.019832+08:00",
-      "actual_finished_at": "2026-08-12T09:16:11.358429+08:00",
+      "date": "2026-08-13",
+      "scheduled_at": "2026-08-13T09:16:00+08:00",
+      "checked_at": "2026-08-13T09:20:04.613335+08:00",
+      "actual_finished_at": "2026-08-13T09:16:17.722845+08:00",
       "status": "ok",
       "failed_step": null,
       "reasons": [],
@@ -41,58 +41,58 @@
         }
       },
       "versions": {
-        "preflight_data_commit": "04fc89cad78974c5a4e03d4b13db4c4cf7c27f31",
-        "preflight_pages_commit": "3fbc1fe8d8f2f2d8afe4fe03381414c7f63450e5",
-        "pages_local_commit": "cb82dce50490c6a296824916e88adf205d1f28ac",
-        "pages_remote_commit": "cb82dce50490c6a296824916e88adf205d1f28ac",
+        "preflight_data_commit": "c5a8e3923319957118af1653e10aeabcb8ec940f",
+        "preflight_pages_commit": "689d0ad4f635b11b6d5da6373442ec69f447b7c2",
+        "pages_local_commit": "b147ec38ceee8fbc75946daa0d6d47df93cc4956",
+        "pages_remote_commit": "b147ec38ceee8fbc75946daa0d6d47df93cc4956",
         "data_runtime_commit": "c5a8e3923319957118af1653e10aeabcb8ec940f"
       },
       "retry": {
         "schema_version": "p2.20.2",
         "phase": "d1",
-        "date": "2026-08-12",
+        "date": "2026-08-13",
         "status": "ok",
         "retry_delay_seconds": 0,
         "attempts": [
           {
             "attempt": 1,
-            "started_at": "2026-08-12T09:16:01.354831+08:00",
-            "finished_at": "2026-08-12T09:16:11.358429+08:00",
+            "started_at": "2026-08-13T09:16:02.381725+08:00",
+            "finished_at": "2026-08-13T09:16:17.722845+08:00",
             "exit_code": 0,
-            "stdout_tail": "{\"status\": \"published\", \"failed_step\": null, \"reason\": \"\", \"detail\": \"To https://github.com/bedstv/tw-limitup-trading-playbook.git\\n   c6181fd..b757e81  main -> main\", \"schema_version\": \"p2.20.4\", \"phase\": \"d1\", \"date\": \"2026-08-12\", \"local_data_saved\": true, \"local_commit_created\": true, \"local_commit_detail\": \"[main b757e81] data: publish D1 09:15 decision\\n 1 file changed, 52 insertions(+), 9 deletions(-)\", \"recorded_at\": \"2026-08-12T09:16:08.945840+08:00\"}\n",
+            "stdout_tail": "{\"status\": \"published\", \"failed_step\": null, \"reason\": \"\", \"detail\": \"To https://github.com/bedstv/tw-limitup-trading-playbook.git\\n   95c2b66..b147ec3  main -> main\", \"schema_version\": \"p2.20.4\", \"phase\": \"d1\", \"date\": \"2026-08-13\", \"local_data_saved\": true, \"local_commit_created\": true, \"local_commit_detail\": \"[main b147ec3] data: publish D1 09:15 decision\\n 1 file changed, 78 insertions(+), 12 deletions(-)\", \"recorded_at\": \"2026-08-13T09:16:15.355580+08:00\"}\n",
             "stderr_tail": ""
           }
         ],
-        "recorded_at": "2026-08-12T09:16:11.358552+08:00"
+        "recorded_at": "2026-08-13T09:16:17.722964+08:00"
       },
       "publication": {
         "status": "published",
         "failed_step": null,
         "reason": "",
-        "detail": "To https://github.com/bedstv/tw-limitup-trading-playbook.git\n   3bdaf57..cb82dce  main -> main",
+        "detail": "To https://github.com/bedstv/tw-limitup-trading-playbook.git\n   95c2b66..b147ec3  main -> main",
         "schema_version": "p2.20.4",
         "phase": "d1",
-        "date": "2026-08-12",
+        "date": "2026-08-13",
         "local_data_saved": true,
         "local_commit_created": true,
-        "local_commit_detail": "[main cb82dce] data: publish D1 09:15 decision\n 1 file changed, 8 insertions(+), 8 deletions(-)",
-        "recorded_at": "2026-08-12T09:30:40.540695+08:00"
+        "local_commit_detail": "[main b147ec3] data: publish D1 09:15 decision\n 1 file changed, 78 insertions(+), 12 deletions(-)",
+        "recorded_at": "2026-08-13T09:16:15.355580+08:00"
       },
       "freshness": {
         "schema_version": "p2.21",
-        "checked_at": "2026-08-12T09:31:57.066061+08:00",
-        "as_of_date": "2026-08-12",
+        "checked_at": "2026-08-13T09:20:04.667236+08:00",
+        "as_of_date": "2026-08-13",
         "calendar_source": "official_live",
         "market_day": {
-          "date": "2026-08-12",
+          "date": "2026-08-13",
           "status": "trading",
           "source": "weekday",
           "reason": "一般交易日"
         },
-        "previous_trading_date": "2026-08-11",
-        "next_trading_date": "2026-08-13",
-        "latest_data_date": "2026-08-11",
-        "expected_latest_data_date": "2026-08-11",
+        "previous_trading_date": "2026-08-12",
+        "next_trading_date": "2026-08-14",
+        "latest_data_date": "2026-08-12",
+        "expected_latest_data_date": "2026-08-12",
         "is_stale": false,
         "expectations": {
           "d1_0915": {
