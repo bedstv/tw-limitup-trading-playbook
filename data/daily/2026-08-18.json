@@ -19,15 +19,24 @@
     "partial_market_dates": {},
     "risk_snapshot_ready": true,
     "regime_0915_ready": true,
-    "regime_0915_date": "2026-08-18",
-    "regime_0915_applies_to": "d1_watch",
+    "regime_0915_date": "2026-08-19",
+    "regime_0915_applies_to": "d0_candidates",
     "market_regime_0915": "NEUTRAL",
-    "taiex_return_0915": 0.002702515871529254,
+    "taiex_return_0915": -0.014475813464439824,
     "eps_snapshot_stock_count": 1832,
     "warning_snapshot_row_count": 16,
-    "limitations": [
-      "2026-08-18 盤後 D0 候選須等待下一交易日 09:15 大盤資料，尚不可標示可交易。"
-    ]
+    "limitations": [],
+    "d0_eligible_count": 0,
+    "d0_regime_0915_date": "2026-08-19",
+    "d1_quote_coverage": {
+      "candidate_count": 1,
+      "covered_count": 1,
+      "coverage_pct": 100.0,
+      "source_counts": {
+        "TWSE MIS live quote": 1
+      },
+      "missing_stock_ids": []
+    }
   },
   "d0_candidates": [
     {
@@ -46,7 +55,7 @@
       "possible_disposition_next_day": true,
       "currently_disposed_snapshot": false,
       "risk_flags_trade_ready": true,
-      "next_step": "Wait for next trading day 09:15 market regime; D1 open watch; avoid direct chase if D1 open gap >5%",
+      "next_step": "D0 warning indicated possible D1 disposition.",
       "industry_code": "31",
       "industry": "其他電子業",
       "industry_candidate_count": 1,
@@ -64,7 +73,30 @@
       "disposition_sources": [
         "TPEx:tpex_trading_warning_note"
       ],
-      "market_regime_0915": "PENDING_NEXT_TRADING_DAY"
+      "market_regime_0915": "NEUTRAL",
+      "d1_trade_date": "2026-08-19",
+      "taiex_return_0915": -0.014475813464439824,
+      "d1_open": 170.0,
+      "price_0915": 174.0,
+      "d1_open_gap_pct": -0.02298850574712641,
+      "stock_return_0915": 0.0,
+      "stock_minus_taiex_return_pp": 1.4475813464439824,
+      "above_intraday_mean_0915": false,
+      "intraday_mean_available_0915": false,
+      "above_opening_low_0915": true,
+      "d1_decision_status": "REJECT",
+      "d1_decision_reason_code": "POSSIBLE_DISPOSITION",
+      "d1_decision_reason": "D0 warning indicated possible D1 disposition.",
+      "d1_decision_ready": true,
+      "d1_quote_source": "TWSE MIS live quote",
+      "d1_quote_valid_bar_count": 0,
+      "paper_trade_rule_version": "p2.11_v2",
+      "paper_entry_trigger_price": "",
+      "stop_loss_price": 158.5,
+      "ux_trade_blocked": true,
+      "ux_trade_block_reason_code": "POSSIBLE_DISPOSITION",
+      "risk_geometry_valid": true,
+      "risk_distance_pct": null
     }
   ],
   "d1_watch": [
@@ -269,5 +301,16 @@
       "corporate_action_detail": ""
     }
   ],
-  "d2_watch": []
+  "d2_watch": [],
+  "d0_decision_ready": true,
+  "d0_decision_date": "2026-08-19",
+  "d1_quote_coverage": {
+    "candidate_count": 1,
+    "covered_count": 1,
+    "coverage_pct": 100.0,
+    "source_counts": {
+      "TWSE MIS live quote": 1
+    },
+    "missing_stock_ids": []
+  }
 }
