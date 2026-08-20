@@ -19,15 +19,22 @@
     "partial_market_dates": {},
     "risk_snapshot_ready": true,
     "regime_0915_ready": true,
-    "regime_0915_date": "2026-08-19",
-    "regime_0915_applies_to": "d1_watch",
+    "regime_0915_date": "2026-08-20",
+    "regime_0915_applies_to": "d0_candidates",
     "market_regime_0915": "NEUTRAL",
-    "taiex_return_0915": -0.014475813464439824,
+    "taiex_return_0915": 0.0035441033914849207,
     "eps_snapshot_stock_count": 1835,
     "warning_snapshot_row_count": 21,
-    "limitations": [
-      "2026-08-19 盤後 D0 候選須等待下一交易日 09:15 大盤資料，尚不可標示可交易。"
-    ]
+    "limitations": [],
+    "d0_eligible_count": 0,
+    "d0_regime_0915_date": "2026-08-20",
+    "d1_quote_coverage": {
+      "candidate_count": 0,
+      "covered_count": 0,
+      "coverage_pct": 0.0,
+      "source_counts": {},
+      "missing_stock_ids": []
+    }
   },
   "d0_candidates": [],
   "d1_watch": [
@@ -74,5 +81,14 @@
       "corporate_action_detail": ""
     }
   ],
-  "d2_watch": []
+  "d2_watch": [],
+  "d0_decision_ready": true,
+  "d0_decision_date": "2026-08-20",
+  "d1_quote_coverage": {
+    "candidate_count": 0,
+    "covered_count": 0,
+    "coverage_pct": 0.0,
+    "source_counts": {},
+    "missing_stock_ids": []
+  }
 }
