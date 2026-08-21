@@ -1,8 +1,8 @@
 {
   "schema_version": "p2.20.1",
-  "checked_at": "2026-08-20T15:20:07.731049+08:00",
-  "phase": "afterhours",
-  "status": "ok",
+  "checked_at": "2026-08-21T09:13:35.190630+08:00",
+  "phase": "d1",
+  "status": "ok_with_publish_deferred",
   "errors": [],
   "versions": {
     "data": {
@@ -13,8 +13,8 @@
       "ignored_generated_changes_before_sync": [
         "data/reference/twse_holiday_calendar_2026.json"
       ],
-      "sync_exit_code": 0,
-      "sync_message": "Already up to date.",
+      "sync_exit_code": 1,
+      "sync_message": "fatal: unable to access 'https://github.com/bedstv/tw-market-data.git/': Could not resolve host: github.com",
       "commit": "c5a8e3923319957118af1653e10aeabcb8ec940f",
       "origin_main": "c5a8e3923319957118af1653e10aeabcb8ec940f",
       "dirty_after_sync": false,
@@ -25,13 +25,13 @@
     "pages": {
       "path": "/Users/suh/.local/share/tw-stock-runtime/tw-limitup-trading-playbook",
       "exists": true,
-      "before_commit": "7a4b536ef9e4d7b5a7636227c5b89868b9ed8d1b",
+      "before_commit": "03041f5b9b9bbe23a31fd2060a7c6290bdb3b0cd",
       "dirty_before_sync": false,
       "ignored_generated_changes_before_sync": [],
-      "sync_exit_code": 0,
-      "sync_message": "Already up to date.",
-      "commit": "7a4b536ef9e4d7b5a7636227c5b89868b9ed8d1b",
-      "origin_main": "7a4b536ef9e4d7b5a7636227c5b89868b9ed8d1b",
+      "sync_exit_code": 1,
+      "sync_message": "fatal: unable to access 'https://github.com/bedstv/tw-limitup-trading-playbook.git/': Could not resolve host: github.com",
+      "commit": "03041f5b9b9bbe23a31fd2060a7c6290bdb3b0cd",
+      "origin_main": "03041f5b9b9bbe23a31fd2060a7c6290bdb3b0cd",
       "dirty_after_sync": false,
       "ignored_generated_changes_after_sync": []
     }
