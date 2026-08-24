@@ -1,7 +1,7 @@
 {
   "schema_version": "p2.25",
   "minimum_decision_days": 60,
-  "available_decision_days": 14,
+  "available_decision_days": 15,
   "available_dates": [
     "2026-07-09",
     "2026-07-14",
@@ -16,12 +16,13 @@
     "2026-08-14",
     "2026-08-17",
     "2026-08-18",
-    "2026-08-19"
+    "2026-08-19",
+    "2026-08-24"
   ],
-  "candidate_count": 30,
+  "candidate_count": 35,
   "data_incomplete_count": 0,
   "provider_counts": {
-    "Fugle": 28,
+    "Fugle": 33,
     "未取得完整分鐘線": 2
   },
   "finmind_unavailable_observations": 0,
