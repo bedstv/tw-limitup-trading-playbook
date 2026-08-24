@@ -3,57 +3,113 @@
     "d1": {
       "schema_version": "p2.20.3",
       "phase": "d1",
-      "date": "2026-08-21",
-      "scheduled_at": "2026-08-21T09:16:00+08:00",
-      "checked_at": "2026-08-21T09:23:43.849716+08:00",
-      "actual_finished_at": null,
-      "status": "skipped",
+      "date": "2026-08-24",
+      "scheduled_at": "2026-08-24T09:16:00+08:00",
+      "checked_at": "2026-08-24T09:20:02.750169+08:00",
+      "actual_finished_at": "2026-08-24T09:16:29.722226+08:00",
+      "status": "ok_with_notification_failure",
       "failed_step": null,
-      "reasons": [
-        "沒有前一日候選資料，無須產生 D1 判斷"
-      ],
+      "reasons": [],
       "steps": {
         "dashboard_data": {
-          "status": "skipped",
-          "detail": "沒有前一日候選資料，無須產生 D1 判斷"
+          "status": "ok",
+          "detail": "D1 09:15 判斷已完成"
+        },
+        "regime_evidence": {
+          "status": "ok",
+          "detail": "09:15 大盤證據與 Dashboard／個股判斷一致"
+        },
+        "retry": {
+          "status": "ok",
+          "detail": "第一次完成"
         },
         "freshness": {
           "status": "ok",
           "detail": "交易日曆與資料新鮮度已更新"
+        },
+        "pages_git": {
+          "status": "ok",
+          "detail": "GitHub main 已同步"
+        },
+        "public_dashboard": {
+          "status": "ok",
+          "detail": "看盤頁與每日資料均可公開讀取"
+        },
+        "telegram": {
+          "status": "failed",
+          "detail": "Telegram 交易摘要未確認送達"
         }
       },
       "versions": {
         "preflight_data_commit": "c5a8e3923319957118af1653e10aeabcb8ec940f",
-        "preflight_pages_commit": "03041f5b9b9bbe23a31fd2060a7c6290bdb3b0cd"
+        "preflight_pages_commit": "d7fccc0d6f0f127a5e981c819e8f7079c0c99337",
+        "pages_local_commit": "f36fc4acb782d0a6ab7d0f71e89b3a9ca337619e",
+        "pages_remote_commit": "f36fc4acb782d0a6ab7d0f71e89b3a9ca337619e",
+        "data_runtime_commit": "c5a8e3923319957118af1653e10aeabcb8ec940f"
       },
-      "publication": {},
+      "retry": {
+        "schema_version": "p2.20.2",
+        "phase": "d1",
+        "date": "2026-08-24",
+        "status": "ok",
+        "retry_delay_seconds": 0,
+        "attempts": [
+          {
+            "attempt": 1,
+            "started_at": "2026-08-24T09:16:02.146369+08:00",
+            "finished_at": "2026-08-24T09:16:29.722226+08:00",
+            "exit_code": 0,
+            "stdout_tail": "{\"status\": \"published\", \"failed_step\": null, \"reason\": \"\", \"detail\": \"To https://github.com/bedstv/tw-limitup-trading-playbook.git\\n   d7fccc0..f36fc4a  main -> main\", \"schema_version\": \"p2.20.4\", \"phase\": \"d1\", \"date\": \"2026-08-24\", \"local_data_saved\": true, \"local_commit_created\": true, \"local_commit_detail\": \"[main f36fc4a] data: publish D1 09:15 decision\\n 1 file changed, 155 insertions(+), 18 deletions(-)\", \"recorded_at\": \"2026-08-24T09:16:13.550562+08:00\"}\nTelegram notification failed: The read operation timed out\n",
+            "stderr_tail": "Telegram notification failed after D1 data was published\n"
+          }
+        ],
+        "recorded_at": "2026-08-24T09:16:29.722350+08:00"
+      },
+      "publication": {
+        "status": "published",
+        "failed_step": null,
+        "reason": "",
+        "detail": "To https://github.com/bedstv/tw-limitup-trading-playbook.git\n   d7fccc0..f36fc4a  main -> main",
+        "schema_version": "p2.20.4",
+        "phase": "d1",
+        "date": "2026-08-24",
+        "local_data_saved": true,
+        "local_commit_created": true,
+        "local_commit_detail": "[main f36fc4a] data: publish D1 09:15 decision\n 1 file changed, 155 insertions(+), 18 deletions(-)",
+        "recorded_at": "2026-08-24T09:16:13.550562+08:00"
+      },
       "freshness": {
         "schema_version": "p2.21",
-        "checked_at": "2026-08-21T09:23:43.919260+08:00",
-        "as_of_date": "2026-08-21",
-        "calendar_source": "official_cache",
+        "checked_at": "2026-08-24T09:20:02.820652+08:00",
+        "as_of_date": "2026-08-24",
+        "calendar_source": "official_live",
         "market_day": {
-          "date": "2026-08-21",
+          "date": "2026-08-24",
           "status": "trading",
           "source": "weekday",
           "reason": "一般交易日"
         },
-        "previous_trading_date": "2026-08-20",
-        "next_trading_date": "2026-08-24",
-        "latest_data_date": "2026-08-20",
-        "expected_latest_data_date": "2026-08-20",
+        "previous_trading_date": "2026-08-21",
+        "next_trading_date": "2026-08-25",
+        "latest_data_date": "2026-08-21",
+        "expected_latest_data_date": "2026-08-21",
         "is_stale": false,
         "expectations": {
           "d1_0915": {
             "due": true,
-            "ready": false
+            "ready": true
           },
           "afterhours": {
             "due": false,
             "ready": null
           }
         }
-      }
+      },
+      "telegram_delivery_status": "failed",
+      "notification_status": "failed",
+      "notification_reasons": [
+        "Telegram 交易摘要未確認送達"
+      ]
     },
     "afterhours": {
       "schema_version": "p2.20.3",
