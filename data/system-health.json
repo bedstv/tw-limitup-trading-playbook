@@ -114,10 +114,10 @@
     "afterhours": {
       "schema_version": "p2.20.3",
       "phase": "afterhours",
-      "date": "2026-08-21",
-      "scheduled_at": "2026-08-21T15:30:00+08:00",
-      "checked_at": "2026-08-21T15:45:04.975606+08:00",
-      "actual_finished_at": "2026-08-21T15:39:22.336474+08:00",
+      "date": "2026-08-24",
+      "scheduled_at": "2026-08-24T15:30:00+08:00",
+      "checked_at": "2026-08-24T15:45:02.861643+08:00",
+      "actual_finished_at": "2026-08-24T15:40:27.172730+08:00",
       "status": "ok",
       "failed_step": null,
       "reasons": [],
@@ -128,7 +128,7 @@
         },
         "retry": {
           "status": "ok",
-          "detail": "第一次完成"
+          "detail": "第一次失敗後已恢復"
         },
         "freshness": {
           "status": "ok",
@@ -149,62 +149,70 @@
       },
       "versions": {
         "preflight_data_commit": "c5a8e3923319957118af1653e10aeabcb8ec940f",
-        "preflight_pages_commit": "27994c8e9ddcf5edd46e1415ca334885cda0b8df",
-        "pages_local_commit": "02ed787ab189e4af09551fc7bc7ac5995651b9b9",
-        "pages_remote_commit": "02ed787ab189e4af09551fc7bc7ac5995651b9b9",
+        "preflight_pages_commit": "2fc6a38b92325c81aa7a7f8c568620bc52180f24",
+        "pages_local_commit": "50483d97e446c3af7931a02207a8b1376dc371e7",
+        "pages_remote_commit": "50483d97e446c3af7931a02207a8b1376dc371e7",
         "data_runtime_commit": "c5a8e3923319957118af1653e10aeabcb8ec940f"
       },
       "retry": {
         "schema_version": "p2.20.2",
         "phase": "afterhours",
-        "date": "2026-08-21",
-        "status": "ok",
-        "retry_delay_seconds": 0,
+        "date": "2026-08-24",
+        "status": "recovered",
+        "retry_delay_seconds": 120,
         "attempts": [
           {
             "attempt": 1,
-            "started_at": "2026-08-21T15:30:04.631693+08:00",
-            "finished_at": "2026-08-21T15:39:22.336474+08:00",
+            "started_at": "2026-08-24T15:30:03.997679+08:00",
+            "finished_at": "2026-08-24T15:32:39.423402+08:00",
+            "exit_code": 1,
+            "stdout_tail": "\",\n        \"--as-of-date\",\n        \"2026-08-24\",\n        \"--event-tag\",\n        \"p12_2016_2026\",\n        \"--outcome-tag\",\n        \"p13_2016_2026_selected\",\n        \"--risk-tag\",\n        \"p19_2016_2026_selected\",\n        \"--regime-tag\",\n        \"p18_2016_2026_selected\",\n        \"--output-tag\",\n        \"2026-08-24\"\n      ],\n      \"returncode\": 0,\n      \"elapsed_seconds\": 0.544,\n      \"stdout_tail\": \"{\\n  \\\"schema_version\\\": \\\"2.0.0\\\",\\n  \\\"output_tag\\\": \\\"2026-08-24\\\",\\n  \\\"as_of_date\\\": \\\"2026-08-24\\\",\\n  \\\"effective_date\\\": \\\"2026-08-24\\\",\\n  \\\"previous_trade_date\\\": \\\"2026-08-21\\\",\\n  \\\"recent_d1_dates_for_d2_watch\\\": [\\n    \\\"2026-08-17\\\",\\n    \\\"2026-08-18\\\",\\n    \\\"2026-08-19\\\",\\n    \\\"2026-08-20\\\",\\n    \\\"2026-08-21\\\"\\n  ],\\n  \\\"d0_candidate_count\\\": 2,\\n  \\\"d1_watch_count\\\": 4,\\n  \\\"d1_abnormal_gap_check_count\\\": 0,\\n  \\\"d1_blowoff_count\\\": 1,\\n  \\\"d2_watch_count\\\": 0,\\n  \\\"d2_reclaimed_count\\\": 0,\\n  \\\"trade_ready\\\": false,\\n  \\\"limitations\\\": [\\n    \\\"Offline prototype based on processed files; not a live data pull.\\\",\\n    \\\"Uses D0 daily TAIEX regime, not D1 09:15 intraday regime.\\\",\\n    \\\"Risk flags are not full historical as-of verified.\\\"\\n  ],\\n  \\\"outputs\\\": {\\n    \\\"d0_candidates\\\": {\\n      \\\"path\\\": \\\"data/processed/daily_brief_d0_candidates_2026-08-24.csv\\\",\\n      \\\"sha256\\\": \\\"f3fcb93ca5d564a37de7784c52ed63be62df84ed5c53453a31753d352a22e2b1\\\"\\n    },\\n    \\\"d1_watch\\\": {\\n      \\\"path\\\": \\\"data/processed/daily_brief_d1_watch_2026-08-24.csv\\\",\\n      \\\"sha256\\\": \\\"9fec21bcf616765ccc6c8d1200eb863694dadc4620bfa6a57becc5a0324bb462\\\"\\n    },\\n    \\\"d2_watch\\\": {\\n      \\\"path\\\": \\\"data/processed/daily_brief_d2_watch_2026-08-24.csv\\\",\\n      \\\"sha256\\\": \\\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\\\"\\n    },\\n    \\\"markdown\\\": {\\n      \\\"path\\\": \\\"data/reports/daily_brief_2026-08-24.md\\\",\\n      \\\"sha256\\\": \\\"7dbeb4317c3f4ceb5986a8eac41f72ffc6a45604f68a13a8f8e13d31d56f0a91\\\"\\n    }\\n  }\\n}\\n\",\n      \"stderr_tail\": \"\"\n    }\n  ]\n}\n",
+            "stderr_tail": "nt call last):\n  File \"/Users/suh/.local/share/tw-stock-runtime/tw-market-data/scripts/build_p24_corporate_actions.py\", line 52, in <module>\n    main()\n  File \"/Users/suh/.local/share/tw-stock-runtime/tw-market-data/scripts/build_p24_corporate_actions.py\", line 25, in main\n    rows = fetch_official_actions(args.start_date, args.end_date)\n  File \"/Users/suh/.local/share/tw-stock-runtime/tw-market-data/src/tw_market_data/corporate_actions.py\", line 134, in fetch_official_actions\n    fetch_json(\"https://openapi.twse.com.tw/v1/exchangeReport/TWT48U_ALL\")\n  File \"/Users/suh/.local/share/tw-stock-runtime/tw-market-data/src/tw_market_data/corporate_actions.py\", line 18, in fetch_json\n    with urllib.request.urlopen(request, timeout=60) as response:\n  File \"/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/urllib/request.py\", line 214, in urlopen\n    return opener.open(url, data, timeout)\n  File \"/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/urllib/request.py\", line 517, in open\n    response = self._open(req, data)\n  File \"/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/urllib/request.py\", line 534, in _open\n    result = self._call_chain(self.handle_open, protocol, protocol +\n  File \"/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/urllib/request.py\", line 494, in _call_chain\n    result = func(*args)\n  File \"/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/urllib/request.py\", line 1389, in https_open\n    return self.do_open(http.client.HTTPSConnection, req,\n  File \"/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/urllib/request.py\", line 1349, in do_open\n    raise URLError(err)\nurllib.error.URLError: <urlopen error [Errno 8] nodename nor servname provided, or not known>\n"
+          },
+          {
+            "attempt": 2,
+            "started_at": "2026-08-24T15:34:39.574986+08:00",
+            "finished_at": "2026-08-24T15:40:27.172730+08:00",
             "exit_code": 0,
-            "stdout_tail": ".json\"}\n{\"schema_version\": \"p2.25\", \"minimum_decision_days\": 60, \"available_decision_days\": 14, \"available_dates\": [\"2026-07-09\", \"2026-07-14\", \"2026-07-16\", \"2026-07-17\", \"2026-07-24\", \"2026-08-04\", \"2026-08-07\", \"2026-08-11\", \"2026-08-12\", \"2026-08-13\", \"2026-08-14\", \"2026-08-17\", \"2026-08-18\", \"2026-08-19\"], \"candidate_count\": 30, \"data_incomplete_count\": 0, \"provider_counts\": {\"Fugle\": 28, \"未取得完整分鐘線\": 2}, \"finmind_unavailable_observations\": 0, \"historical_backtest_allowed\": false, \"status\": \"insufficient_historical_coverage\", \"reason\": \"需有至少 60 個完整 D1 分鐘線判斷日才可重跑歷史分鐘回測；目前僅保留 forward 封存資料。\", \"source_policy\": \"同一股票日只使用單一來源；Fugle 近期 1 分鐘線優先，FinMind TaiwanStockKBar 僅在帳號授權時使用。\"}\n{\n  \"schema_version\": \"p2.30.0\",\n  \"decision_date\": \"2026-08-21\",\n  \"baseline_rule_version\": \"p2.11_v2\",\n  \"shadow_rule_versions\": [\n    \"p2.30_d1_confirmed_v1\",\n    \"p2.30_d2_reclaim_hv_v1\"\n  ],\n  \"market_minute_verified\": false,\n  \"d1\": {\n    \"candidate_count\": 0,\n    \"confirmed_entry_count\": 0,\n    \"data_incomplete_count\": 0\n  },\n  \"d2\": {\n    \"active_watch_count\": 0,\n    \"confirmed_entry_count\": 0,\n    \"data_incomplete_count\": 0\n  },\n  \"allocated_count\": 0,\n  \"shadow_only\": true,\n  \"telegram_buy_alerts\": false,\n  \"minute_capture_attempts\": []\n}\n{\"output\": \"/Users/suh/.local/share/tw-stock-runtime/tw-limitup-trading-playbook/data/p230-shadow-evaluation.json\", \"d1_records\": 22, \"d2_records\": 0}\n{\"status\": \"published\", \"failed_step\": null, \"reason\": \"\", \"detail\": \"To https://github.com/bedstv/tw-limitup-trading-playbook.git\\n   8a69da6..02ed787  main -> main\", \"schema_version\": \"p2.20.4\", \"phase\": \"afterhours\", \"date\": \"2026-08-21\", \"local_data_saved\": true, \"local_commit_created\": true, \"local_commit_detail\": \"[main 02ed787] data: publish 2026-08-21 after-hours dashboard\\n 2 files changed, 250 insertions(+), 3 deletions(-)\\n create mode 100644 data/daily/2026-08-21.json\", \"recorded_at\": \"2026-08-21T15:39:15.605375+08:00\"}\n{\"p3_development_gate\": \"not_ready\", \"p230_shadow_gate\": \"not_ready\"}\n",
-            "stderr_tail": "2026-01-01 failed: Remote end closed connection without response\n"
+            "stdout_tail": "_version\": \"p2.25\", \"minimum_decision_days\": 60, \"available_decision_days\": 15, \"available_dates\": [\"2026-07-09\", \"2026-07-14\", \"2026-07-16\", \"2026-07-17\", \"2026-07-24\", \"2026-08-04\", \"2026-08-07\", \"2026-08-11\", \"2026-08-12\", \"2026-08-13\", \"2026-08-14\", \"2026-08-17\", \"2026-08-18\", \"2026-08-19\", \"2026-08-24\"], \"candidate_count\": 35, \"data_incomplete_count\": 0, \"provider_counts\": {\"Fugle\": 33, \"未取得完整分鐘線\": 2}, \"finmind_unavailable_observations\": 0, \"historical_backtest_allowed\": false, \"status\": \"insufficient_historical_coverage\", \"reason\": \"需有至少 60 個完整 D1 分鐘線判斷日才可重跑歷史分鐘回測；目前僅保留 forward 封存資料。\", \"source_policy\": \"同一股票日只使用單一來源；Fugle 近期 1 分鐘線優先，FinMind TaiwanStockKBar 僅在帳號授權時使用。\"}\n{\n  \"schema_version\": \"p2.30.0\",\n  \"decision_date\": \"2026-08-24\",\n  \"baseline_rule_version\": \"p2.11_v2\",\n  \"shadow_rule_versions\": [\n    \"p2.30_d1_confirmed_v1\",\n    \"p2.30_d2_reclaim_hv_v1\"\n  ],\n  \"market_minute_verified\": false,\n  \"d1\": {\n    \"candidate_count\": 5,\n    \"confirmed_entry_count\": 0,\n    \"data_incomplete_count\": 3\n  },\n  \"d2\": {\n    \"active_watch_count\": 0,\n    \"confirmed_entry_count\": 0,\n    \"data_incomplete_count\": 0\n  },\n  \"allocated_count\": 0,\n  \"shadow_only\": true,\n  \"telegram_buy_alerts\": false,\n  \"minute_capture_attempts\": []\n}\n{\"output\": \"/Users/suh/.local/share/tw-stock-runtime/tw-limitup-trading-playbook/data/p230-shadow-evaluation.json\", \"d1_records\": 27, \"d2_records\": 0}\n{\"status\": \"published\", \"failed_step\": null, \"reason\": \"\", \"detail\": \"To https://github.com/bedstv/tw-limitup-trading-playbook.git\\n   f8c4636..50483d9  main -> main\", \"schema_version\": \"p2.20.4\", \"phase\": \"afterhours\", \"date\": \"2026-08-24\", \"local_data_saved\": true, \"local_commit_created\": true, \"local_commit_detail\": \"[main 50483d9] data: publish 2026-08-24 after-hours dashboard\\n 7 files changed, 669 insertions(+), 108 deletions(-)\\n create mode 100644 data/daily/2026-08-24.json\", \"recorded_at\": \"2026-08-24T15:40:25.589995+08:00\"}\n{\"p3_development_gate\": \"not_ready\", \"p230_shadow_gate\": \"not_ready\"}\n",
+            "stderr_tail": "2025-05-30 failed: Failed after 5 attempts: <urlopen error [Errno 8] nodename nor servname provided, or not known>\n2025-09-29 failed: Failed after 5 attempts: <urlopen error [Errno 8] nodename nor servname provided, or not known>\n2025-10-06 failed: Failed after 5 attempts: <urlopen error [Errno 8] nodename nor servname provided, or not known>\n2025-10-10 failed: Failed after 5 attempts: <urlopen error [Errno 8] nodename nor servname provided, or not known>\n2025-10-24 failed: Failed after 5 attempts: <urlopen error [Errno 8] nodename nor servname provided, or not known>\n2025-12-25 failed: Failed after 5 attempts: <urlopen error [Errno 8] nodename nor servname provided, or not known>\n"
           }
         ],
-        "recorded_at": "2026-08-21T15:39:22.337835+08:00"
+        "recorded_at": "2026-08-24T15:40:27.173215+08:00"
       },
       "publication": {
         "status": "published",
         "failed_step": null,
         "reason": "",
-        "detail": "To https://github.com/bedstv/tw-limitup-trading-playbook.git\n   8a69da6..02ed787  main -> main",
+        "detail": "To https://github.com/bedstv/tw-limitup-trading-playbook.git\n   f8c4636..50483d9  main -> main",
         "schema_version": "p2.20.4",
         "phase": "afterhours",
-        "date": "2026-08-21",
+        "date": "2026-08-24",
         "local_data_saved": true,
         "local_commit_created": true,
-        "local_commit_detail": "[main 02ed787] data: publish 2026-08-21 after-hours dashboard\n 2 files changed, 250 insertions(+), 3 deletions(-)\n create mode 100644 data/daily/2026-08-21.json",
-        "recorded_at": "2026-08-21T15:39:15.605375+08:00"
+        "local_commit_detail": "[main 50483d9] data: publish 2026-08-24 after-hours dashboard\n 7 files changed, 669 insertions(+), 108 deletions(-)\n create mode 100644 data/daily/2026-08-24.json",
+        "recorded_at": "2026-08-24T15:40:25.589995+08:00"
       },
       "freshness": {
         "schema_version": "p2.21",
-        "checked_at": "2026-08-21T15:45:05.029312+08:00",
-        "as_of_date": "2026-08-21",
+        "checked_at": "2026-08-24T15:45:02.902760+08:00",
+        "as_of_date": "2026-08-24",
         "calendar_source": "official_live",
         "market_day": {
-          "date": "2026-08-21",
+          "date": "2026-08-24",
           "status": "trading",
           "source": "weekday",
           "reason": "一般交易日"
         },
-        "previous_trading_date": "2026-08-20",
-        "next_trading_date": "2026-08-24",
-        "latest_data_date": "2026-08-21",
-        "expected_latest_data_date": "2026-08-21",
+        "previous_trading_date": "2026-08-21",
+        "next_trading_date": "2026-08-25",
+        "latest_data_date": "2026-08-24",
+        "expected_latest_data_date": "2026-08-24",
         "is_stale": false,
         "expectations": {
           "d1_0915": {
             "due": true,
-            "ready": false
+            "ready": true
           },
           "afterhours": {
             "due": true,
