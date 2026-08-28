@@ -58,105 +58,63 @@
     "afterhours": {
       "schema_version": "p2.20.3",
       "phase": "afterhours",
-      "date": "2026-08-27",
-      "scheduled_at": "2026-08-27T15:30:00+08:00",
-      "checked_at": "2026-08-27T15:45:00.244139+08:00",
-      "actual_finished_at": "2026-08-27T15:32:44.389522+08:00",
-      "status": "ok",
-      "failed_step": null,
-      "reasons": [],
+      "date": "2026-08-28",
+      "scheduled_at": "2026-08-28T15:30:00+08:00",
+      "checked_at": "2026-08-28T15:45:00.879359+08:00",
+      "actual_finished_at": null,
+      "status": "failed",
+      "failed_step": "freshness",
+      "reasons": [
+        "找不到盤後資料",
+        "找不到主排程完成紀錄",
+        "交易日應有盤後資料，但最新資料仍落後"
+      ],
       "steps": {
         "dashboard_data": {
-          "status": "ok",
-          "detail": "盤後資料已完整產生"
+          "status": "failed",
+          "detail": "找不到盤後資料"
         },
         "retry": {
-          "status": "ok",
-          "detail": "第一次完成"
+          "status": "failed",
+          "detail": "找不到主排程完成紀錄"
         },
         "freshness": {
-          "status": "ok",
-          "detail": "交易日曆與資料新鮮度已更新"
-        },
-        "pages_git": {
-          "status": "ok",
-          "detail": "GitHub main 已同步"
-        },
-        "public_dashboard": {
-          "status": "ok",
-          "detail": "看盤頁與每日資料均可公開讀取"
-        },
-        "telegram": {
-          "status": "ok",
-          "detail": "交易摘要已送達"
+          "status": "failed",
+          "detail": "交易日應有盤後資料，但最新資料仍落後"
         }
       },
       "versions": {
         "preflight_data_commit": "c5a8e3923319957118af1653e10aeabcb8ec940f",
-        "preflight_pages_commit": "f3087ae2f41eb342caad40d5aaf544d3c5f5714b",
-        "pages_local_commit": "78bfa8d38d065c5c3f88481f626bbf084e24b415",
-        "pages_remote_commit": "78bfa8d38d065c5c3f88481f626bbf084e24b415",
-        "data_runtime_commit": "c5a8e3923319957118af1653e10aeabcb8ec940f"
+        "preflight_pages_commit": "0c0533eceaed6c8c2a1894663f01c4e94d0960a2"
       },
-      "retry": {
-        "schema_version": "p2.20.2",
-        "phase": "afterhours",
-        "date": "2026-08-27",
-        "status": "ok",
-        "retry_delay_seconds": 0,
-        "attempts": [
-          {
-            "attempt": 1,
-            "started_at": "2026-08-27T15:30:05.770151+08:00",
-            "finished_at": "2026-08-27T15:32:44.389522+08:00",
-            "exit_code": 0,
-            "stdout_tail": "decision_days\": 60, \"available_decision_days\": 17, \"available_dates\": [\"2026-07-09\", \"2026-07-14\", \"2026-07-16\", \"2026-07-17\", \"2026-07-24\", \"2026-08-04\", \"2026-08-07\", \"2026-08-11\", \"2026-08-12\", \"2026-08-13\", \"2026-08-14\", \"2026-08-17\", \"2026-08-18\", \"2026-08-19\", \"2026-08-24\", \"2026-08-26\", \"2026-08-27\"], \"candidate_count\": 48, \"data_incomplete_count\": 0, \"provider_counts\": {\"Fugle\": 46, \"未取得完整分鐘線\": 2}, \"finmind_unavailable_observations\": 0, \"historical_backtest_allowed\": false, \"status\": \"insufficient_historical_coverage\", \"reason\": \"需有至少 60 個完整 D1 分鐘線判斷日才可重跑歷史分鐘回測；目前僅保留 forward 封存資料。\", \"source_policy\": \"同一股票日只使用單一來源；Fugle 近期 1 分鐘線優先，FinMind TaiwanStockKBar 僅在帳號授權時使用。\"}\n{\n  \"schema_version\": \"p2.30.0\",\n  \"decision_date\": \"2026-08-27\",\n  \"baseline_rule_version\": \"p2.11_v2\",\n  \"shadow_rule_versions\": [\n    \"p2.30_d1_confirmed_v1\",\n    \"p2.30_d2_reclaim_hv_v1\"\n  ],\n  \"market_minute_verified\": true,\n  \"d1\": {\n    \"candidate_count\": 10,\n    \"confirmed_entry_count\": 0,\n    \"data_incomplete_count\": 3\n  },\n  \"d2\": {\n    \"active_watch_count\": 0,\n    \"confirmed_entry_count\": 0,\n    \"data_incomplete_count\": 0\n  },\n  \"allocated_count\": 0,\n  \"shadow_only\": true,\n  \"telegram_buy_alerts\": false,\n  \"minute_capture_attempts\": []\n}\n{\"output\": \"/Users/suh/.local/share/tw-stock-runtime/tw-limitup-trading-playbook/data/p230-shadow-evaluation.json\", \"d1_records\": 42, \"d2_records\": 0}\n{\"status\": \"published\", \"failed_step\": null, \"reason\": \"\", \"detail\": \"To https://github.com/bedstv/tw-limitup-trading-playbook.git\\n   4e935f3..78bfa8d  main -> main\", \"schema_version\": \"p2.20.4\", \"phase\": \"afterhours\", \"date\": \"2026-08-27\", \"local_data_saved\": true, \"local_commit_created\": true, \"local_commit_detail\": \"[main 78bfa8d] data: publish 2026-08-27 after-hours dashboard\\n 7 files changed, 1372 insertions(+), 117 deletions(-)\\n create mode 100644 data/daily/2026-08-27.json\", \"recorded_at\": \"2026-08-27T15:32:41.984267+08:00\"}\n{\"p3_development_gate\": \"not_ready\", \"p230_shadow_gate\": \"not_ready\"}\n",
-            "stderr_tail": ""
-          }
-        ],
-        "recorded_at": "2026-08-27T15:32:44.389698+08:00"
-      },
-      "publication": {
-        "status": "published",
-        "failed_step": null,
-        "reason": "",
-        "detail": "To https://github.com/bedstv/tw-limitup-trading-playbook.git\n   4e935f3..78bfa8d  main -> main",
-        "schema_version": "p2.20.4",
-        "phase": "afterhours",
-        "date": "2026-08-27",
-        "local_data_saved": true,
-        "local_commit_created": true,
-        "local_commit_detail": "[main 78bfa8d] data: publish 2026-08-27 after-hours dashboard\n 7 files changed, 1372 insertions(+), 117 deletions(-)\n create mode 100644 data/daily/2026-08-27.json",
-        "recorded_at": "2026-08-27T15:32:41.984267+08:00"
-      },
+      "publication": {},
       "freshness": {
         "schema_version": "p2.21",
-        "checked_at": "2026-08-27T15:45:00.305005+08:00",
-        "as_of_date": "2026-08-27",
+        "checked_at": "2026-08-28T15:45:00.924475+08:00",
+        "as_of_date": "2026-08-28",
         "calendar_source": "official_live",
         "market_day": {
-          "date": "2026-08-27",
+          "date": "2026-08-28",
           "status": "trading",
           "source": "weekday",
           "reason": "一般交易日"
         },
-        "previous_trading_date": "2026-08-26",
-        "next_trading_date": "2026-08-28",
+        "previous_trading_date": "2026-08-27",
+        "next_trading_date": "2026-08-31",
         "latest_data_date": "2026-08-27",
-        "expected_latest_data_date": "2026-08-27",
-        "is_stale": false,
+        "expected_latest_data_date": "2026-08-28",
+        "is_stale": true,
         "expectations": {
           "d1_0915": {
             "due": true,
-            "ready": true
+            "ready": false
           },
           "afterhours": {
             "due": true,
-            "ready": true
+            "ready": false
           }
         }
-      },
-      "telegram_delivery_status": "sent"
+      }
     }
   }
 }
