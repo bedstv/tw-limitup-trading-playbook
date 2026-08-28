@@ -3,109 +3,57 @@
     "d1": {
       "schema_version": "p2.20.3",
       "phase": "d1",
-      "date": "2026-08-27",
-      "scheduled_at": "2026-08-27T09:16:00+08:00",
-      "checked_at": "2026-08-27T09:20:04.921451+08:00",
-      "actual_finished_at": "2026-08-27T09:16:20.746118+08:00",
-      "status": "ok",
+      "date": "2026-08-28",
+      "scheduled_at": "2026-08-28T09:16:00+08:00",
+      "checked_at": "2026-08-28T09:20:05.461626+08:00",
+      "actual_finished_at": null,
+      "status": "skipped",
       "failed_step": null,
-      "reasons": [],
+      "reasons": [
+        "沒有前一日候選資料，無須產生 D1 判斷"
+      ],
       "steps": {
         "dashboard_data": {
-          "status": "ok",
-          "detail": "D1 09:15 判斷已完成"
-        },
-        "regime_evidence": {
-          "status": "ok",
-          "detail": "09:15 大盤證據與 Dashboard／個股判斷一致"
-        },
-        "retry": {
-          "status": "ok",
-          "detail": "第一次完成"
+          "status": "skipped",
+          "detail": "沒有前一日候選資料，無須產生 D1 判斷"
         },
         "freshness": {
           "status": "ok",
           "detail": "交易日曆與資料新鮮度已更新"
-        },
-        "pages_git": {
-          "status": "ok",
-          "detail": "GitHub main 已同步"
-        },
-        "public_dashboard": {
-          "status": "ok",
-          "detail": "看盤頁與每日資料均可公開讀取"
-        },
-        "telegram": {
-          "status": "ok",
-          "detail": "交易摘要已送達"
         }
       },
       "versions": {
         "preflight_data_commit": "c5a8e3923319957118af1653e10aeabcb8ec940f",
-        "preflight_pages_commit": "b3c8657c9d51423ad67cabcfa9344288396f6d01",
-        "pages_local_commit": "d043ca93d272b3c517ece505dab51edb09bf79fd",
-        "pages_remote_commit": "d043ca93d272b3c517ece505dab51edb09bf79fd",
-        "data_runtime_commit": "c5a8e3923319957118af1653e10aeabcb8ec940f"
+        "preflight_pages_commit": "4bc05e785805c298f561576769111d45a9a42f7f"
       },
-      "retry": {
-        "schema_version": "p2.20.2",
-        "phase": "d1",
-        "date": "2026-08-27",
-        "status": "ok",
-        "retry_delay_seconds": 0,
-        "attempts": [
-          {
-            "attempt": 1,
-            "started_at": "2026-08-27T09:16:05.422956+08:00",
-            "finished_at": "2026-08-27T09:16:20.746118+08:00",
-            "exit_code": 0,
-            "stdout_tail": "{\"status\": \"published\", \"failed_step\": null, \"reason\": \"\", \"detail\": \"To https://github.com/bedstv/tw-limitup-trading-playbook.git\\n   909e40d..d043ca9  main -> main\", \"schema_version\": \"p2.20.4\", \"phase\": \"d1\", \"date\": \"2026-08-27\", \"local_data_saved\": true, \"local_commit_created\": true, \"local_commit_detail\": \"[main d043ca9] data: publish D1 09:15 decision\\n 1 file changed, 255 insertions(+), 26 deletions(-)\", \"recorded_at\": \"2026-08-27T09:16:18.666011+08:00\"}\n",
-            "stderr_tail": ""
-          }
-        ],
-        "recorded_at": "2026-08-27T09:16:20.746245+08:00"
-      },
-      "publication": {
-        "status": "published",
-        "failed_step": null,
-        "reason": "",
-        "detail": "To https://github.com/bedstv/tw-limitup-trading-playbook.git\n   909e40d..d043ca9  main -> main",
-        "schema_version": "p2.20.4",
-        "phase": "d1",
-        "date": "2026-08-27",
-        "local_data_saved": true,
-        "local_commit_created": true,
-        "local_commit_detail": "[main d043ca9] data: publish D1 09:15 decision\n 1 file changed, 255 insertions(+), 26 deletions(-)",
-        "recorded_at": "2026-08-27T09:16:18.666011+08:00"
-      },
+      "publication": {},
       "freshness": {
         "schema_version": "p2.21",
-        "checked_at": "2026-08-27T09:20:05.005044+08:00",
-        "as_of_date": "2026-08-27",
+        "checked_at": "2026-08-28T09:20:05.526954+08:00",
+        "as_of_date": "2026-08-28",
         "calendar_source": "official_live",
         "market_day": {
-          "date": "2026-08-27",
+          "date": "2026-08-28",
           "status": "trading",
           "source": "weekday",
           "reason": "一般交易日"
         },
-        "previous_trading_date": "2026-08-26",
-        "next_trading_date": "2026-08-28",
-        "latest_data_date": "2026-08-26",
-        "expected_latest_data_date": "2026-08-26",
+        "previous_trading_date": "2026-08-27",
+        "next_trading_date": "2026-08-31",
+        "latest_data_date": "2026-08-27",
+        "expected_latest_data_date": "2026-08-27",
         "is_stale": false,
         "expectations": {
           "d1_0915": {
             "due": true,
-            "ready": true
+            "ready": false
           },
           "afterhours": {
             "due": false,
             "ready": null
           }
         }
-      },
-      "telegram_delivery_status": "sent"
+      }
     },
     "afterhours": {
       "schema_version": "p2.20.3",
