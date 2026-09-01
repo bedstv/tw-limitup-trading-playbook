@@ -3,9 +3,9 @@
     "d1": {
       "schema_version": "p2.20.3",
       "phase": "d1",
-      "date": "2026-08-31",
-      "scheduled_at": "2026-08-31T09:16:00+08:00",
-      "checked_at": "2026-08-31T09:24:14.859488+08:00",
+      "date": "2026-09-01",
+      "scheduled_at": "2026-09-01T09:16:00+08:00",
+      "checked_at": "2026-09-01T09:20:05.501689+08:00",
       "actual_finished_at": null,
       "status": "skipped",
       "failed_step": null,
@@ -24,24 +24,24 @@
       },
       "versions": {
         "preflight_data_commit": "c5a8e3923319957118af1653e10aeabcb8ec940f",
-        "preflight_pages_commit": "40938eb752721d67b51a4b1838b4a7a447de35f2"
+        "preflight_pages_commit": "ed790bcfe8aad1f4dccc8de1ff263c90717e1853"
       },
       "publication": {},
       "freshness": {
         "schema_version": "p2.21",
-        "checked_at": "2026-08-31T09:24:14.952928+08:00",
-        "as_of_date": "2026-08-31",
+        "checked_at": "2026-09-01T09:20:05.551460+08:00",
+        "as_of_date": "2026-09-01",
         "calendar_source": "official_live",
         "market_day": {
-          "date": "2026-08-31",
+          "date": "2026-09-01",
           "status": "trading",
           "source": "weekday",
           "reason": "一般交易日"
         },
-        "previous_trading_date": "2026-08-28",
-        "next_trading_date": "2026-09-01",
+        "previous_trading_date": "2026-08-31",
+        "next_trading_date": "2026-09-02",
         "latest_data_date": "2026-08-27",
-        "expected_latest_data_date": "2026-08-28",
+        "expected_latest_data_date": "2026-08-31",
         "is_stale": false,
         "expectations": {
           "d1_0915": {
