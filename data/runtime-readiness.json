@@ -1,7 +1,7 @@
 {
   "schema_version": "p2.20.1",
-  "checked_at": "2026-09-07T09:10:07.277879+08:00",
-  "phase": "d1",
+  "checked_at": "2026-09-07T15:20:04.175488+08:00",
+  "phase": "afterhours",
   "status": "ok",
   "errors": [],
   "versions": {
@@ -25,15 +25,13 @@
     "pages": {
       "path": "/Users/suh/.local/share/tw-stock-runtime/tw-limitup-trading-playbook",
       "exists": true,
-      "before_commit": "8c154fbb12b13dbcf91faceb8ef284f0741b6ca5",
+      "before_commit": "1531d52e727864b625eb7ad7080e818bfd7d0109",
       "dirty_before_sync": false,
       "ignored_generated_changes_before_sync": [],
       "sync_exit_code": 0,
       "sync_message": "Already up to date.",
-      "commit": "8c154fbb12b13dbcf91faceb8ef284f0741b6ca5",
-      "origin_main": "8c154fbb12b13dbcf91faceb8ef284f0741b6ca5",
-      "recovery_push_exit_code": 0,
-      "recovery_push_message": "To https://github.com/bedstv/tw-limitup-trading-playbook.git\n   a97185c..8c154fb  main -> main",
+      "commit": "1531d52e727864b625eb7ad7080e818bfd7d0109",
+      "origin_main": "1531d52e727864b625eb7ad7080e818bfd7d0109",
       "dirty_after_sync": false,
       "ignored_generated_changes_after_sync": []
     }
