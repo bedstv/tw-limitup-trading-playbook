@@ -1,25 +1,25 @@
 {
   "schema_version": "p2.24",
   "rule_version": "p2.11_v2",
-  "decision_day_count": 19,
+  "decision_day_count": 20,
   "minimum_decision_days": 20,
-  "status": "collecting_fixed_rule_sample",
+  "status": "ready_for_review",
   "overall": {
-    "candidate_count": 57,
+    "candidate_count": 65,
     "settled_count": 36,
     "avg_net_return": -0.015008744545878989,
     "median_net_return": -0.015459679623858743,
     "win_rate": 0.2777777777777778,
-    "stop_loss_rate": 0.10526315789473684,
+    "stop_loss_rate": 0.09230769230769231,
     "max_drawdown_equal_weight": -0.6623060247301474
   },
-  "unsettled_count": 3,
+  "unsettled_count": 5,
   "formal_review": {
-    "status": "collecting",
+    "status": "midterm_review_available",
     "minimum_decision_days": 20,
     "formal_review_decision_days": 60,
-    "manual_decision_required": false,
-    "message": "樣本收集中；第 20 個 D1 判斷日可做中期人工檢查，第 60 日才可進入正式評估。"
+    "manual_decision_required": true,
+    "message": "已達 20 日中期檢查門檻；固定規則仍鎖定，持續累積至 60 日後再進行正式評估。"
   },
   "p1_daily_backtest_reference": {
     "period": "2016–2026",
@@ -60,12 +60,12 @@
   "splits": {
     "setup_type": {
       "B": {
-        "candidate_count": 57,
+        "candidate_count": 65,
         "settled_count": 36,
         "avg_net_return": -0.015008744545878989,
         "median_net_return": -0.015459679623858743,
         "win_rate": 0.2777777777777778,
-        "stop_loss_rate": 0.10526315789473684,
+        "stop_loss_rate": 0.09230769230769231,
         "max_drawdown_equal_weight": -0.6623060247301474
       }
     },
@@ -89,7 +89,7 @@
         "max_drawdown_equal_weight": -0.6177218663143058
       },
       "STRONG": {
-        "candidate_count": 6,
+        "candidate_count": 14,
         "settled_count": 0,
         "avg_net_return": null,
         "median_net_return": null,
@@ -109,12 +109,12 @@
     },
     "liquidity_tier": {
       "": {
-        "candidate_count": 57,
+        "candidate_count": 65,
         "settled_count": 36,
         "avg_net_return": -0.015008744545878989,
         "median_net_return": -0.015459679623858743,
         "win_rate": 0.2777777777777778,
-        "stop_loss_rate": 0.10526315789473684,
+        "stop_loss_rate": 0.09230769230769231,
         "max_drawdown_equal_weight": -0.6623060247301474
       }
     },
@@ -129,27 +129,27 @@
         "max_drawdown_equal_weight": null
       },
       "False": {
-        "candidate_count": 29,
+        "candidate_count": 32,
         "settled_count": 20,
         "avg_net_return": -0.010661406471415018,
         "median_net_return": -0.0106765609007165,
         "win_rate": 0.3,
-        "stop_loss_rate": 0.13793103448275862,
+        "stop_loss_rate": 0.125,
         "max_drawdown_equal_weight": -0.3537437618130933
       },
       "True": {
-        "candidate_count": 25,
+        "candidate_count": 30,
         "settled_count": 16,
         "avg_net_return": -0.02044291713895895,
         "median_net_return": -0.015459679623858743,
         "win_rate": 0.25,
-        "stop_loss_rate": 0.08,
+        "stop_loss_rate": 0.06666666666666667,
         "max_drawdown_equal_weight": -0.32708667422334325
       }
     },
     "d1_decision_status": {
       "DOWNRANK": {
-        "candidate_count": 5,
+        "candidate_count": 10,
         "settled_count": 0,
         "avg_net_return": null,
         "median_net_return": null,
@@ -167,7 +167,7 @@
         "max_drawdown_equal_weight": null
       },
       "REJECT": {
-        "candidate_count": 9,
+        "candidate_count": 12,
         "settled_count": 0,
         "avg_net_return": null,
         "median_net_return": null,
