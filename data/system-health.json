@@ -3,50 +3,94 @@
     "d1": {
       "schema_version": "p2.20.3",
       "phase": "d1",
-      "date": "2026-09-22",
-      "scheduled_at": "2026-09-22T09:16:00+08:00",
-      "checked_at": "2026-09-22T09:20:01.888484+08:00",
-      "actual_finished_at": null,
-      "status": "skipped",
-      "failed_step": null,
+      "date": "2026-09-23",
+      "scheduled_at": "2026-09-23T09:16:00+08:00",
+      "checked_at": "2026-09-23T09:20:04.886945+08:00",
+      "actual_finished_at": "2026-09-23T09:17:45.057935+08:00",
+      "status": "failed",
+      "failed_step": "pages_git",
       "reasons": [
-        "沒有前一日候選資料，無須產生 D1 判斷"
+        "Dashboard commit 尚未推送至 GitHub"
       ],
       "steps": {
         "dashboard_data": {
-          "status": "skipped",
-          "detail": "沒有前一日候選資料，無須產生 D1 判斷"
+          "status": "ok",
+          "detail": "D1 09:15 判斷已完成"
+        },
+        "regime_evidence": {
+          "status": "ok",
+          "detail": "09:15 大盤證據與 Dashboard／個股判斷一致"
+        },
+        "retry": {
+          "status": "failed",
+          "detail": "主排程未完成，但 D1 資料已產生"
         },
         "freshness": {
           "status": "ok",
           "detail": "交易日曆與資料新鮮度已更新"
+        },
+        "pages_git": {
+          "status": "failed",
+          "detail": "Dashboard commit 尚未推送至 GitHub"
         }
       },
       "versions": {
         "preflight_data_commit": "c5a8e3923319957118af1653e10aeabcb8ec940f",
-        "preflight_pages_commit": "6a9e803ae995a145061cb65d592b990656d1d56f"
+        "preflight_pages_commit": "6b3cfc82aac2c874d5d4c7aebc194c1b551796d4",
+        "pages_local_commit": "761f9caae032daaab25a48bcbacb8228dd1429cc",
+        "pages_remote_commit": "6b3cfc82aac2c874d5d4c7aebc194c1b551796d4",
+        "data_runtime_commit": "c5a8e3923319957118af1653e10aeabcb8ec940f"
       },
+      "retry": {
+        "schema_version": "p2.20.2",
+        "phase": "d1",
+        "date": "2026-09-23",
+        "status": "failed",
+        "retry_delay_seconds": 90,
+        "attempts": [
+          {
+            "attempt": 1,
+            "started_at": "2026-09-23T09:16:05.012948+08:00",
+            "finished_at": "2026-09-23T09:16:10.120163+08:00",
+            "exit_code": 1,
+            "stdout_tail": "",
+            "stderr_tail": "D1 09:15 個股報價不完整（1 檔）；保留本次結果供重試，不發布 Dashboard。\n"
+          },
+          {
+            "attempt": 2,
+            "started_at": "2026-09-23T09:17:40.270998+08:00",
+            "finished_at": "2026-09-23T09:17:45.057935+08:00",
+            "exit_code": 1,
+            "stdout_tail": "",
+            "stderr_tail": "D1 09:15 個股報價不完整（2 檔）；保留本次結果供重試，不發布 Dashboard。\n"
+          }
+        ],
+        "recorded_at": "2026-09-23T09:17:45.057956+08:00"
+      },
+      "operational_reasons": [
+        "主排程未完成，但 D1 資料已產生"
+      ],
       "publication": {},
       "freshness": {
         "schema_version": "p2.21",
-        "checked_at": "2026-09-22T09:20:01.940310+08:00",
-        "as_of_date": "2026-09-22",
+        "checked_at": "2026-09-23T09:20:04.922533+08:00",
+        "as_of_date": "2026-09-23",
         "calendar_source": "official_live",
         "market_day": {
-          "date": "2026-09-22",
+          "date": "2026-09-23",
           "status": "trading",
           "source": "weekday",
           "reason": "一般交易日"
         },
-        "previous_trading_date": "2026-09-21",
-        "next_trading_date": "2026-09-23",
+        "previous_trading_date": "2026-09-22",
+        "next_trading_date": "2026-09-24",
         "latest_data_date": "2026-08-27",
-        "expected_latest_data_date": "2026-09-21",
+        "expected_latest_data_date": "2026-09-22",
         "is_stale": false,
         "expectations": {
           "d1_0915": {
             "due": true,
-            "ready": false
+            "ready": true
           },
           "afterhours": {
             "due": false,
