@@ -1,8 +1,8 @@
 {
   "schema_version": "p2.20.1",
-  "checked_at": "2026-09-22T15:20:07.951071+08:00",
-  "phase": "afterhours",
-  "status": "ok",
+  "checked_at": "2026-09-23T09:10:07.388949+08:00",
+  "phase": "d1",
+  "status": "ok_with_publish_deferred",
   "errors": [],
   "versions": {
     "data": {
@@ -13,8 +13,8 @@
       "ignored_generated_changes_before_sync": [
         "data/reference/twse_holiday_calendar_2026.json"
       ],
-      "sync_exit_code": 0,
-      "sync_message": "Already up to date.",
+      "sync_exit_code": 1,
+      "sync_message": "fatal: could not read Username for 'https://github.com': Device not configured",
       "commit": "c5a8e3923319957118af1653e10aeabcb8ec940f",
       "origin_main": "c5a8e3923319957118af1653e10aeabcb8ec940f",
       "dirty_after_sync": false,
@@ -25,13 +25,13 @@
     "pages": {
       "path": "/Users/suh/.local/share/tw-stock-runtime/tw-limitup-trading-playbook",
       "exists": true,
-      "before_commit": "2aeda071ce3a419757a1bc34c7f175580f645b20",
+      "before_commit": "6b3cfc82aac2c874d5d4c7aebc194c1b551796d4",
       "dirty_before_sync": false,
       "ignored_generated_changes_before_sync": [],
       "sync_exit_code": 0,
       "sync_message": "Already up to date.",
-      "commit": "2aeda071ce3a419757a1bc34c7f175580f645b20",
-      "origin_main": "2aeda071ce3a419757a1bc34c7f175580f645b20",
+      "commit": "6b3cfc82aac2c874d5d4c7aebc194c1b551796d4",
+      "origin_main": "6b3cfc82aac2c874d5d4c7aebc194c1b551796d4",
       "dirty_after_sync": false,
       "ignored_generated_changes_after_sync": []
     }
