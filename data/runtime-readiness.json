@@ -1,11 +1,9 @@
 {
   "schema_version": "p2.20.1",
-  "checked_at": "2026-09-23T15:20:05.320476+08:00",
+  "checked_at": "2026-09-23T23:06:03.489722+08:00",
   "phase": "afterhours",
-  "status": "failed",
-  "errors": [
-    "tw-limitup-trading-playbook 執行環境仍有未提交變更：data/daily/2026-08-27.json"
-  ],
+  "status": "ok_with_publish_deferred",
+  "errors": [],
   "versions": {
     "data": {
       "path": "/Users/suh/.local/share/tw-stock-runtime/tw-market-data",
@@ -27,14 +25,16 @@
     "pages": {
       "path": "/Users/suh/.local/share/tw-stock-runtime/tw-limitup-trading-playbook",
       "exists": true,
-      "before_commit": "62a6b70b38a6144c0f30e641632310c8694fa9f0",
-      "dirty_before_sync": true,
+      "before_commit": "cf8ad13ce0901addebc6d578ecd521594eb99327",
+      "dirty_before_sync": false,
       "ignored_generated_changes_before_sync": [],
-      "sync_exit_code": 128,
-      "sync_message": "error: cannot pull with rebase: You have unstaged changes.\nerror: Please commit or stash them.",
-      "commit": "62a6b70b38a6144c0f30e641632310c8694fa9f0",
+      "sync_exit_code": 0,
+      "sync_message": "Current branch main is up to date.",
+      "commit": "cf8ad13ce0901addebc6d578ecd521594eb99327",
       "origin_main": "6b3cfc82aac2c874d5d4c7aebc194c1b551796d4",
-      "dirty_after_sync": true,
+      "recovery_push_exit_code": 128,
+      "recovery_push_message": "fatal: could not read Username for 'https://github.com': Device not configured",
+      "dirty_after_sync": false,
       "ignored_generated_changes_after_sync": []
     }
   }
